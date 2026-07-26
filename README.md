@@ -6,22 +6,50 @@
 
 </div>
 
-Conky can be difficult for users who don’t know how to code or simply want a hassle-free way to manage their setups. That is where **Conky Studio** comes in.
+Conky is incredibly powerful, but creating and managing themes often requires editing Lua, Cairo, shell scripts, and Conky configuration files by hand. Conky Studio is a visual editor designed to make building, managing, and sharing Conky themes accessible without sacrificing flexibility.
 
-While still actively in development, Conky Studio is designed to streamline theme management and custom Conky creation using a visual node system inspired by Unreal Engine's Blueprints. In fact, it's the exact secret sauce behind how I build and iterate on my own custom themes so quickly.
+Conky Studio is already capable of building real, fully functional themes, but I'm waiting to make a public release until the remaining core features are finished and the workflow is polished.
 
 While the app is technically functional right now, I’m holding off on a public release until the core feature set is fully locked in.
 
 ### Key Features
 
 * **Visual Node Editor:** Wire up custom logic, scripts, Lua, and Cairo effortlessly using a Blueprint-style workflow.
-* **Smart Directory Detection:** Automatically discovers themes stored in both `~/.conky` and `~/.config/conky/<folder>`, complete with README preview support.
+* **Built-in Theme Manager:** Automatically discovers themes in ~/.conky and ~/.config/conky, complete with previews, installation, duplication, exporting, and README support.
 * **One-Click Control & Debugging:** Start themes directly from the app and monitor live execution logs to catch errors in real time.
 * **Modular Plugin System:** Expand functionality with custom nodes or install community-made plugins.
 * **Flexible Theme Importing:** Import themes via `.zip` or `.tar.gz` archives, through an integrated Community Store, or directly via OpenDesktop API integration (the OpenDesktop feature is currently in progress).
 * **Custom Script Generator:** Easily create and attach custom scripts to your widgets by making it a custom node in the complex setting.
+* **Live Preview & Debugging:** Launch a real Conky instance directly from Studio and monitor live logs to catch errors while designing.
+* **Plugin System:** Extend Conky Studio with community-made nodes, generators, and tools without modifying the core application.
 
-> **Note on Compatibility:** Conky Studio relies on a start.sh entry point to execute scripts, so any custom or imported themes must follow this format. Standardizing execution through a script ensures themes launch reliably without syntax hiccups, and saves my issue tracker and Discord from being flooded with command-line edge cases.
+> **Note on Compatibility:** Why every theme uses start.sh. Every theme generated or managed by Conky Studio launches through a standard start.sh entry point. This provides a consistent way to start Conky, initialize background scripts, and manage runtime resources across Linux distributions. It also eliminates many command-line edge cases, making themes easier to install, share, and support.
+
+Support Development
+
+If you'd like to help make Conky Studio even better, consider sponsoring the project on GitHub. Your support helps me dedicate more time to development, bug fixes, documentation, and new features. 
+[GitHub sponsors](https://github.com/sponsors/bobbycomet)
+
+## Current Status
+
+Conky Studio is under active development.
+
+Already implemented:
+
+- Visual node editor
+- Live Conky preview
+- Theme manager
+- Code generation
+- Import/export
+- Community Store backend
+- Plugin framework
+
+Still in progress:
+
+- OpenDesktop integration
+- Layer/timeline editor
+- Additional plugins
+- Final workflow polish before public release
 
 ---
 
