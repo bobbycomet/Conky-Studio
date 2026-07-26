@@ -1,6 +1,10 @@
 ## Conky Studio
 
-<img width="1024" height="1024" alt="conky-studio" src="https://github.com/user-attachments/assets/d6f92f00-e4f5-4b0a-a715-138f20a46458" />
+<div align="center">
+  
+<img width="300" height="300" alt="conky-studio" src="https://github.com/user-attachments/assets/d6f92f00-e4f5-4b0a-a715-138f20a46458" />
+
+</div>
 
 Conky can be difficult for users who don’t know how to code or simply want a hassle-free way to manage their setups. That is where **Conky Studio** comes in.
 
