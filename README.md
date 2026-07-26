@@ -1,5 +1,3 @@
----
-
 ## Conky Studio
 
 Conky can be difficult for users who don’t know how to code or simply want a hassle-free way to manage their setups. That is where **Conky Studio** comes in.
