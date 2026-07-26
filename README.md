@@ -62,3 +62,9 @@ Still in progress:
 <img width="1920" height="1080" alt="Screenshot_20260726_004114" src="https://github.com/user-attachments/assets/2794cb57-9e23-4d8d-bfea-81b4fa3fd663" />
 <img width="1920" height="1080" alt="Screenshot_20260726_004051" src="https://github.com/user-attachments/assets/36e43196-e09b-4b50-a361-649a8cc99fd4" />
 <img width="1920" height="1080" alt="Screenshot_20260726_004103" src="https://github.com/user-attachments/assets/6792bb3c-7de6-4144-aba5-a18a53661970" />
+
+## Themes I have made with this tool. If there is a red line, I was just redacting my location info.
+
+<img width="1920" height="1080" alt="Screenshot_20260724_083124" src="https://github.com/user-attachments/assets/06c87d09-2b5a-466a-956b-00e8b84876f1" />
+<img width="1920" height="1080" alt="Screenshot_20260724_181643" src="https://github.com/user-attachments/assets/118ba01f-0a36-4127-9577-2fe80bac97aa" />
+<img width="1920" height="1080" alt="Screenshot_20260719_220545" src="https://github.com/user-attachments/assets/981eaf50-5f37-4c21-8644-e39901bf60ce" />
