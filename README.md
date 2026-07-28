@@ -231,7 +231,7 @@ Nothing is silently dropped—everything is preserved or wrapped.
 
 If you want to help push this further:
 
-[GitHun Sponsors](https://github.com/sponsors/bobbycomet)
+[GitHub Sponsors](https://github.com/sponsors/bobbycomet)
 Or
 [Ko-fi](https://ko-fi.com/bobby60908)
 
