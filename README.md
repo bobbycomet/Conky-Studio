@@ -1,4 +1,4 @@
-## Conky Studio
+## Conky Studio a visual system designer for desktop HUDs
 
 <div align="center">
   
@@ -6,50 +6,251 @@
 
 </div>
 
-Conky is incredibly powerful, but creating and managing themes often requires editing Lua, Cairo, shell scripts, and Conky configuration files by hand. Conky Studio is a visual editor designed to make building, managing, and sharing Conky themes accessible without sacrificing flexibility.
+## Overview
 
-Conky Studio is already capable of building real, fully functional themes, but I'm waiting to make a public release until the remaining core features are finished and the workflow is polished.
+Conky is extremely powerful—but building and managing themes often means manually editing Lua, Cairo, shell scripts, and Conky configs.
 
-While the app is technically functional right now, I’m holding off on a public release until the core feature set is fully locked in.
+**Conky Studio changes that.**
 
-### Key Features
+It’s a visual editor that lets you design fully functional Conky themes using a node-based workflow—without sacrificing flexibility or control.
 
-* **Visual Node Editor:** Wire up custom logic, scripts, Lua, and Cairo effortlessly using a Blueprint-style workflow.
-* **Built-in Theme Manager:** Automatically discovers themes in ~/.conky and ~/.config/conky, complete with previews, installation, duplication, exporting, and README support.
-* **One-Click Control & Debugging:** Start themes directly from the app and monitor live execution logs to catch errors in real time.
-* **Modular Plugin System:** Expand functionality with custom nodes or install community-made plugins.
-* **Flexible Theme Importing:** Import themes via `.zip` or `.tar.gz` archives, through an integrated Community Store, or directly via OpenDesktop API integration (the OpenDesktop feature is currently in progress).
-* **Custom Script Generator:** Easily create and attach custom scripts to your widgets by making it a custom node in the complex setting.
-* **Live Preview & Debugging:** Launch a real Conky instance directly from Studio and monitor live logs to catch errors while designing.
-* **Plugin System:** Extend Conky Studio with community-made nodes, generators, and tools without modifying the core application.
+You can build real, production-ready themes today. Public release is planned once the remaining core features are complete and the workflow is fully polished.
 
-> **Note on Compatibility:** Why every theme uses start.sh. Every theme generated or managed by Conky Studio launches through a standard start.sh entry point. This provides a consistent way to start Conky, initialize background scripts, and manage runtime resources across Linux distributions. It also eliminates many command-line edge cases, making themes easier to install, share, and support.
+---
 
-Support Development
+## Why Conky Studio?
 
-If you'd like to help make Conky Studio even better, consider sponsoring the project on GitHub. Your support helps me dedicate more time to development, bug fixes, documentation, and new features. 
-[GitHub sponsors](https://github.com/sponsors/bobbycomet)
+* No more hand-writing complex configs
+* Build visually, export real working themes
+* Debug and preview in real time
+* Extend functionality with plugins
+* Share themes easily with standardized structure
+
+This isn’t a mockup tool—it generates **1:1 real output**.
+
+---
+
+## Key Features
+
+* **Visual Node Editor**
+  Blueprint-style system for connecting logic, scripts, Lua, and Cairo.
+
+* **Live Preview & Debugging**
+  Launch a real Conky instance and monitor logs in real time.
+
+* **Theme Manager**
+  Automatically detects themes in `~/.conky` and `~/.config/conky` with:
+
+  * Previews
+  * Install/export
+  * Duplication
+  * README editing
+
+* **Plugin System**
+  Extend the app with custom nodes, generators, and tools.
+
+* **Theme Wizard**
+  Generate a starter HUD instantly:
+
+  * Categories: Minimal, Gaming, RPG, Sci-Fi, Cyberpunk, Terminal, Fantasy
+  * Panels: Weather, CPU, GPU, RAM, Clock, Calendar, Music
+
+* **Legacy Theme Importer (Beta)**
+  Converts existing Conky configs into node graphs using semantic parsing.
+
+* **Flexible Data Execution**
+  Choose per-node:
+
+  * `execi` mode (Conky-native polling)
+  * Daemon mode (background cached scripts)
+
+* **Custom Script Generator**
+  Turn scripts into reusable nodes inside the editor.
+
+* **Click Actions**
+  Any visual node can trigger shell commands.
+
+* **Community Store (In Progress)**
+  Import themes via `.zip`, `.tar.gz`, or online sources.
+
+---
+
+## Compatibility Note
+
+All themes use a standardized `start.sh` entry point.
+
+This ensures:
+
+* Consistent startup behavior
+* Background script handling
+* Cross-distro compatibility
+* Fewer edge-case failures
+
+---
+
+## Wayland Support
+
+Conky overlay support depends on the compositor:
+
+**Supported:**
+
+* wlroots-based (Sway, Hyprland, Wayfire)
+* KDE Plasma (Wayland)
+* Mir-based compositors
+
+**Not Supported:**
+
+* GNOME (Mutter), no overlay support exists
+
+Also note:
+
+* Some distro packages (like `conky-all` on Ubuntu/Debian) are compiled **X11-only**
+
+Conky Studio detects your environment and warns you automatically.
+
+---
 
 ## Current Status
 
-Conky Studio is under active development.
+**Actively in development**
 
-Already implemented:
+### Implemented
 
-- Visual node editor
-- Live Conky preview
-- Theme manager
-- Code generation
-- Import/export
-- Community Store backend
-- Plugin framework
+* Visual node editor
+* Live preview (real Conky instance)
+* Theme manager
+* Code generation
+* Import/export
+* Plugin framework
+* Community store backend
+* Theme wizard
+* README editor
+* Clickable nodes
+* Logic nodes (math + conditionals)
+* External + native data sources
+* Legacy importer (Beta) more details below
 
-Still in progress:
+### In Progress
 
-- OpenDesktop integration
-- Layer/timeline editor
-- Additional plugins
-- Final workflow polish before public release
+* OpenDesktop integration
+* Layer/timeline editor
+* Animation keyframes
+* SVG → Cairo pipeline
+* Built-in performance profiler
+* Source plugin system (safe execution model)
+* Workflow polish
+
+---
+
+## Architecture
+
+```
+conkystudio/
+├── model/        Project structure (JSON)
+├── nodes/        Node definitions
+├── plugins/      Community extensions
+├── importer/     Legacy theme parser
+├── codegen/      Theme generator
+├── hardware/     System detection
+├── fonts/        Font installer
+├── manager/      Theme management
+├── store/        Community index
+├── preview/      Live Conky runner
+└── ui/           PyQt6 interface
+```
+
+---
+
+## Output Structure
+
+```
+<ThemeName>/
+├── theme.json
+├── start.sh
+├── conky.conf
+├── render.lua
+├── images/
+├── fonts/
+├── scripts/
+├── .runtime-cache/
+├── preview.png
+└── README.md
+```
+
+---
+
+## Node System
+
+### Data Sources
+
+* CPU, RAM, Disk, Network, Uptime, System Info
+* GPU stats, temps, weather, music, Custom scripts
+
+### Logic
+
+* Math operations
+* Conditional flows
+* String formatting
+
+### Visual
+
+* Text, gauges, bars
+* Rings, spirals, glow effects
+* Graphs, icons, album art
+* Custom Lua rendering
+
+More nodes are coming
+
+### Plugins
+
+* Extend with custom node types
+* Ships with: Clamp, Temp conversion, Status indicators
+
+---
+
+## Legacy Importer (Beta)
+
+Imports existing themes into node graphs by:
+
+* Converting `${cpu}`, `${mem}`, etc. → native nodes
+* Mapping `${execi}` → script nodes
+* Detecting album art and images
+* Translating click regions from Lua
+
+**Limitations:**
+
+* Does NOT decompile arbitrary Cairo drawing
+* Complex Lua is wrapped as a Custom Lua node
+* Some conditionals are simplified
+
+Nothing is silently dropped—everything is preserved or wrapped.
+
+---
+
+## Support Development
+
+If you want to help push this further:
+
+[GitHun Sponsors](https://github.com/sponsors/bobbycomet)
+Or
+[Ko-fi](https://ko-fi.com/bobby60908)
+
+Support goes toward:
+
+* Development time
+* Features
+* Documentation
+* Stability improvements
+
+---
+
+## Vision
+
+Conky Studio isn’t just a tool—it’s a shift from manual config hacking to **visual system design**.
+
+The goal is simple:
+
+> Make Conky as easy to design as it is powerful to run.
 
 ---
 
