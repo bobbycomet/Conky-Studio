@@ -12,7 +12,7 @@ Conky is extremely powerful, but building and managing themes often means manual
 
 **Conky Studio changes that.**
 
-It’s a visual editor that lets you design fully functional Conky themes using a node-based workflow—without sacrificing flexibility or control.
+It’s a visual editor that lets you design fully functional Conky themes using a node-based workflow, without sacrificing flexibility or control.
 
 You can build real, production-ready themes today. Public release is planned once the remaining core features are complete and the workflow is fully polished.
 
@@ -246,7 +246,7 @@ Support goes toward:
 
 ## Vision
 
-Conky Studio isn’t just a tool—it’s a shift from manual config hacking to **visual system design**.
+Conky Studio isn’t just a tool; it’s a shift from manual config hacking to **visual system design**.
 
 The goal is simple:
 
