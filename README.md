@@ -8,7 +8,7 @@
 
 ## Overview
 
-Conky is extremely powerful—but building and managing themes often means manually editing Lua, Cairo, shell scripts, and Conky configs.
+Conky is extremely powerful, but building and managing themes often means manually editing Lua, Cairo, shell scripts, and Conky configs.
 
 **Conky Studio changes that.**
 
