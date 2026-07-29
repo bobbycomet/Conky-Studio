@@ -1,4 +1,4 @@
-## Conky Studio a visual system designer for desktop HUDs
+## Conky Studio: a visual system designer for desktop HUDs without the pain
 
 <div align="center">
   
@@ -20,23 +20,55 @@ You can build real, production-ready themes today. Public release is planned onc
 
 ## Why Conky Studio?
 
-* No more hand-writing complex configs
-* Build visually, export real working themes
-* Debug and preview in real time
-* Extend functionality with plugins
-* Share themes easily with standardized structure
+Build and tweak Conky themes in minutes instead of hours or days.
 
-This isn’t a mockup tool—it generates **1:1 real output**.
+No more:
+
+* restarting Conky for every small change
+* digging through Lua and config files
+* trial-and-error positioning
+
+With Conky Studio, you:
+
+* design visually
+* see changes instantly
+* export real, production-ready themes
+
+This is not a mockup tool.
+It generates 1:1 real Conky output.
+
+What You Get
+* Visual editing instead of manual config work
+* Live preview with real Conky output
+* Faster iteration (seconds instead of minutes)
+* Reusable components via nodes and plugins
+* Clean, structured theme exports
+* Ability to import and improve existing themes
 
 ---
 
 ## Key Features
 
 * **Visual Node Editor**
-  Blueprint-style system for connecting logic, scripts, Lua, and Cairo.
+* Blueprint-style node editor
+* Real-time preview (actual Conky instance)
+* Logs and debugging built in
+* Drag, connect, test—no restart cycle
+
+| Task | Traditional Workflow | Conky Studio |
+| :--- | :--- | :--- |
+| **Adjust layout** | Edit → restart → repeat | Drag and see instantly |
+| **Add widget** | Write Lua + config | Connect nodes |
+| **Debug script** | Logs + guesswork | Built-in preview + logs |
+| **Build complex gauge** | ~10–30 minutes | Seconds to wire |
 
 * **Live Preview & Debugging**
-  Launch a real Conky instance and monitor logs in real time.
+
+Build themes using a structured node system for:
+
+* data
+* logic
+* rendering
 
 * **Theme Manager**
   Automatically detects themes in `~/.conky` and `~/.config/conky` with:
@@ -46,9 +78,6 @@ This isn’t a mockup tool—it generates **1:1 real output**.
   * Duplication
   * README editing
 
-* **Plugin System**
-  Extend the app with custom nodes, generators, and tools.
-
 * **Theme Wizard**
   Generate a starter HUD instantly:
 
@@ -57,6 +86,9 @@ This isn’t a mockup tool—it generates **1:1 real output**.
 
 * **Legacy Theme Importer (Beta)**
   Converts existing Conky configs into node graphs using semantic parsing.
+
+* **Plugin System**
+  Extend the app with custom nodes, generators, and tools.
 
 * **Flexible Data Execution**
   Choose per-node:
@@ -129,16 +161,16 @@ Conky Studio detects your environment and warns you automatically.
 * Logic nodes (math + conditionals)
 * External + native data sources
 * Legacy importer (Beta) more details below
+* SVG → Cairo pipeline
+* Workflow polish
+* Layer/timeline editor
 
 ### In Progress
 
 * OpenDesktop integration
-* Layer/timeline editor
 * Animation keyframes
-* SVG → Cairo pipeline
 * Built-in performance profiler
 * Source plugin system (safe execution model)
-* Workflow polish
 
 ---
 
