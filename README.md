@@ -53,7 +53,7 @@ What You Get
 * Blueprint-style node editor
 * Real-time preview (actual Conky instance)
 * Logs and debugging built in
-* Drag, connect, test—no restart cycle
+* Drag, connect, test, no restart cycle
 
 | Task | Traditional Workflow | Conky Studio |
 | :--- | :--- | :--- |
