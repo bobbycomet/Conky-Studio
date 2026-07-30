@@ -8,9 +8,11 @@
 
 ### Design desktop HUDs visually. Ship real Conky themes.
 
+**No sudo, no pkexec, and no package commands (apt, pacman, dnf, rpm, and so on.** If your distro supports AppImages and Conky, you can run Conky Studio.
+
 **What you see in the live preview is exactly what gets exported; 1:1 Conky output, not a mockup.**
 
-Public release planned for **August 1st**. Showcase video coming soon.
+Public release planned for **August 1st**.
 [Video Showcase](https://youtu.be/RbUr9pFosDc)
 Machine tested on: GPU RTX 2060, CPU Ryzen 7 2700, RAM 32 GB 3600 MHz, Motherboard DS3H B450, SSD Sabrent 250 GB GEN 3
 </div>
