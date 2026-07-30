@@ -107,7 +107,7 @@ Overlay behaviour depends on the compositor:
 
 **Not supported for this kind of overlay:**
 
-- GNOME (Mutter) — no suitable overlay path  
+- GNOME (Mutter), no suitable overlay path. This is not a Conky Studio choice or limitation; it is just the state of things with GNOME and Conky.
 
 **Also note:** some distro packages (e.g., `conky-all` on Ubuntu/Debian) are **X11-only** builds. Conky Studio detects your session and warns when the environment will not support the window type you need.
 
