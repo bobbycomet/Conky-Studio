@@ -1,10 +1,53 @@
-## Conky Studio: a visual system designer for desktop HUDs without the pain
+# Conky Studio
+
+2 nodes = 1 widget in 30 seconds. Start simple. Scale to anything.
 
 <div align="center">
-  
+
 <img width="300" height="300" alt="conky-studio" src="https://github.com/user-attachments/assets/d6f92f00-e4f5-4b0a-a715-138f20a46458" />
 
+### Design desktop HUDs visually. Ship real Conky themes.
+
+**What you see in the live preview is exactly what gets exported; 1:1 Conky output, not a mockup.**
+
+Public release planned for **August 1st**. Showcase video coming soon.
+
 </div>
+
+
+---
+
+## Conky is cool, but hard for some to get into. Not anymore
+
+You can have a working widget in 30 seconds.
+
+No, I'm serious.
+
+Grab a CPU node, grab a gauge node, wire them up, and you have a working widget.
+
+Conky can draw almost anything on your desktop. The cost has always been the same: Lua, Cairo, shell scripts, and config files edited by hand, then restart, squint, and try again. What took days can now take hours or less. Even someone who has never coded a theme can enjoy Conky; no code is required to get into Conky.
+
+**Conky Studio exists to remove that loop.**
+
+It is a visual system designer for Conky HUDs: a node graph for data, logic, and drawing; a live preview driven by a **real Conky instance**; and a build step that writes a normal theme folder (`start.sh`, `conky.conf`, `render.lua`, scripts). You design in the editor. You run the same files Conky would run without the editor.
+
+No fake canvas. No “approximate” export. **Live preview built themes are the same pipeline.**
+
+---
+
+## Why Conky Studio was made
+
+| Pain | What Studio does instead |
+|------|---------------------------|
+| Edit Lua → restart Conky → repeat | Change a property, see it in a live Conky preview |
+| Hunt `${goto}` and font lines for layout | Drag nodes; wire data into visuals |
+| Glue `execi` scripts and caches by hand | Sources with `execi` or daemon mode; scripts become nodes |
+| Fear breaking a working theme | Build/export a clean, structured theme; import legacy themes into a graph you can edit |
+| Powerful overlays only for people who enjoy config archaeology | Same power, visual workflow, production output |
+
+This is not a theme pack and not a screenshot toy. It is a **tool for building production-ready Conky HUDs** faster, with the same Cairo/Lua stack Conky already uses.
+
+---
 
 ## Overview
 
@@ -12,197 +55,120 @@ Conky is extremely powerful, but building and managing themes often means manual
 
 **Conky Studio changes that.**
 
-It’s a visual editor that lets you design fully functional Conky themes using a node-based workflow, without sacrificing flexibility or control.
+You can build real, shippable themes today.
 
-You can build real, production-ready themes today. Public release is planned for August 1st. Showcase video coming soon.
+### What you get
 
----
+- **Visual editing** instead of pure config grinding  
+- **Live preview** from an actual Conky process; **1:1 with export**  
+- **Faster iteration** (seconds, not restart cycles)  
+- **Reusable structure** via nodes and plugins  
+- **Clean theme exports** (`start.sh`, conf, Lua, scripts, assets)  
+- **Import** of existing themes into an editable graph  
 
-## Why Conky Studio?
-
-Build and tweak Conky themes in minutes instead of hours or days.
-
-No more:
-
-* restarting Conky for every small change
-* digging through Lua and config files
-* trial-and-error positioning
-
-With Conky Studio, you:
-
-* design visually
-* see changes instantly
-* export real, production-ready themes
-
-This is not a mockup tool.
-It generates 1:1 real Conky output.
-
-What You Get
-* Visual editing instead of manual config work
-* Live preview with real Conky output
-* Faster iteration (seconds instead of minutes)
-* Reusable components via nodes and plugins
-* Clean, structured theme exports
-* Ability to import and improve existing themes
+| Task | Traditional workflow | Conky Studio |
+|------|----------------------|--------------|
+| Adjust layout | Edit → restart → repeat | Node/tweak and see instantly |
+| Add widget | Write Lua + config | Drop and connect nodes |
+| Debug script | Logs + guesswork | Live preview + logs |
+| Complex gauge | Tens of minutes of Lua | Wire a gauge node in seconds |
 
 ---
 
-## Key Features
+## Key features
 
-* **Visual Node Editor**
-* Blueprint-style node editor
-* Real-time preview (actual Conky instance)
-* Logs and debugging built in
-* Drag, connect, test, no restart cycle
+- **Visual node editor** — Blueprint-style graph; drag, connect, test without a full restart cycle  
+- **Live preview & debugging** — Real Conky instance; what you preview is what you build  
+- **Theme manager** — Detects themes in `~/.conky` and `~/.config/conky`; previews, install/export, duplicate, README editing, start/stop  
+- **Theme wizard** — Starter HUDs by category (Minimal, Gaming, RPG, Sci-Fi, Cyberpunk, Terminal, Fantasy, and Batman) and panels (Weather, CPU, GPU, RAM, Clock, Calendar, Music, …)  
+- **Legacy theme importer (Beta)** — Semantic import of existing conf + TEXT + Lua + scripts into nodes (details below)  
+- **Plugin system** — Custom nodes, generators, tools  
+- **Flexible data execution** — Per source: `execi` (Conky-native) or **daemon** (background scripts + cache)  
+- **Custom scripts as nodes** — Any executable script, poll interval, and mode under your control  
+- **Click actions** — Visual nodes can run shell commands on click  
+- **Community store (in progress)** — Import via `.zip`, `.tar.gz`, or online sources  
 
-| Task | Traditional Workflow | Conky Studio |
-| :--- | :--- | :--- |
-| **Adjust layout** | Edit → restart → repeat | Drag and see instantly |
-| **Add widget** | Write Lua + config | Connect nodes |
-| **Debug script** | Logs + guesswork | Built-in preview + logs |
-| **Build complex gauge** | ~10–30 minutes | Seconds to wire |
-
-* **Live Preview & Debugging**
-
-Build themes using a structured node system for:
-
-* data
-* logic
-* rendering
-
-* **Theme Manager**
-  Automatically detects themes in `~/.conky` and `~/.config/conky` with:
-
-  * Previews
-  * Install/export
-  * Duplication
-  * README editing
-
-* **Theme Wizard**
-  Generate a starter HUD instantly:
-
-  * Categories: Minimal, Gaming, RPG, Sci-Fi, Cyberpunk, Terminal, Fantasy, Batman
-  * Panels: Weather, CPU, GPU, RAM, Clock, Calendar, Music
-
-* **Legacy Theme Importer (Beta)**
-  Converts existing Conky configs into node graphs using semantic parsing.
-
-* **Plugin System**
-  Extend the app with custom nodes, generators, and tools.
-
-* **Flexible Data Execution**
-  Choose per-node:
-
-  * `execi` mode (Conky-native polling)
-  * Daemon mode (background cached scripts)
-
-* **Custom Script Generator**
-  Turn scripts into reusable nodes inside the editor.
-
-* **Click Actions**
-  Any visual node can trigger shell commands.
-
-* **Community Store (In Progress)**
-  Import themes via `.zip`, `.tar.gz`, or online sources.
+Themes use a standardized **`start.sh`** entry point for consistent startup, background pollers, single-instance locking, and fewer edge-case failures across distros.
 
 ---
 
-## Compatibility Note
+## Wayland support
 
-All themes use a standardized `start.sh` entry point.
+Overlay behaviour depends on the compositor:
 
-This ensures:
+**Supported (typical):**
 
-* Consistent startup behavior
-* Background script handling
-* Cross-distro compatibility
-* Fewer edge-case failures
+- wlroots-based (Sway, Hyprland, Wayfire, etc)  
+- KDE Plasma (Wayland)  
+- Mir-based compositors  
 
----
+**Not supported for this kind of overlay:**
 
-## Wayland Support
+- GNOME (Mutter) — no suitable overlay path  
 
-Conky overlay support depends on the compositor:
-
-**Supported:**
-
-* wlroots-based (Sway, Hyprland, Wayfire)
-* KDE Plasma (Wayland)
-* Mir-based compositors
-
-**Not Supported:**
-
-* GNOME (Mutter), no overlay support exists
-
-Also note:
-
-* Some distro packages (like `conky-all` on Ubuntu/Debian) are compiled **X11-only**
-
-Conky Studio detects your environment and warns you automatically.
+**Also note:** some distro packages (e.g., `conky-all` on Ubuntu/Debian) are **X11-only** builds. Conky Studio detects your session and warns when the environment will not support the window type you need.
 
 ---
 
-## Current Status
+## Current status
 
-**Actively in development**
+**Actively in development.**
 
 ### Implemented
 
-* Visual node editor
-* Live preview (real Conky instance)
-* Theme manager
-* Code generation
-* Import/export
-* Plugin framework
-* Community store backend
-* Theme wizard (starting points, not full themes)
-* README editor
-* Clickable nodes
-* Logic nodes (math + conditionals)
-* External + native data sources
-* SVG → Cairo pipeline
-* Workflow polish
-* Layer/timeline editor
-* Generate a theme.json with a form to fill
-* Undocking floating node properties and layer docks for precision work with less UI to move around
-* Save a project
-* Open a project
-* Build system (you can build it and save for later editing, or build and export for the manager use)
+- Visual node editor  
+- Live preview (real Conky instance) — **1:1 with generated output**  
+- Theme manager  
+- Code generation (`conky.conf`, `render.lua`, `start.sh`, scripts)  
+- Import/export  
+- Plugin framework  
+- Community store backend  
+- Theme wizard (starting points, not fully finished art packs)  
+- README editor  
+- Clickable nodes  
+- Logic nodes (math, conditionals, string format)  
+- External + native data sources  
+- SVG → Cairo path where supported  
+- Save / open project  
+- Build to folder or build & install to Manager  
+- Layer / undockable property workflows  
+- Generate `theme.json`  
 
-## Beta
-* Legacy importer (Beta) more details below
-* Music nodes with playerctl
+### Beta
 
-### In Progress
+- **Legacy importer** (see below)  
+- Music / now-playing nodes with playerctl-style scripts  
 
-* OpenDesktop integration
-* Animation keyframes
-* Built-in performance profiler
+### In progress
+
+- OpenDesktop integration  
+- Animation keyframes  
+- Built-in performance profiler  
 
 ---
 
 ## Architecture
 
-```
+```text
 conkystudio/
-├── model/        Project structure (JSON)
-├── nodes/        Node definitions
-├── plugins/      Community extensions
-├── importer/     Legacy theme parser
-├── codegen/      Theme generator
-├── hardware/     System detection
-├── fonts/        Font installer
-├── manager/      Theme management
-├── store/        Community index
-├── preview/      Live Conky runner
-└── ui/           PyQt6 interface
+├── model/       Project structure (JSON)
+├── nodes/       Node definitions
+├── plugins/     Community extensions
+├── importer/    Legacy theme parser
+├── codegen/     Theme generator (conf, Lua, start.sh, scripts)
+├── hardware/System/session detection
+├── fonts/       Font installer
+├── manager/     Theme management & process control
+├── store/       Community index
+├── preview/     Live Conky runner
+└── ui/          PyQt6 interface
 ```
 
 ---
 
-## Output Structure
+## Output structure
 
-```
+```text
 <ThemeName>/
 ├── theme.json
 ├── start.sh
@@ -211,110 +177,135 @@ conkystudio/
 ├── images/
 ├── fonts/
 ├── scripts/
-├── .runtime-cache/
-├── preview.png
+├── .runtime-cache/   # created at runtime
+├── preview.png       # when available
 └── README.md
 ```
 
+`start.sh` detaches cleanly (session + lock file). Themes keep running after you quit Conky Studio; the Manager starts them as independent processes.
+
 ---
 
-## Node System
+## Node system
 
-### Data Sources
+### Data sources
 
-* CPU, RAM, Disk, Network, Uptime, System Info
-* GPU stats, temps, weather, music, Custom scripts
+- CPU, RAM, disk, network, uptime, hostname, kernel, processes  
+- Battery, date/time, greeting  
+- GPU stats & temps, disk sensors, weather (script + cache families)  
+- Now playing / music (playerctl-style)  
+- **Custom Script** — any executable; `execi` or daemon polling  
+
+Unused sources are not polled in the generated theme.
 
 ### Logic
 
-* Math operations
-* Conditional flows
-* String formatting
+- Math (add, subtract, multiply, divide, average, min, max)  
+- Conditionals (threshold → then/else)  
+- String formatting (`{value}` templates)  
 
-### Visual
+### Visuals
 
-* Text, gauges, bars
-* Rings, spirals, glow effects
-* Brackets, moon phases, reactor gauge
-* Analog clock, radar
-* Graphs, icons, album art
-* Shapes, star, triangle, and circle
+| Area | Nodes |
+|------|--------|
+| Text | Text Label, Text List, Wall Calendar |
+| Gauges & bars | Arc/Ring Gauge, Bar (solid/segmented/trapezoid), **Reactor Gauge** |
+| Graphs | History graph |
+| Effects | Glow/Pulse, Spiral, **Radar Sweep**, Moon Phase, Corner Brackets, **Analog Clock** |
+| Shapes | **Star**, **Triangle**, **Circle** (ellipse/arc/pie) |
+| Media & icons | Image/Icon (PNG/SVG + swaps), Weather Icon, Album Art, Icon Glyph |
+| Advanced | **Custom Lua** (raw Cairo in the draw path) |
 
->**Note:** Some of the visuals act as dual-use; Bars can be turned into a CRT backdrop, a circle backdrop, a square backdrop, or custom brackets. The gauge (non-reactor gauge) can be used to make dots, a hollow circle, curves; an example would be a smile emoji, or combine with the circle shape. The star has a regular star with point counts, pentagram, Star of David, and a Christmas tree star.
+**Star styles:** regular N-point star, pentagram, Star of David, Christmas tree star.  
 
-### Custom scripts
-
-* Any executable script like a weather.sh file and edit polling
-
-More nodes are coming
+**Dual-use tips:** bars can read as CRT strips or solid blocks; arc gauges as dots, arcs, or smile-like curves with circles; shapes stack into larger motifs.
 
 ### Plugins
 
-* Extend with custom node types
-* Ships with: Clamp, Temp conversion, Status indicators
+- Extend with custom node types  
+- Example bundle ideas: clamp, temperature conversion, status indicators  
+
+More nodes continue to land before and after public release.
 
 ---
 
-## Legacy Importer (Beta)
+## Legacy importer (Beta)
 
-Imports existing themes into node graphs by:
+**Project → Import Legacy Theme** points at a folder with a Conky conf. Import is **semantic**, not a guaranteed pixel clone, but **nothing important is dropped on purpose**.
 
-* Automated Node Conversion: Instantly maps variables (like ${cpu} and 
-  ${mem}) into native nodes and translates ${execi} into dedicated Script nodes
-* Smart Asset & Region Detection: Automatically identifies images, extracts album art, 
-  and translates Lua click regions into interactive elements
-* Cairo Support: Ready out-of-the-box for .conf and .lua files utilizing Cairo rendering (may need expanding for full support)
+### What it converts
 
-**Limitations:**
+| Input | Result |
+|--------|--------|
+| `*.conf` / `conkyrc` | Canvas size, alignment, gaps, update rate, `lua_load`, draw hooks |
+| `conky.text` | `${goto}`/offset layout (best-effort), fonts, colours, text nodes |
+| `${cpu}`, `${memperc}`, `${time}`, … | Native source nodes, wired into visuals where possible |
+| `${image}` | Image/Icon or Album Art (`-n`); paths resolved under the theme |
+| `${execi}` / `${exec}` / `${execbar}` | Known scripts → native/family sources; else **Custom Script** nodes |
+| Cairo `.lua` from `lua_load` | **Custom Lua** node(s): helpers + draw-hook body; surface boilerplate stripped to use Studio’s `cr` / `W` / `H` |
+| Click regions in Lua | Clickable marker nodes with commands |
+| `.sh` / shebang scripts in the tree | Custom Script (or known mapping), including scripts only used from Lua |
 
-* Does NOT decompile arbitrary Cairo drawing
-* Complex Lua is wrapped as a Custom Lua node
-* Some conditionals are simplified
+### Limitations (honest)
 
-Nothing is silently dropped—everything is preserved or wrapped.
+- Does **not** decompile arbitrary Cairo into Arc/Bar/Star nodes  
+- Heavy custom Lua stays one (or more) **Custom Lua** node(s)  
+- `${if_…}` conditionals are simplified (content kept, always shown)  
+- Layout from pure TEXT positioning is approximate  
+
+Warnings list every approximation. After import, you can edit the graph, then **build** the same way as a native Studio project — live preview and export remain **1:1** for whatever is on the canvas.
 
 ---
 
-## Support Development
+## Compatibility note
+
+All Studio-built themes share a standardized **`start.sh`** so startup, daemon pollers, and single-instance behaviour stay consistent across machines and distros.
+
+---
+
+## Support development
 
 If you want to help push this further:
 
-[GitHub Sponsors](https://github.com/sponsors/bobbycomet)
-Or
-[Ko-fi](https://ko-fi.com/bobby60908)
+- [GitHub Sponsors](https://github.com/sponsors/bobbycomet)  
+- [Ko-fi](https://ko-fi.com/bobby60908)  
 
-Support goes toward:
-
-* Development time
-* Features
-* Documentation
-* Stability improvements
-
+Support goes toward development time, features, documentation, and stability.
 
 ---
 
 ## Vision
 
-Conky Studio isn’t just a tool; it’s a shift from manual config hacking to **visual system design**.
+Conky Studio is not only a convenience UI. It is a shift from **manual config hacking** to **visual system design** — without giving up the real Conky runtime.
 
-The goal is simple:
-
-> Make Conky as easy to design as it is powerful to run.
+> Make Conky as easy to design as it is powerful to run.  
+> **Preview what you ship. Ship what you preview.**
 
 ---
 
+## Screenshots
+
 <img width="1920" height="1080" alt="manager" src="https://github.com/user-attachments/assets/e5ad19c9-b4ab-4eee-90df-f2dc5184966b" />
+
 <img width="1920" height="1080" alt="nodes" src="https://github.com/user-attachments/assets/6f5ae7f5-aa81-4cec-95e5-47d84b40bade" />
+
 <img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/d0bb0a7b-6559-4519-99b9-3bd648548275" />
+
 <img width="1920" height="1080" alt="Screenshot_20260730_013306" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
+
 <img width="1920" height="1080" alt="Screenshot_20260730_013223" src="https://github.com/user-attachments/assets/80dc01ed-28cf-4f4a-9ee4-b2673584b0f5" />
+
 <img width="1920" height="1080" alt="Screenshot_20260730_013153" src="https://github.com/user-attachments/assets/ad03e7a1-cede-4b61-b07b-51d81366fc5a" />
+
 <img width="1920" height="1080" alt="Screenshot_20260730_013126" src="https://github.com/user-attachments/assets/a2975d15-ae83-4eda-b73d-5591c5020837" />
 
+## Themes built with this tool
 
-
-## Themes I have made with this tool. If there is a red line, I was just redacting my location info.
+*(Red lines redact location info.)*
 
 <img width="1920" height="1080" alt="Screenshot_20260724_083124" src="https://github.com/user-attachments/assets/06c87d09-2b5a-466a-956b-00e8b84876f1" />
+
 <img width="1920" height="1080" alt="Screenshot_20260724_181643" src="https://github.com/user-attachments/assets/118ba01f-0a36-4127-9577-2fe80bac97aa" />
+
 <img width="1920" height="1080" alt="Screenshot_20260719_220545" src="https://github.com/user-attachments/assets/981eaf50-5f37-4c21-8644-e39901bf60ce" />
+```
