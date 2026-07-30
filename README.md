@@ -138,6 +138,7 @@ Overlay behaviour depends on the compositor:
 - Generate `theme.json`  
 - OpenDesktop integration (opens in browser)
 - Share a project by sharing the JSON made when you save the project
+- Theme import is under legacy import/same function, but current Conky syntax
 
 ### Beta
 
@@ -237,7 +238,7 @@ More nodes continue to land before and after public release.
 
 ## Legacy importer (Beta)
 
-**Project → Import Legacy Theme** points at a folder with a Conky conf. Import is **semantic**, not a guaranteed pixel clone, but **nothing important is dropped on purpose**.
+**Project → Import Legacy Theme** points at a folder with a Conky conf. Import is **semantic**, not a guaranteed pixel clone, but **nothing important is dropped on purpose**. If your import is of current Conky syntax, your likelihood of better imports is much higher. Images do not get imported.
 
 ### What it converts
 
