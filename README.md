@@ -238,6 +238,9 @@ conkystudio/
 * Brackets, moon phases, reactor gauge
 * Analog clock, radar
 * Graphs, icons, album art
+* Shapes, star, triangle, and circle
+
+>**Note:** Some of the visuals act as dual-use; Bars can be turned into a CRT backdrop, a circle backdrop, a square backdrop, or custom brackets. The gauge (non-reactor gauge) can be used to make dots, a hollow circle, curves; an example would be a smile emoji, or combine with the circle shape. The star has a regular star with point counts, pentagram, Star of David, and a Christmas tree star.
 
 ### Custom scripts
 
