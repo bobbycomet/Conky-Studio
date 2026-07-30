@@ -137,14 +137,17 @@ Overlay behaviour depends on the compositor:
 - Layer / undockable property workflows  
 - Generate `theme.json`  
 - OpenDesktop integration (opens in browser)
+- Share a project by sharing the JSON made when you save the project
 
 ### Beta
 
 - **Legacy importer** (see below)  
-- Music / now-playing nodes with playerctl-style scripts  
+- Music/now-playing nodes with playerctl-style scripts  
 
 ### In progress
-  
+
+These two features will be left to the community to decide whether to add or not.
+
 - Animation keyframes  
 - Built-in performance profiler  
 
