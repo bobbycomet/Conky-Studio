@@ -1,1 +1,305 @@
+{
+  "api_version": "1.1",
+  "updated_at": "2026-07-30",
+  "plugins": [
+    {
+      "id": "logic.map_range",
+      "category": "logic",
+      "label": "Map Range",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Remap a number from one range into another (e.g. 0–100 °C → 0–1, or sensor raw → percent). Clamps to the output range by default.",
+      "color": "#6b9bd1",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "remap", "scale"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 50,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input",
+          "help": "Incoming value to remap"
+        },
+        {
+          "key": "in_min",
+          "label": "In min",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input range"
+        },
+        {
+          "key": "in_max",
+          "label": "In max",
+          "kind": "float",
+          "default": 100,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input range"
+        },
+        {
+          "key": "out_min",
+          "label": "Out min",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Output range"
+        },
+        {
+          "key": "out_max",
+          "label": "Out max",
+          "kind": "float",
+          "default": 1,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Output range"
+        },
+        {
+          "key": "clamp_out",
+          "label": "Clamp output",
+          "kind": "bool",
+          "default": true,
+          "group": "Behaviour",
+          "help": "If on, result stays between out min and out max"
+        }
+      ],
+      "lua_expr": "(function()\n  local v, a, b, c, d = {value}, {in_min}, {in_max}, {out_min}, {out_max}\n  local span = b - a\n  if span == 0 then return c end\n  local t = (v - a) / span\n  local r = c + t * (d - c)\n  if {clamp_out} then\n    local lo, hi = math.min(c, d), math.max(c, d)\n    if r < lo then r = lo elseif r > hi then r = hi end\n  end\n  return r\nend)()"
+    },
+    {
+      "id": "logic.lerp",
+      "category": "logic",
+      "label": "Lerp",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Linear blend between A and B by T (0 = all A, 1 = all B). T is clamped to 0–1.",
+      "color": "#7a9ed6",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "blend", "mix"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "a",
+          "label": "A",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        },
+        {
+          "key": "b",
+          "label": "B",
+          "kind": "float",
+          "default": 100,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        },
+        {
+          "key": "t",
+          "label": "T (0–1)",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.01,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Mix",
+          "help": "Blend factor. Wire a percent source and divide by 100 upstream, or use 0–1 directly."
+        }
+      ],
+      "lua_expr": "(function()\n  local t = {t}\n  if t < 0 then t = 0 elseif t > 1 then t = 1 end\n  return {a} + ({b} - {a}) * t\nend)()"
+    },
+    {
+      "id": "logic.threshold",
+      "category": "logic",
+      "label": "Threshold",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Compare a value to a threshold. Outputs either a boolean-style 0/1, or passes the original value when the condition holds (gate mode). Useful for glow triggers, swap triggers, and alert bands.",
+      "color": "#d4a05a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["compare", "gate", "trigger"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 50,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "threshold",
+          "label": "Threshold",
+          "kind": "float",
+          "default": 80,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "mode",
+          "label": "Mode",
+          "kind": "enum",
+          "default": "above",
+          "choices": ["above", "below", "equal"],
+          "choice_labels": ["Above (≥)", "Below (≤)", "Equal (±ε)"],
+          "group": "Compare"
+        },
+        {
+          "key": "output_mode",
+          "label": "Output",
+          "kind": "enum",
+          "default": "binary",
+          "choices": ["binary", "gate", "invert_binary"],
+          "choice_labels": ["0 or 1", "Pass value when true, else 0", "1 or 0 (inverted)"],
+          "group": "Output",
+          "help": "binary → 1 when condition holds. gate → original value when true, else 0. invert_binary flips the 0/1."
+        },
+        {
+          "key": "epsilon",
+          "label": "Equal ε",
+          "kind": "float",
+          "default": 0.01,
+          "minimum": 0,
+          "maximum": 1e6,
+          "step": 0.01,
+          "group": "Compare",
+          "help": "Tolerance used only when Mode is Equal"
+        }
+      ],
+      "lua_expr": "(function()\n  local v, th, eps = {value}, {threshold}, {epsilon}\n  local mode, outm = '{mode}', '{output_mode}'\n  local ok = false\n  if mode == 'above' then ok = (v >= th)\n  elseif mode == 'below' then ok = (v <= th)\n  else ok = (math.abs(v - th) <= eps)\n  end\n  if outm == 'gate' then return ok and v or 0 end\n  if outm == 'invert_binary' then return ok and 0 or 1 end\n  return ok and 1 or 0\nend)()"
+    },
+    {
+      "id": "logic.deadzone",
+      "category": "logic",
+      "label": "Deadzone",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Zero-out values whose absolute magnitude is below a threshold. Optional soft ramp so the edge is not a hard cliff. Great for noisy net/CPU deltas and joystick-style inputs.",
+      "color": "#8a8fa8",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["filter", "noise", "math"],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "zone",
+          "label": "Deadzone",
+          "kind": "float",
+          "default": 1,
+          "minimum": 0,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Filter",
+          "help": "Values with |value| < deadzone become 0 (or are scaled in soft mode)"
+        },
+        {
+          "key": "soft",
+          "label": "Soft edge",
+          "kind": "bool",
+          "default": false,
+          "group": "Filter",
+          "help": "If on, rescale so the deadzone is removed and the rest maps smoothly outward"
+        }
+      ],
+      "lua_expr": "(function()\n  local v, z = {value}, {zone}\n  if z < 0 then z = 0 end\n  local a = math.abs(v)\n  if a <= z then return 0 end\n  if not {soft} then return v end\n  local sign = (v >= 0) and 1 or -1\n  return sign * (a - z)\nend)()"
+    },
+    {
+      "id": "logic.smooth",
+      "category": "logic",
+      "label": "Smooth (EMA)",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Exponential moving average — tames jittery sensors (CPU, net, GPU) before they hit rings/bars. Each node needs a unique Slot so parallel smoothers do not share state.",
+      "color": "#5fb89a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["filter", "ema", "smooth"],
+      "simple_mode": true,
+      "lua_helpers": "local _cs_plugin_smooth = _cs_plugin_smooth or {}\n",
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1e9,
+          "maximum": 1e9,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "alpha",
+          "label": "Alpha",
+          "kind": "float",
+          "default": 0.2,
+          "minimum": 0.01,
+          "maximum": 1,
+          "step": 0.01,
+          "bindable": true,
+          "accepts": ["number"],
+          "group": "Filter",
+          "help": "1 = no smoothing (follow input). Smaller = heavier lag. 0.15–0.3 is a good starting band for CPU/net."
+        },
+        {
+          "key": "slot",
+          "label": "Slot",
+          "kind": "int",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 9999,
+          "step": 1,
+          "group": "State",
+          "help": "Unique integer per Smooth node in the project (1, 2, 3…). Shared slots share the same smoothed memory."
+        }
+      ],
+      "lua_expr": "(function()\n  local k = {slot}\n  local v, a = {value}, {alpha}\n  if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n  local s = _cs_plugin_smooth\n  if s[k] == nil then s[k] = v end\n  s[k] = s[k] + (v - s[k]) * a\n  return s[k]\nend)()"
+    }
+  ]
+}
 
