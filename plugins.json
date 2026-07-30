@@ -8,11 +8,15 @@
       "label": "Map Range",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Remap a number from one range into another (e.g. 0–100 °C → 0–1, or sensor raw → percent). Clamps to the output range by default.",
+      "description": "Remap a number from one range into another (e.g. 0\u2013100 \u00b0C \u2192 0\u20131, or sensor raw \u2192 percent). Clamps to the output range by default.",
       "color": "#6b9bd1",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": ["math", "remap", "scale"],
+      "tags": [
+        "math",
+        "remap",
+        "scale"
+      ],
       "simple_mode": true,
       "properties": [
         {
@@ -20,10 +24,14 @@
           "label": "Value",
           "kind": "float",
           "default": 50,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input",
           "help": "Incoming value to remap"
         },
@@ -32,10 +40,14 @@
           "label": "In min",
           "kind": "float",
           "default": 0,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input range"
         },
         {
@@ -43,10 +55,14 @@
           "label": "In max",
           "kind": "float",
           "default": 100,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input range"
         },
         {
@@ -54,10 +70,13 @@
           "label": "Out min",
           "kind": "float",
           "default": 0,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent"],
+          "accepts": [
+            "number",
+            "percent"
+          ],
           "group": "Output range"
         },
         {
@@ -65,10 +84,13 @@
           "label": "Out max",
           "kind": "float",
           "default": 1,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent"],
+          "accepts": [
+            "number",
+            "percent"
+          ],
           "group": "Output range"
         },
         {
@@ -88,11 +110,15 @@
       "label": "Lerp",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Linear blend between A and B by T (0 = all A, 1 = all B). T is clamped to 0–1.",
+      "description": "Linear blend between A and B by T (0 = all A, 1 = all B). T is clamped to 0\u20131.",
       "color": "#7a9ed6",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": ["math", "blend", "mix"],
+      "tags": [
+        "math",
+        "blend",
+        "mix"
+      ],
       "simple_mode": true,
       "properties": [
         {
@@ -100,10 +126,14 @@
           "label": "A",
           "kind": "float",
           "default": 0,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Values"
         },
         {
@@ -111,24 +141,31 @@
           "label": "B",
           "kind": "float",
           "default": 100,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Values"
         },
         {
           "key": "t",
-          "label": "T (0–1)",
+          "label": "T (0\u20131)",
           "kind": "float",
           "default": 0.5,
           "minimum": 0,
           "maximum": 1,
           "step": 0.01,
           "bindable": true,
-          "accepts": ["number", "percent"],
+          "accepts": [
+            "number",
+            "percent"
+          ],
           "group": "Mix",
-          "help": "Blend factor. Wire a percent source and divide by 100 upstream, or use 0–1 directly."
+          "help": "Blend factor. Wire a percent source and divide by 100 upstream, or use 0\u20131 directly."
         }
       ],
       "lua_expr": "(function()\n  local t = {t}\n  if t < 0 then t = 0 elseif t > 1 then t = 1 end\n  return {a} + ({b} - {a}) * t\nend)()"
@@ -143,7 +180,11 @@
       "color": "#d4a05a",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": ["compare", "gate", "trigger"],
+      "tags": [
+        "compare",
+        "gate",
+        "trigger"
+      ],
       "simple_mode": true,
       "properties": [
         {
@@ -151,10 +192,14 @@
           "label": "Value",
           "kind": "float",
           "default": 50,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input"
         },
         {
@@ -162,10 +207,14 @@
           "label": "Threshold",
           "kind": "float",
           "default": 80,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input"
         },
         {
@@ -173,8 +222,16 @@
           "label": "Mode",
           "kind": "enum",
           "default": "above",
-          "choices": ["above", "below", "equal"],
-          "choice_labels": ["Above (≥)", "Below (≤)", "Equal (±ε)"],
+          "choices": [
+            "above",
+            "below",
+            "equal"
+          ],
+          "choice_labels": [
+            "Above (\u2265)",
+            "Below (\u2264)",
+            "Equal (\u00b1\u03b5)"
+          ],
           "group": "Compare"
         },
         {
@@ -182,18 +239,26 @@
           "label": "Output",
           "kind": "enum",
           "default": "binary",
-          "choices": ["binary", "gate", "invert_binary"],
-          "choice_labels": ["0 or 1", "Pass value when true, else 0", "1 or 0 (inverted)"],
+          "choices": [
+            "binary",
+            "gate",
+            "invert_binary"
+          ],
+          "choice_labels": [
+            "0 or 1",
+            "Pass value when true, else 0",
+            "1 or 0 (inverted)"
+          ],
           "group": "Output",
-          "help": "binary → 1 when condition holds. gate → original value when true, else 0. invert_binary flips the 0/1."
+          "help": "binary \u2192 1 when condition holds. gate \u2192 original value when true, else 0. invert_binary flips the 0/1."
         },
         {
           "key": "epsilon",
-          "label": "Equal ε",
+          "label": "Equal \u03b5",
           "kind": "float",
           "default": 0.01,
           "minimum": 0,
-          "maximum": 1e6,
+          "maximum": 1000000.0,
           "step": 0.01,
           "group": "Compare",
           "help": "Tolerance used only when Mode is Equal"
@@ -211,7 +276,11 @@
       "color": "#8a8fa8",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": ["filter", "noise", "math"],
+      "tags": [
+        "filter",
+        "noise",
+        "math"
+      ],
       "simple_mode": false,
       "properties": [
         {
@@ -219,10 +288,14 @@
           "label": "Value",
           "kind": "float",
           "default": 0,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input"
         },
         {
@@ -231,9 +304,12 @@
           "kind": "float",
           "default": 1,
           "minimum": 0,
-          "maximum": 1e9,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent"],
+          "accepts": [
+            "number",
+            "percent"
+          ],
           "group": "Filter",
           "help": "Values with |value| < deadzone become 0 (or are scaled in soft mode)"
         },
@@ -254,11 +330,15 @@
       "label": "Smooth (EMA)",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Exponential moving average — tames jittery sensors (CPU, net, GPU) before they hit rings/bars. Each node needs a unique Slot so parallel smoothers do not share state.",
+      "description": "Exponential moving average \u2014 tames jittery sensors (CPU, net, GPU) before they hit rings/bars. Each node needs a unique Slot so parallel smoothers do not share state.",
       "color": "#5fb89a",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": ["filter", "ema", "smooth"],
+      "tags": [
+        "filter",
+        "ema",
+        "smooth"
+      ],
       "simple_mode": true,
       "lua_helpers": "local _cs_plugin_smooth = _cs_plugin_smooth or {}\n",
       "properties": [
@@ -267,10 +347,14 @@
           "label": "Value",
           "kind": "float",
           "default": 0,
-          "minimum": -1e9,
-          "maximum": 1e9,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": ["number", "percent", "celsius"],
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
           "group": "Input"
         },
         {
@@ -282,9 +366,11 @@
           "maximum": 1,
           "step": 0.01,
           "bindable": true,
-          "accepts": ["number"],
+          "accepts": [
+            "number"
+          ],
           "group": "Filter",
-          "help": "1 = no smoothing (follow input). Smaller = heavier lag. 0.15–0.3 is a good starting band for CPU/net."
+          "help": "1 = no smoothing (follow input). Smaller = heavier lag. 0.15\u20130.3 is a good starting band for CPU/net."
         },
         {
           "key": "slot",
@@ -295,11 +381,84 @@
           "maximum": 9999,
           "step": 1,
           "group": "State",
-          "help": "Unique integer per Smooth node in the project (1, 2, 3…). Shared slots share the same smoothed memory."
+          "help": "Unique integer per Smooth node in the project (1, 2, 3\u2026). Shared slots share the same smoothed memory."
         }
       ],
       "lua_expr": "(function()\n  local k = {slot}\n  local v, a = {value}, {alpha}\n  if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n  local s = _cs_plugin_smooth\n  if s[k] == nil then s[k] = v end\n  s[k] = s[k] + (v - s[k]) * a\n  return s[k]\nend)()"
+    },
+    {
+      "id": "logic.temp_convert",
+      "category": "logic",
+      "label": "Temp Convert",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Convert temperature between Fahrenheit and Celsius. Wire your weather (or any \u00b0F/\u00b0C source) in, pick the direction, and feed rings, labels, or thresholds in the unit you want.",
+      "color": "#5eb0c9",
+      "subcategory": "Plugins",
+      "output_kind": "celsius",
+      "tags": [
+        "weather",
+        "temperature",
+        "units",
+        "convert"
+      ],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Temperature",
+          "kind": "float",
+          "default": 72,
+          "minimum": -200,
+          "maximum": 200,
+          "step": 0.1,
+          "bindable": true,
+          "accepts": [
+            "number",
+            "celsius",
+            "percent"
+          ],
+          "group": "Input",
+          "help": "Incoming temperature. Accepts a weather/source node that reports \u00b0F or \u00b0C."
+        },
+        {
+          "key": "direction",
+          "label": "Convert",
+          "kind": "enum",
+          "default": "f_to_c",
+          "choices": [
+            "f_to_c",
+            "c_to_f"
+          ],
+          "choice_labels": [
+            "\u00b0F \u2192 \u00b0C",
+            "\u00b0C \u2192 \u00b0F"
+          ],
+          "group": "Units",
+          "help": "\u00b0F \u2192 \u00b0C: (F \u2212 32) \u00d7 5/9.  \u00b0C \u2192 \u00b0F: C \u00d7 9/5 + 32."
+        },
+        {
+          "key": "decimals",
+          "label": "Round to",
+          "kind": "enum",
+          "default": "1",
+          "choices": [
+            "none",
+            "0",
+            "1",
+            "2"
+          ],
+          "choice_labels": [
+            "No rounding",
+            "Whole degrees",
+            "1 decimal",
+            "2 decimals"
+          ],
+          "group": "Output",
+          "help": "Optional rounding so labels stay tidy (e.g. 21.3 instead of 21.333\u2026)."
+        }
+      ],
+      "lua_expr": "(function()\n  local v = {value}\n  local dir = '{direction}'\n  local out\n  if dir == 'c_to_f' then\n    out = v * 9 / 5 + 32\n  else\n    out = (v - 32) * 5 / 9\n  end\n  local d = '{decimals}'\n  if d == '0' then return math.floor(out + 0.5)\n  elseif d == '1' then return math.floor(out * 10 + 0.5) / 10\n  elseif d == '2' then return math.floor(out * 100 + 0.5) / 100\n  end\n  return out\nend)()"
     }
   ]
 }
-
