@@ -234,8 +234,9 @@ conkystudio/
 ### Visual
 
 * Text, gauges, bars
-* Rings, spirals, glow effects,
-* brackets, moon phases
+* Rings, spirals, glow effects
+* Brackets, moon phases, reactor gauge
+* Analog clock, radar
 * Graphs, icons, album art
 
 ### Custom scripts
