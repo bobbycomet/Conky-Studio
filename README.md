@@ -138,7 +138,7 @@ Overlay behaviour depends on the compositor:
 - Generate `theme.json`  
 - OpenDesktop integration (opens in browser)
 - Share a project by sharing the JSON made when you save the project
-- Theme import is under legacy import/same function, but current Conky syntax
+- Theme import is under legacy import/same function, but current Conky syntax. Importer gets you 70–90% there. Studio is where you finish it.
 
 ### Beta
 
