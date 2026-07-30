@@ -461,263 +461,85 @@
       "lua_expr": "(function()\n  local v = {value}\n  local dir = '{direction}'\n  local out\n  if dir == 'c_to_f' then\n    out = v * 9 / 5 + 32\n  else\n    out = (v - 32) * 5 / 9\n  end\n  local d = '{decimals}'\n  if d == '0' then return math.floor(out + 0.5)\n  elseif d == '1' then return math.floor(out * 10 + 0.5) / 10\n  elseif d == '2' then return math.floor(out * 100 + 0.5) / 100\n  end\n  return out\nend)()"
     },
     {
-      "id": "logic.chain_select",
+      "id": "logic.threshold_chain_10",
       "category": "logic",
-      "label": "Chain Select",
+      "label": "Threshold Chain (10-Stage)",
       "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Chain up to 10 gate/threshold inputs into a single index (1\u201310). Wire each Threshold into Gate 1\u2026Gate 10. Output is the active slot \u2014 feed it into Image Chain, Chain Pick, or compare nodes so only one branch is \u201con\u201d.",
-      "color": "#c9a227",
+      "version": "1.1.0",
+      "description": "Map one number onto up to 10 progressive stages. Output is a stage index (0 = below all, 1\u2026N = highest step passed). Drive Image Chain slots, Chain Pick (rotation/opacity/scale), text visibility, glow triggers, or any numeric input \u2014 not images only.",
+      "color": "#d4825a",
       "subcategory": "Plugins",
       "output_kind": "number",
       "tags": [
         "chain",
         "threshold",
-        "mux",
-        "select",
-        "image"
+        "multi-stage",
+        "swap",
+        "asset",
+        "battery",
+        "signal"
       ],
       "simple_mode": true,
       "properties": [
         {
-          "key": "gate_1",
-          "label": "Gate 1",
+          "key": "value",
+          "label": "Input value",
           "kind": "float",
           "default": 0,
-          "minimum": 0,
+          "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
           "accepts": [
             "number",
             "percent",
-            "boolean"
+            "celsius"
           ],
-          "group": "Gates",
-          "help": "Wire Threshold 1 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
+          "group": "Input",
+          "help": "Battery %, signal, RPM, CPU, temperature \u2014 any scalar."
         },
         {
-          "key": "gate_2",
-          "label": "Gate 2",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 2 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_3",
-          "label": "Gate 3",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 3 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_4",
-          "label": "Gate 4",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 4 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_5",
-          "label": "Gate 5",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 5 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_6",
-          "label": "Gate 6",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 6 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_7",
-          "label": "Gate 7",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 7 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_8",
-          "label": "Gate 8",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 8 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_9",
-          "label": "Gate 9",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 9 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "gate_10",
-          "label": "Gate 10",
-          "kind": "float",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "boolean"
-          ],
-          "group": "Gates",
-          "help": "Wire Threshold 10 (or any 0/1 signal). Treated as true when value \u2265 truth threshold."
-        },
-        {
-          "key": "truth",
-          "label": "Truth \u2265",
-          "kind": "float",
-          "default": 0.5,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "step": 0.1,
-          "group": "Compare",
-          "help": "A gate counts as ON when its value is \u2265 this (use 0.5 for 0/1 thresholds, or 80 if you wire raw percents)."
+          "key": "steps_count",
+          "label": "Active steps",
+          "kind": "int",
+          "default": 4,
+          "minimum": 1,
+          "maximum": 10,
+          "group": "Configuration",
+          "help": "Only the first N thresholds are evaluated (1\u201310)."
         },
         {
           "key": "mode",
           "label": "Mode",
           "kind": "enum",
-          "default": "first",
+          "default": "progressive",
           "choices": [
-            "first",
-            "last",
-            "highest"
+            "progressive",
+            "highest",
+            "exact_band"
           ],
           "choice_labels": [
-            "First ON (1\u219210)",
-            "Last ON (10\u21921)",
-            "Highest index ON"
+            "Progressive (must pass 1, then 2, \u2026)",
+            "Highest only (any step \u2265 its threshold)",
+            "Exact band (step i if t[i] \u2264 v < t[i+1])"
           ],
-          "group": "Compare",
-          "help": "Which gate wins when several are true at once."
+          "group": "Configuration",
+          "help": "Progressive: classic battery bars (must clear lower steps). Highest: last threshold the value meets. Exact band: one stage at a time between cut-points."
         },
         {
           "key": "none_value",
-          "label": "When none ON",
+          "label": "Below all \u2192",
           "kind": "float",
           "default": 0,
           "minimum": 0,
           "maximum": 10,
           "group": "Output",
-          "help": "Output if no gate is true (0 = nothing selected)."
-        }
-      ],
-      "lua_expr": "(function()\n  local truth = {truth}\n  local mode = '{mode}'\n  local gates = {{ {gate_1}, {gate_2}, {gate_3}, {gate_4}, {gate_5}, {gate_6}, {gate_7}, {gate_8}, {gate_9}, {gate_10} }}\n  local first_i, last_i = 0, 0\n  for i = 1, 10 do\n    local g = gates[i]\n    if type(g) ~= 'number' then g = tonumber(g) or 0 end\n    if g >= truth then\n      if first_i == 0 then first_i = i end\n      last_i = i\n    end\n  end\n  if first_i == 0 then return {none_value} end\n  if mode == 'last' or mode == 'highest' then return last_i end\n  return first_i\nend)()"
-    },
-    {
-      "id": "logic.chain_pick",
-      "category": "logic",
-      "label": "Chain Pick",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Pick one of up to 10 values by index. Wire Chain Select \u2192 Index, and set Value 1\u202610 (constants or other nodes). Useful for per-slot rotation speed, opacity, or scale.",
-      "color": "#d4b04a",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "chain",
-        "mux",
-        "select",
-        "pick"
-      ],
-      "simple_mode": false,
-      "properties": [
-        {
-          "key": "index",
-          "label": "Index",
-          "kind": "float",
-          "default": 1,
-          "minimum": 0,
-          "maximum": 10,
-          "bindable": true,
-          "accepts": [
-            "number"
-          ],
-          "group": "Select",
-          "help": "Usually the output of Chain Select (1\u201310). 0 or out-of-range \u2192 fallback."
+          "help": "Output when the value is under every active threshold (usually 0)."
         },
         {
-          "key": "v_1",
-          "label": "Value 1",
+          "key": "t1",
+          "label": "Step 1 \u2265",
           "kind": "float",
-          "default": 0,
+          "default": 10,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
@@ -726,14 +548,14 @@
             "percent",
             "celsius"
           ],
-          "group": "Values",
-          "help": "Value returned when index is 1."
+          "group": "Thresholds",
+          "help": "Stage 1 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "v_2",
-          "label": "Value 2",
+          "key": "t2",
+          "label": "Step 2 \u2265",
           "kind": "float",
-          "default": 0,
+          "default": 25,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
@@ -742,14 +564,14 @@
             "percent",
             "celsius"
           ],
-          "group": "Values",
-          "help": "Value returned when index is 2."
+          "group": "Thresholds",
+          "help": "Stage 2 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "v_3",
-          "label": "Value 3",
+          "key": "t3",
+          "label": "Step 3 \u2265",
           "kind": "float",
-          "default": 0,
+          "default": 50,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
@@ -758,14 +580,14 @@
             "percent",
             "celsius"
           ],
-          "group": "Values",
-          "help": "Value returned when index is 3."
+          "group": "Thresholds",
+          "help": "Stage 3 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "v_4",
-          "label": "Value 4",
+          "key": "t4",
+          "label": "Step 4 \u2265",
           "kind": "float",
-          "default": 0,
+          "default": 75,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
@@ -774,14 +596,14 @@
             "percent",
             "celsius"
           ],
-          "group": "Values",
-          "help": "Value returned when index is 4."
+          "group": "Thresholds",
+          "help": "Stage 4 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "v_5",
-          "label": "Value 5",
+          "key": "t5",
+          "label": "Step 5 \u2265",
           "kind": "float",
-          "default": 0,
+          "default": 90,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
@@ -790,277 +612,91 @@
             "percent",
             "celsius"
           ],
-          "group": "Values",
-          "help": "Value returned when index is 5."
+          "group": "Thresholds",
+          "help": "Stage 5 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "v_6",
-          "label": "Value 6",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values",
-          "help": "Value returned when index is 6."
-        },
-        {
-          "key": "v_7",
-          "label": "Value 7",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values",
-          "help": "Value returned when index is 7."
-        },
-        {
-          "key": "v_8",
-          "label": "Value 8",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values",
-          "help": "Value returned when index is 8."
-        },
-        {
-          "key": "v_9",
-          "label": "Value 9",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values",
-          "help": "Value returned when index is 9."
-        },
-        {
-          "key": "v_10",
-          "label": "Value 10",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values",
-          "help": "Value returned when index is 10."
-        },
-        {
-          "key": "fallback",
-          "label": "Fallback",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
-          "group": "Select",
-          "help": "Used when index is 0 or outside 1\u201310."
-        }
-      ],
-      "lua_expr": "(function()\n  local i = math.floor(({index}) + 0.5)\n  local vals = {{ {v_1}, {v_2}, {v_3}, {v_4}, {v_5}, {v_6}, {v_7}, {v_8}, {v_9}, {v_10} }}\n  if i < 1 or i > 10 then return {fallback} end\n  local v = vals[i]\n  if type(v) ~= 'number' then v = tonumber(v) or {fallback} end\n  return v\nend)()"
-    },
-    {
-      "id": "visual.plugin.image_chain",
-      "category": "visual",
-      "label": "Image Chain",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Up to 10 images, one visible at a time. Wire Chain Select into Active index; set Image 1\u202610 paths. Shared position, size, and rotation apply to whichever slot is active \u2014 so thresholds can advance which art is spinning.",
-      "color": "#9b7ed9",
-      "subcategory": "Plugins",
-      "tags": [
-        "image",
-        "chain",
-        "rotation",
-        "swap"
-      ],
-      "simple_mode": true,
-      "lua_helpers": "\nlocal function _cs_chain_basename(p)\n  if p == nil then return nil end\n  p = tostring(p)\n  if p == '' then return nil end\n  return p:match('([^/\\\\]+)$') or p\nend\nlocal function _cs_chain_load(p)\n  local base = _cs_chain_basename(p)\n  if not base then return nil end\n  local candidates = {\n    p,\n    (IMAGES_DIR or '') .. '/' .. base,\n    (THEME_DIR or './') .. 'images/' .. base,\n    (THEME_DIR or './') .. 'assets/' .. base,\n  }\n  for _, c in ipairs(candidates) do\n    if c and c ~= '' then\n      local img = load_image_cached(c)\n      if img ~= nil then return img end\n    end\n  end\n  return nil\nend\n",
-      "properties": [
-        {
-          "key": "x",
-          "label": "X",
+          "key": "t6",
+          "label": "Step 6 \u2265",
           "kind": "float",
           "default": 100,
-          "minimum": -5000,
-          "maximum": 5000,
-          "group": "Layout"
-        },
-        {
-          "key": "y",
-          "label": "Y",
-          "kind": "float",
-          "default": 100,
-          "minimum": -5000,
-          "maximum": 5000,
-          "group": "Layout"
-        },
-        {
-          "key": "size",
-          "label": "Size",
-          "kind": "float",
-          "default": 128,
-          "minimum": 1,
-          "maximum": 4000,
-          "group": "Layout"
-        },
-        {
-          "key": "index",
-          "label": "Active index",
-          "kind": "float",
-          "default": 1,
-          "minimum": 0,
-          "maximum": 10,
-          "bindable": true,
-          "accepts": [
-            "number"
-          ],
-          "group": "Chain",
-          "help": "Wire Chain Select here (1\u201310). 0 or empty slot \u2192 nothing drawn."
-        },
-        {
-          "key": "rotation",
-          "label": "Rotation \u00b0",
-          "kind": "float",
-          "default": 0,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
           "accepts": [
-            "number"
+            "number",
+            "percent",
+            "celsius"
           ],
-          "group": "Transform",
-          "help": "Applied to the active image. Wire a time-based or Smooth source for continuous spin."
+          "group": "Thresholds",
+          "help": "Stage 6 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "opacity",
-          "label": "Opacity",
+          "key": "t7",
+          "label": "Step 7 \u2265",
           "kind": "float",
-          "default": 1,
-          "minimum": 0,
-          "maximum": 1,
-          "step": 0.05,
+          "default": 110,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
           "bindable": true,
           "accepts": [
             "number",
-            "percent"
+            "percent",
+            "celsius"
           ],
-          "group": "Transform"
+          "group": "Thresholds",
+          "help": "Stage 7 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "path_1",
-          "label": "Image 1",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 1. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
+          "key": "t8",
+          "label": "Step 8 \u2265",
+          "kind": "float",
+          "default": 120,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
+          "group": "Thresholds",
+          "help": "Stage 8 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "path_2",
-          "label": "Image 2",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 2. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
+          "key": "t9",
+          "label": "Step 9 \u2265",
+          "kind": "float",
+          "default": 130,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
+          "group": "Thresholds",
+          "help": "Stage 9 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         },
         {
-          "key": "path_3",
-          "label": "Image 3",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 3. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_4",
-          "label": "Image 4",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 4. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_5",
-          "label": "Image 5",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 5. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_6",
-          "label": "Image 6",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 6. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_7",
-          "label": "Image 7",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 7. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_8",
-          "label": "Image 8",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 8. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_9",
-          "label": "Image 9",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 9. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
-        },
-        {
-          "key": "path_10",
-          "label": "Image 10",
-          "kind": "path",
-          "default": "",
-          "group": "Images",
-          "help": "PNG (etc.) for slot 10. Leave empty to skip. Copied into theme images/ on Build if referenced by a path prop."
+          "key": "t10",
+          "label": "Step 10 \u2265",
+          "kind": "float",
+          "default": 140,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
+          "group": "Thresholds",
+          "help": "Stage 10 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
         }
       ],
-      "lua_draw_body": "  local idx = math.floor(({index}) + 0.5)\n  if idx < 1 or idx > 10 then return end\n  local paths = {\n    [1] = {path_1}, [2] = {path_2}, [3] = {path_3}, [4] = {path_4}, [5] = {path_5},\n    [6] = {path_6}, [7] = {path_7}, [8] = {path_8}, [9] = {path_9}, [10] = {path_10},\n  }\n  local p = paths[idx]\n  if p == nil or p == '' or p == 0 then return end\n  -- path props may resolve to a quoted string or a raw path; normalize\n  if type(p) == 'number' then return end\n  local img = _cs_chain_load(p)\n  if img == nil then return end\n  local op = {opacity}\n  if type(op) ~= 'number' then op = tonumber(op) or 1 end\n  if op > 1 then op = op / 100 end\n  if op < 0 then op = 0 elseif op > 1 then op = 1 end\n  draw_image_fit(cr, img, {x}, {y}, {size}, {rotation}, op)\n"
+      "lua_expr": "(function()\n  local v = {value}\n  if type(v) ~= 'number' then v = tonumber(v) or 0 end\n  local count = math.floor({steps_count} + 0.5)\n  if count < 1 then count = 1 elseif count > 10 then count = 10 end\n  local t = { {t1}, {t2}, {t3}, {t4}, {t5}, {t6}, {t7}, {t8}, {t9}, {t10} }\n  local mode = '{mode}'\n  if mode == 'exact_band' then\n    for i = 1, count do\n      local lo = t[i]\n      local hi = (i < count) and t[i + 1] or nil\n      if type(lo) ~= 'number' then lo = tonumber(lo) or 0 end\n      if hi ~= nil and type(hi) ~= 'number' then hi = tonumber(hi) end\n      if v >= lo and (hi == nil or v < hi) then return i end\n    end\n    -- above last threshold \u2192 last step\n    local last = t[count]\n    if type(last) ~= 'number' then last = tonumber(last) or 0 end\n    if v >= last then return count end\n    return {none_value}\n  end\n  if mode == 'highest' then\n    local best = 0\n    for i = 1, count do\n      local th = t[i]\n      if type(th) ~= 'number' then th = tonumber(th) or 0 end\n      if v >= th then best = i end\n    end\n    if best == 0 then return {none_value} end\n    return best\n  end\n  -- progressive (default): require contiguous pass from step 1\n  local active = 0\n  for i = 1, count do\n    local th = t[i]\n    if type(th) ~= 'number' then th = tonumber(th) or 0 end\n    if v >= th then active = i else break end\n  end\n  if active == 0 then return {none_value} end\n  return active\nend)()"
     }
   ]
 }
