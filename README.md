@@ -301,7 +301,6 @@ The goal is simple:
 
 <img width="1920" height="1080" alt="manager" src="https://github.com/user-attachments/assets/e5ad19c9-b4ab-4eee-90df-f2dc5184966b" />
 <img width="1920" height="1080" alt="nodes" src="https://github.com/user-attachments/assets/6f5ae7f5-aa81-4cec-95e5-47d84b40bade" />
-<img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/3a490229-9e1b-4d62-a4cb-6f37fa93d8d1" />
 <img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/d0bb0a7b-6559-4519-99b9-3bd648548275" />
 <img width="1920" height="1080" alt="Screenshot_20260730_013306" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
 <img width="1920" height="1080" alt="Screenshot_20260730_013223" src="https://github.com/user-attachments/assets/80dc01ed-28cf-4f4a-9ee4-b2673584b0f5" />
