@@ -14,7 +14,7 @@ Conky is extremely powerful, but building and managing themes often means manual
 
 It’s a visual editor that lets you design fully functional Conky themes using a node-based workflow, without sacrificing flexibility or control.
 
-You can build real, production-ready themes today. Public release is planned once the remaining core features are complete and the workflow is fully polished.
+You can build real, production-ready themes today. Public release is planned for August 1st. Showcase video coming soon.
 
 ---
 
@@ -81,7 +81,7 @@ Build themes using a structured node system for:
 * **Theme Wizard**
   Generate a starter HUD instantly:
 
-  * Categories: Minimal, Gaming, RPG, Sci-Fi, Cyberpunk, Terminal, Fantasy
+  * Categories: Minimal, Gaming, RPG, Sci-Fi, Cyberpunk, Terminal, Fantasy, Batman
   * Panels: Weather, CPU, GPU, RAM, Clock, Calendar, Music
 
 * **Legacy Theme Importer (Beta)**
@@ -155,22 +155,29 @@ Conky Studio detects your environment and warns you automatically.
 * Import/export
 * Plugin framework
 * Community store backend
-* Theme wizard
+* Theme wizard (starting points, not full themes)
 * README editor
 * Clickable nodes
 * Logic nodes (math + conditionals)
 * External + native data sources
-* Legacy importer (Beta) more details below
 * SVG → Cairo pipeline
 * Workflow polish
 * Layer/timeline editor
+* Generate a theme.json with a form to fill
+* Undocking floating node properties and layer docks for precision work with less UI to move around
+* Save a project
+* Open a project
+* Build system (you can build it and save for later editing, or build and export for the manager use)
+
+## Beta
+* Legacy importer (Beta) more details below
+* Music nodes with playerctl
 
 ### In Progress
 
 * OpenDesktop integration
 * Animation keyframes
 * Built-in performance profiler
-* Source plugin system (safe execution model)
 
 ---
 
@@ -227,9 +234,13 @@ conkystudio/
 ### Visual
 
 * Text, gauges, bars
-* Rings, spirals, glow effects
+* Rings, spirals, glow effects,
+* brackets, moon phases
 * Graphs, icons, album art
-* Custom Lua rendering
+
+### Custom scripts
+
+* Any executable script like a weather.sh file and edit polling
 
 More nodes are coming
 
@@ -244,10 +255,11 @@ More nodes are coming
 
 Imports existing themes into node graphs by:
 
-* Converting `${cpu}`, `${mem}`, etc. → native nodes
-* Mapping `${execi}` → script nodes
-* Detecting album art and images
-* Translating click regions from Lua
+* Automated Node Conversion: Instantly maps variables (like ${cpu} and 
+  ${mem}) into native nodes and translates ${execi} into dedicated Script nodes
+* Smart Asset & Region Detection: Automatically identifies images, extracts album art, 
+  and translates Lua click regions into interactive elements
+* Cairo Support: Ready out-of-the-box for .conf and .lua files utilizing Cairo rendering (may need expanding for full support)
 
 **Limitations:**
 
@@ -274,6 +286,7 @@ Support goes toward:
 * Documentation
 * Stability improvements
 
+
 ---
 
 ## Vision
@@ -286,15 +299,16 @@ The goal is simple:
 
 ---
 
+<img width="1920" height="1080" alt="manager" src="https://github.com/user-attachments/assets/e5ad19c9-b4ab-4eee-90df-f2dc5184966b" />
+<img width="1920" height="1080" alt="nodes" src="https://github.com/user-attachments/assets/6f5ae7f5-aa81-4cec-95e5-47d84b40bade" />
+<img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/3a490229-9e1b-4d62-a4cb-6f37fa93d8d1" />
+<img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/d0bb0a7b-6559-4519-99b9-3bd648548275" />
+<img width="1920" height="1080" alt="Screenshot_20260730_013306" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
+<img width="1920" height="1080" alt="Screenshot_20260730_013223" src="https://github.com/user-attachments/assets/80dc01ed-28cf-4f4a-9ee4-b2673584b0f5" />
+<img width="1920" height="1080" alt="Screenshot_20260730_013153" src="https://github.com/user-attachments/assets/ad03e7a1-cede-4b61-b07b-51d81366fc5a" />
+<img width="1920" height="1080" alt="Screenshot_20260730_013126" src="https://github.com/user-attachments/assets/a2975d15-ae83-4eda-b73d-5591c5020837" />
 
-<img width="1920" height="1080" alt="Screenshot_20260725_215056" src="https://github.com/user-attachments/assets/4d0d4915-bd94-4923-8c38-1fe80f9086f4" />
-<img width="1920" height="1080" alt="Screenshot_20260725_222200" src="https://github.com/user-attachments/assets/510d2054-f2ce-419b-85d5-35d40683fae6" />
-<img width="1920" height="1080" alt="Screenshot_20260725_222334" src="https://github.com/user-attachments/assets/3d3baa56-acd3-4a68-a266-5cf910cb49b4" />
-<img width="1920" height="1080" alt="Screenshot_20260726_004030" src="https://github.com/user-attachments/assets/64cc10d8-c1e0-43fe-aa68-3c6b804eb7fb" />
-<img width="1920" height="1080" alt="Screenshot_20260726_004041" src="https://github.com/user-attachments/assets/38df8b6b-b835-4bd6-8fb0-edee46d89994" />
-<img width="1920" height="1080" alt="Screenshot_20260726_004114" src="https://github.com/user-attachments/assets/2794cb57-9e23-4d8d-bfea-81b4fa3fd663" />
-<img width="1920" height="1080" alt="Screenshot_20260726_004051" src="https://github.com/user-attachments/assets/36e43196-e09b-4b50-a361-649a8cc99fd4" />
-<img width="1920" height="1080" alt="Screenshot_20260726_004103" src="https://github.com/user-attachments/assets/6792bb3c-7de6-4144-aba5-a18a53661970" />
+
 
 ## Themes I have made with this tool. If there is a red line, I was just redacting my location info.
 
