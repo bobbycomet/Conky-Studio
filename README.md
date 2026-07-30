@@ -11,7 +11,7 @@
 **What you see in the live preview is exactly what gets exported; 1:1 Conky output, not a mockup.**
 
 Public release planned for **August 1st**. Showcase video coming soon.
-
+[Video Showcase](https://youtu.be/RbUr9pFosDc)
 </div>
 
 
