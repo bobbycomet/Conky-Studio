@@ -12,6 +12,7 @@
 
 Public release planned for **August 1st**. Showcase video coming soon.
 [Video Showcase](https://youtu.be/RbUr9pFosDc)
+Machine tested on: GPU RTX 2060, CPU Ryzen 7 2700, RAM 32 GB 3600 MHz, Motherboard DS3H B450, SSD Sabrent 250 GB GEN 3
 </div>
 
 
@@ -133,6 +134,7 @@ Overlay behaviour depends on the compositor:
 - Build to folder or build & install to Manager  
 - Layer / undockable property workflows  
 - Generate `theme.json`  
+- OpenDesktop integration (opens in browser)
 
 ### Beta
 
@@ -140,8 +142,7 @@ Overlay behaviour depends on the compositor:
 - Music / now-playing nodes with playerctl-style scripts  
 
 ### In progress
-
-- OpenDesktop integration  
+  
 - Animation keyframes  
 - Built-in performance profiler  
 
