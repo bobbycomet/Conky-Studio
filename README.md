@@ -163,7 +163,7 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 - Does **not** reverse-engineer arbitrary Cairo into Arc/Bar nodes
 - `${if_…}` is simplified; layout from pure TEXT is approximate
 - Warnings are summarized (not one line per unknown token)
-- Images also cannot be imported with the legacy importer
+- Images cannot currently be reconstructed from legacy theme references. Re-add assets through Studio after import.
 
 Then you edit and **build** like any native project; preview and export stay **1:1** for what’s on the canvas.
 
