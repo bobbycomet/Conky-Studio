@@ -14,7 +14,7 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 Public release planned for **August 1st**.
 
-[Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet)
+[Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki)
 
 </div>
 
