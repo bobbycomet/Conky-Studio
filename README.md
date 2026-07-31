@@ -105,7 +105,7 @@ You can build real, shippable themes today.
 
 ## Conky Studio Sharing & Compatibility Guide
 
-> **Bottom Line:** The Project JSON is ideal for collaboration and remixing inside Conky Studio, provided both parties have compatible Studio versions, matching plugins, and access to external assets. However, it is not a standalone portable theme—you must use the **built theme output** for a fully self-contained runtime environment.
+> **Bottom Line:** The Project JSON is ideal for collaboration and remixing inside Conky Studio, provided both parties have compatible Studio versions, matching plugins, and access to external assets. However, it is not a standalone portable theme; you must use the **built theme output** for a fully self-contained runtime environment.
 
 ---
 
