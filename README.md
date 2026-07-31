@@ -164,6 +164,147 @@ Warnings list every compromise. Then you edit and **build** like any native proj
 
 ---
 
+## Requirements
+
+**Conky Studio** (AppImage) does not need sudo or a package manager.  
+**Conky** (and a few optional tools) come from your system.
+
+### Required
+
+| Component | Why |
+|-----------|-----|
+| **Conky** | Live Preview and every built theme run `conky` |
+| **Graphical session** | X11, or Wayland on a supported compositor (see Compatibility wiki) |
+
+Check Conky:
+
+```
+conky -v
+```
+
+On Wayland, prefer a build that lists Wayland in that output. Some distro packages are X11-only.
+
+- lm-sensorsCPU/board temperature sources 
+- playerctlMusic/now-playing nodes 
+- curl Weather and some scripted sourcesfonts you use in themes
+- Avoid fallback typefaces on other machines
+
+## Debian/Ubuntu/Linux Mint/Pop!_OS (apt)
+
+### Required
+```
+sudo apt update
+sudo apt install conky-all
+```
+### Optional
+```
+sudo apt install lm-sensors playerctl curl
+sudo sensors-detect   # once; follow prompts for hardware sensors
+```
+## Fedora (dnf)
+
+### Required
+```
+sudo dnf install conky
+```
+### Optional
+```
+sudo dnf install lm_sensors playerctl curl
+sudo sensors-detect
+```
+
+## RHEL/CentOS Stream/Alma/Rocky (dnf)
+
+### Required (EPEL often needed for conky)
+```
+sudo dnf install epel-release
+sudo dnf install conky
+```
+### Optional
+```
+sudo dnf install lm_sensors playerctl curl
+sudo sensors-detect
+```
+
+## openSUSE Leap/Tumbleweed (zypper)
+
+### Required
+```
+sudo zypper install conky
+```
+### Optional
+```
+sudo zypper install sensors playerctl curl
+sudo sensors-detect
+```
+
+## Arch Linux / Manjaro / EndeavourOS (pacman)
+
+### Required
+```
+sudo pacman -S conky
+```
+### Optional
+```
+sudo pacman -S lm_sensors playerctl curl
+sudo sensors-detect
+```
+
+## Void Linux (xbps)
+
+### Required
+```
+sudo xbps-install -S conky
+```
+### Optional
+```
+sudo xbps-install -S lm_sensors playerctl curl
+```
+
+## Gentoo (emerge)
+
+### Required. Enable the USE flags you need (e.g. wayland, X, lua)
+```
+sudo emerge --ask app-admin/conky
+```
+### Optional
+```
+sudo emerge --ask sys-apps/lm-sensors media-sound/playerctl net-misc/curl
+sudo sensors-detect
+```
+
+## Alpine (apk)
+
+### Required
+```
+sudo apk add conky
+```
+
+### Optional
+```
+sudo apk add lm-sensors playerctl curl
+```
+
+---
+
+### After installing
+
+```bash
+conky -v          # confirm Conky; look for Wayland if you use a Wayland session
+which playerctl   # music nodes
+sensors           # temperatures (after sensors-detect where applicable)
+```
+
+In Conky Studio: Tools → Hardware & Session to verify display server, Conky build, sensors, and GPU/net hints.
+
+AppImage host notes
+
+A working desktop session (not a bare TTY)
+Ability to run AppImages (FUSE / libfuse or extract-and-run, per your distro’s AppImage docs)
+No sudo required for Studio itself; the commands above are only for system dependencies
+
+---
+
 ## Support development
 
 - [GitHub Sponsors](https://github.com/sponsors/bobbycomet)  
