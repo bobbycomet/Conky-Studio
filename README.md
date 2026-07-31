@@ -103,6 +103,32 @@ You can build real, shippable themes today.
 - **Gradients** — Linear and radial fills on gauges, bars, shapes, and other fill-capable visuals
 - **Custom Lua node** — Full Cairo escape hatch when the palette is not enough
 
+## Conky Studio Sharing & Compatibility Guide
+
+> **Bottom Line:** The Project JSON is ideal for collaboration and remixing inside Conky Studio, provided both parties have compatible Studio versions, matching plugins, and access to external assets. However, it is not a standalone portable theme—you must use the **built theme output** for a fully self-contained runtime environment.
+
+---
+
+### Share the project's JSON; what Breaks or Needs Care
+
+| Issue Category | Problem / Cause | Impact & Behavior | Resolution |
+| :--- | :--- | :--- | :--- |
+| **Image & Script Paths** | Props like `path`, `script_path`, and `swap paths` are often stored as absolute paths on the author's machine. | Recipient opens the project with missing file/path errors until manually re-linked. | Send assets alongside the JSON or place them relative to the project folder. |
+| **Plugin Node Types** | Custom nodes (e.g., `logic.smooth`, `visual.plugin.*`) require specific plugin packs. | Unknown type errors or failed builds if the recipient lacks the plugin. | Ensure both machines have identical plugin packs installed. |
+| **Custom Script / Custom Lua** | Graph references external script files, but code bodies reside locally on disk. | Graph loads, but the underlying execution fails without the script files. | Package external `.lua` / shell script files together with the JSON. |
+| **Hardware / OS Specifics** | Sources rely on local hardware (e.g., specific GPU stats, weather APIs, network `iface` names). | Non-fatal warnings or empty data readings on systems with different setups. | Update source configurations to match target machine interfaces/sensors. |
+| **Studio Versioning** | Newer node types (e.g., `Map Range`, `Rectangle`, gradients) require updated Studio registries. | Older Studio versions will report unknown/unregistered node types. | Upgrade all Studio instances to the minimum required build version. |
+
+---
+
+### Practical Guidance by Goal
+
+| Goal | Required Artifacts | Usage & Compatibility |
+| :--- | :--- | :--- |
+| **Edit / Remix Graph Elsewhere** | Project JSON + Images/Scripts + Required Plugin Packs | Allows full editing in Conky Studio; paths must be updated upon load. |
+| **Run the HUD Only** | Built Theme Folder (`start.sh`, `conky.conf`, `render.lua`, `images/`, `scripts/`) | Self-contained for Conky runtime. No Conky Studio required. |
+| **Public Share / Store Release** | Exported Theme Package (Optionally attach Project JSON for remixability) | Guarantees end-user portability while allowing developers to modify source graphs. |
+
 Themes use a standardized **`start.sh`** entry point for consistent startup, background pollers, single-instance locking, and fewer edge-case failures across distros.
 
 ---
