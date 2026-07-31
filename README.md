@@ -154,7 +154,8 @@ Overlay behaviour depends on the compositor:
 - Community store backend  
 - Theme wizard (starting points, not fully finished art packs)  
 - README editor  
-- Clickable nodes  
+- Clickable nodes
+- Colour picker with gradients and on-screen colour picker
 - Logic nodes (math, conditionals, string format)  
 - External + native data sources  
 - SVG → Cairo path where supported  
