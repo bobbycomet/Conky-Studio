@@ -8,7 +8,7 @@
 
 **Design desktop HUDs visually. Ship real Conky themes.**
 
-No sudo. No package installers. If your distro runs AppImages and Conky, you can run Conky Studio. Optional nodes use existing Linux tools like playerctl and lm-sensors when available.
+No sudo. No package installers. If your distro runs AppImages and Conky, you can run Conky Studio. Optional nodes use existing Linux tools like playerctl and lm-sensors when available [Check Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements).
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
@@ -174,128 +174,6 @@ Warnings list every compromise. Then you edit and **build** like any native proj
 
 ---
 
-## Requirements
-
-**Conky Studio** (AppImage) does not need sudo or a package manager.  
-**Conky** (and a few optional tools) come from your system.
-
-### Required
-
-| Component | Why |
-|-----------|-----|
-| **Conky** | Live Preview and every built theme run `conky` |
-| **Graphical session** | X11, or Wayland on a supported compositor (see Compatibility wiki) |
-
-Check Conky:
-
-```
-conky -v
-```
-
-On Wayland, prefer a build that lists Wayland in that output. Some distro packages are X11-only.
-
-- lm-sensorsCPU/board temperature sources 
-- playerctlMusic/now-playing nodes 
-- curl Weather and some scripted sourcesfonts you use in themes
-- Avoid fallback typefaces on other machines
-
-## Debian/Ubuntu/Linux Mint/Pop!_OS (apt)
-
-### Required
-```
-sudo apt update
-sudo apt install conky-all
-```
-### Optional
-```
-sudo apt install lm-sensors playerctl curl
-sudo sensors-detect   # once; follow prompts for hardware sensors
-```
-## Fedora (dnf)
-
-### Required
-```
-sudo dnf install conky
-```
-### Optional
-```
-sudo dnf install lm_sensors playerctl curl
-sudo sensors-detect
-```
-
-## RHEL/CentOS Stream/Alma/Rocky (dnf)
-
-### Required (EPEL often needed for conky)
-```
-sudo dnf install epel-release
-sudo dnf install conky
-```
-### Optional
-```
-sudo dnf install lm_sensors playerctl curl
-sudo sensors-detect
-```
-
-## openSUSE Leap/Tumbleweed (zypper)
-
-### Required
-```
-sudo zypper install conky
-```
-### Optional
-```
-sudo zypper install sensors playerctl curl
-sudo sensors-detect
-```
-
-## Arch Linux / Manjaro / EndeavourOS (pacman)
-
-### Required
-```
-sudo pacman -S conky
-```
-### Optional
-```
-sudo pacman -S lm_sensors playerctl curl
-sudo sensors-detect
-```
-
-## Void Linux (xbps)
-
-### Required
-```
-sudo xbps-install -S conky
-```
-### Optional
-```
-sudo xbps-install -S lm_sensors playerctl curl
-```
-
-## Gentoo (emerge)
-
-### Required. Enable the USE flags you need (e.g. wayland, X, lua)
-```
-sudo emerge --ask app-admin/conky
-```
-### Optional
-```
-sudo emerge --ask sys-apps/lm-sensors media-sound/playerctl net-misc/curl
-sudo sensors-detect
-```
-
-## Alpine (apk)
-
-### Required
-```
-sudo apk add conky
-```
-
-### Optional
-```
-sudo apk add lm-sensors playerctl curl
-```
-
----
 
 ### After installing
 
