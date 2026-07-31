@@ -10,6 +10,8 @@
 
 **No sudo, no pkexec, and no package commands (apt, pacman, dnf, rpm, and so on.** If your distro supports AppImages and Conky, you can run Conky Studio.
 
+**Auto-detects Wayland
+
 **What you see in the live preview is exactly what gets exported; 1:1 Conky output, not a mockup.**
 
 Public release planned for **August 1st**.
@@ -92,6 +94,27 @@ You can build real, shippable themes today.
 - **Community store (in progress)** — Import via `.zip`, `.tar.gz`, or online sources  
 
 Themes use a standardized **`start.sh`** entry point for consistent startup, background pollers, single-instance locking, and fewer edge-case failures across distros.
+
+## Smart System Detection
+
+This tool doesn’t just generate configs; it understands your system and adapts themes accordingly.
+
+- Automatically detects
+- Display server
+- X11 vs Wayland
+- Desktop environment/compositor
+- KDE, GNOME (warns on GNOME Wayland and Mutter), etc. (best-effort detection)
+- Wayland capabilities
+- Checks for layer-shell support and HUD compatibility
+- Conky installation
+- Installed or missing
+- Version
+- Wayland support
+- Hardware & system tools
+- Sensors (lm-sensors)
+- GPU hints
+- Network interfaces
+- Disks
 
 ---
 
