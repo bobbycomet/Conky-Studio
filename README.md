@@ -41,7 +41,7 @@ You design in a node graph. You run the same files Conky would run without the e
 
 ---
 
-## 30-second first widget
+## 30-second first widget for [Getting Started](https://github.com/bobbycomet/Conky-Studio/wiki/Getting-Started)
 
 1. Drop a **CPU** source  
 2. Drop a **gauge** (or bar / text)  
@@ -54,7 +54,7 @@ From there, you add logic, layers, gradients, click actions, custom scripts, or 
 
 ---
 
-## What you get
+## [Features](https://github.com/bobbycomet/Conky-Studio/wiki/Features) you get
 
 - **Visual node editor** — sources → logic → visuals; drag, connect, iterate  
 - **Live preview** — real Conky process; **1:1 with build output**  
@@ -75,7 +75,7 @@ From there, you add logic, layers, gradients, click actions, custom scripts, or 
 
 ---
 
-## Sharing & [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
+## [Sharing](https://github.com/bobbycomet/Conky-Studio/wiki/Sharing-Projects) & [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 | Goal | What to share |
 |------|----------------|
@@ -144,7 +144,7 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 
 ---
 
-## Legacy import (honest)
+## [Legacy Import](https://github.com/bobbycomet/Conky-Studio/wiki/Legacy-Import) (honest)
 
 **Project → Import Legacy Theme** is semantic, not a pixel-perfect clone:
 
