@@ -8,7 +8,7 @@
 
 ### Design desktop HUDs visually. Ship real Conky themes.
 
-**No sudo, no pkexec, and no package commands (apt, pacman, dnf, rpm, and so on.** If your distro supports AppImages and Conky, you can run Conky Studio.
+**No sudo, no pkexec, and no package commands (apt, pacman, dnf, rpm, and so on).** If your distro supports AppImages and Conky, you can run Conky Studio.
 
 **Automatically adapts themes to your system (X11/Wayland, compositor, Conky build, hardware)**
 
