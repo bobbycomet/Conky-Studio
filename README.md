@@ -19,7 +19,7 @@ Public release planned for **August 1st**.
 
 [GITHUB](https://discord.gg/kJZCZWg5nw)
 
-Machine tested on: GPU RTX 2060, CPU Ryzen 7 2700, RAM 32 GB 3600 MHz, Motherboard DS3H B450, SSD Sabrent 250 GB GEN 3
+Machine tested performance on: GPU RTX 2060, CPU Ryzen 7 2700, RAM 32 GB 3600 MHz, Motherboard DS3H B450, SSD Sabrent 250 GB GEN 3
 </div>
 
 
