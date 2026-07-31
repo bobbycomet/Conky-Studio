@@ -12,7 +12,13 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
-Public release planned for **August 1st**.
+## Acknowledgments & Disclaimer
+
+This project is an independent tool designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky). 
+
+>**Please note:** This project is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers. Conky is licensed under the GPL-3.0 License.
+
+Public release planned for **August 1st 2026**.
 
 [Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki)
 
