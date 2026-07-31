@@ -10,7 +10,7 @@
 
 **No sudo, no pkexec, and no package commands (apt, pacman, dnf, rpm, and so on.** If your distro supports AppImages and Conky, you can run Conky Studio.
 
-**Auto-detects Wayland
+**Automatically adapts themes to your system (X11/Wayland, compositor, Conky build, hardware)**
 
 **What you see in the live preview is exactly what gets exported; 1:1 Conky output, not a mockup.**
 
