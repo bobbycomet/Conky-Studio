@@ -192,6 +192,9 @@ Overlay behaviour depends on the compositor:
 - Legacy theme import (current Conky syntax imports better; importer gets you ~70–90% there. Studio is where you finish)
 - Custom editable Lua node for what this tool does not cover
 - Music node needs playerctl
+- Studio tour
+- Getting started
+- Links to get support
 
 ### In progress (community-driven)
 
