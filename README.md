@@ -75,7 +75,7 @@ From there, you add logic, layers, gradients, click actions, custom scripts, or 
 
 ---
 
-## Sharing & compatibility
+## Sharing & [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 | Goal | What to share |
 |------|----------------|
@@ -99,6 +99,8 @@ Studio detects your session and adapts where it can:
 - **Hardware** — lm-sensors, GPU hints, network iface, disks  
 
 Use **Tools → Hardware & Session** when a preview looks empty or misplaced.
+
+Check [Compatibility Here](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 ---
 
