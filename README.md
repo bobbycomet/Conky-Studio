@@ -167,7 +167,7 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 
 Then you edit and **build** like any native project; preview and export stay **1:1** for what’s on the canvas.
 
-This will be  improved as time goes on, but it cannot create a magical way to be 100% accurate if the limitation is beyond Conky Studio's control. Think of this more as a shortcut to remix faster if you are fine with coding and need a visual tool.
+This will be  improved as time goes on, but it cannot create a magical way to be 100% accurate if the limitation is beyond Conky Studio's control. Think of this as a migration and remixing tool: it gets existing themes into Studio quickly, while preserving complex sections through Custom Lua when automatic conversion is not possible.
 
 ---
 
