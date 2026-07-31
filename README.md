@@ -170,14 +170,14 @@ Overlay behaviour depends on the compositor:
 ### Implemented
 
 - Visual node editor
-- Live preview (real Conky instance) — **1:1 with generated output**
+- Live preview (real Conky instance) **1:1 with generated output**
 - Theme manager
 - Code generation (`conky.conf`, `render.lua`, `start.sh`, scripts)
 - Import/export
 - Plugin framework (logic + visual packs)
 - Community store backend
 - Theme wizard (starting points; art packs still expanding)
-- README editor
+- README and theme.json editor
 - Clickable nodes
 - Colour picker with solid + gradient fills and on-screen colour picking
 - Logic nodes (math, conditionals, remap, gates, and more; see below)
@@ -190,12 +190,8 @@ Overlay behaviour depends on the compositor:
 - OpenDesktop integration (opens in browser)
 - Share a project by sharing the JSON saved with the project
 - Legacy theme import (current Conky syntax imports better; importer gets you ~70–90% there. Studio is where you finish)
-- Custom editable Lua node for what this tool does not cover.
-
-### Beta
-
-- **Legacy importer** (see below)
-- Music/now-playing nodes with playerctl-style scripts
+- Custom editable Lua node for what this tool does not cover
+- Music node needs playerctl
 
 ### In progress (community-driven)
 
