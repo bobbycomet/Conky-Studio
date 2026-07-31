@@ -1,7 +1,7 @@
 # Authoring Conky Studio plugins
 
 Plugins are **data only**: JSON metadata + Lua templates. No Python is executed
-from a plugin pack. Lua runs inside Conky at preview/build time — treat packs
+from a plugin pack. Lua runs inside Conky at preview/build time; treat packs
 like any theme you download.
 
 ## Manifest shape
@@ -82,12 +82,12 @@ like any theme you download.
 | Rule | Detail |
 |------|--------|
 | **id** | Must match `^(logic\|visual)(\.[a-z][a-z0-9_]*)+$` — starts with `logic.` or `visual.`, then one or more `.segment`s; each segment starts with a letter; only `a-z`, `0-9`, `_`. Examples: `logic.clamp`, `visual.plugin.dot`. Rejected: `logic.Clamp`, `visual.dot-1`, `plugin.foo` |
-| **category** | `logic` or `visual` only (no `source` / `canvas` — those need real polling or fixed window semantics) |
+| **category** | `logic` or `visual` only (no `source` / `canvas`; those need real polling or fixed window semantics) |
 | **logic** | Requires `output_kind` **and** `lua_expr` (a **single expression**, not statements) |
 | **visual** | Requires `lua_draw_body` (statements that draw with `cr`; `W` / `H` are in scope as bare names) |
 | **output_kind** | One of: `percent`, `celsius`, `number`, `text`, `category`, `boolean` |
-| **placeholders** | `{property_key}` only. Every `{name}` in `lua_expr`, `lua_draw_body`, or `lua_helpers` must be a declared property key — unknown keys are a **hard validation error**, not a warning |
-| **cr / W / H** | Use as **Lua identifiers**, not placeholders. Write `cr`, `W`, `H` — never `{W}` or `{H}`. (`{cr}` is specially allowed by the validator but unnecessary; prefer bare `cr`) |
+| **placeholders** | `{property_key}` only. Every `{name}` in `lua_expr`, `lua_draw_body`, or `lua_helpers` must be a declared property key; unknown keys are a **hard validation error**, not a warning |
+| **cr / W / H** | Use as **Lua identifiers**, not placeholders. Write `cr`, `W`, `H` never `{W}` or `{H}`. (`{cr}` is specially allowed by the validator but unnecessary; prefer bare `cr`) |
 | **color kind** | Substitutes as `r, g, b` number literals for Cairo (e.g. `0.31, 0.82, 0.77`), **not** a hex string |
 | **lua_helpers** | Optional shared functions; substituted then emitted **once per plugin type** in a build |
 | **property keys** | Must match `^[a-z][a-z0-9_]*$`; unique within the node |
@@ -141,9 +141,9 @@ CI-check a pack that collides with built-ins only at install time.
 | Situation | What happens |
 |-----------|----------------|
 | `{value}` in template but no property `value` | Validation error |
-| `{W}` or `{H}` in `lua_draw_body` | Validation error — use bare `W` / `H` |
+| `{W}` or `{H}` in `lua_draw_body` | Validation error; use bare `W` / `H` |
 | Logic `lua_expr` with multiple statements | Not supported; keep a single expression |
-| Color default `"#4fd1c5"` in template as `{color}` | Becomes `r, g, b` literals, e.g. suitable for `cairo_set_source_rgb(cr, {color})` or `local r,g,b = {color}` |
+| Color default `"#4fd1c5"` in template as `{color}` | Becomes `r, g, b` literals, e.g., suitable for `cairo_set_source_rgb(cr, {color})` or `local r,g,b = {color}` |
 | Same `id` as a built-in (e.g. if core later adds `logic.clamp`) | Register fails if that type is already in the registry |
 | Pack loaded twice (remote + local copy) | Second load is skipped for already-loaded ids |
 | Property key `Value` or `my-value` | Rejected — must be `value` / `my_value` style |
