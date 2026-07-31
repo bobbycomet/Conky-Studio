@@ -379,6 +379,6 @@ Support goes toward development time, features, documentation, and stability.
 
 *(Red lines was me redacting my location info.)*
 
-<img width="1920" height="1080" alt="Screenshot_20260724_083124" src="https://github.com/user-attachments/assets/06c87f00-2b5a-466a-956b-00e8b84876f1" />
+<img width="1920" height="1080" alt="Screenshot_20260724_144435" src="https://github.com/user-attachments/assets/f5f6287b-b852-47b7-b895-d5caefea5c19" />
 <img width="1920" height="1080" alt="Screenshot_20260724_181643" src="https://github.com/user-attachments/assets/118ba01f-0a36-4127-9577-2fe80bac97aa" />
 <img width="1920" height="1080" alt="Screenshot_20260719_220545" src="https://github.com/user-attachments/assets/981eaf50-5f37-4c21-8644-e39901bf60ce" />
