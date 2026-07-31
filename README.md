@@ -158,11 +158,16 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 
 **Project → Import Legacy Theme** is semantic, not a pixel-perfect clone:
 
-- Converts conf settings, TEXT layout (best-effort), common `${…}` sources, images, known scripts, and Cairo Lua into **Custom Lua** nodes  
-- Does **not** reverse-engineer arbitrary Cairo into Arc/Bar nodes  
-- `${if_…}` is simplified; layout from pure TEXT is approximate  
+- Converts conf settings (including colour palette/default font when present), TEXT layout (best-effort), common `${…}` sources (CPU, RAM, disk, battery, net, time, …), bars/graphs/`${hr}` when recognized, images, known scripts, and Cairo Lua into **Custom Lua** nodes
+- Deduplicates identical sources and lays out the graph so sources sit in a left column and visuals near their draw positions
+- Does **not** reverse-engineer arbitrary Cairo into Arc/Bar nodes
+- `${if_…}` is simplified; layout from pure TEXT is approximate
+- Warnings are summarized (not one line per unknown token)
+- Images also cannot be imported with the legacy importer
 
-Warnings list every compromise. Then you edit and **build** like any native project; preview and export stay **1:1** for what’s on the canvas.
+Then you edit and **build** like any native project; preview and export stay **1:1** for what’s on the canvas.
+
+This will be  improved as time goes on, but it cannot create a magical way to be 100% accurate if the limitation is beyond Conky Studio's control. Think of this more as a shortcut to remix faster if you are fine with coding and need a visual tool.
 
 ---
 
