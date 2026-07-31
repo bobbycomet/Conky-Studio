@@ -340,7 +340,21 @@ Goes toward development time, features, docs, and stability.
 
 ### Starter themes (a few clicks, then edit)
 
-<img width="1920" height="1080" alt="Starter theme A" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
+These are purposefully unfinished, they are to help you learn and explore, while also giving you a headstart on a clean looking HUD.
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150901" src="https://github.com/user-attachments/assets/c00d10ef-eb56-40f7-9c81-bba90cd90946" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150823" src="https://github.com/user-attachments/assets/5f1bc21e-79c0-4aea-9662-1233eb589253" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150757" src="https://github.com/user-attachments/assets/581d7a53-75ae-4dfb-ad04-c8b99babb0ec" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150719" src="https://github.com/user-attachments/assets/84b6c6c0-266b-4204-afea-40df40980eaf" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150648" src="https://github.com/user-attachments/assets/d746a798-4fba-414c-b171-6c50b4eeeb76" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_150619" src="https://github.com/user-attachments/assets/1ddd8e17-68bf-4fe1-80b2-54ddc7de9e1c" />
+
+<img width="1920" height="1080" alt="Screenshot_20260731_004434" src="https://github.com/user-attachments/assets/85a92bbf-6e8e-455e-8370-340811eea48d" />
 
 <img width="1920" height="1080" alt="Starter theme B" src="https://github.com/user-attachments/assets/03cc075f-5add-44d2-a444-de7b1604b045" />
 
