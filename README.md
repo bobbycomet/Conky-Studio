@@ -164,6 +164,7 @@ Overlay behaviour depends on the compositor:
 - OpenDesktop integration (opens in browser)
 - Share a project by sharing the JSON saved with the project
 - Legacy theme import (current Conky syntax imports better; importer gets you ~70–90% there. Studio is where you finish)
+- Custom editable Lua node for what this tool does not cover.
 
 ### Beta
 
