@@ -8,15 +8,11 @@
       "label": "Map Range",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Remap a number from one range into another (e.g. 0\u2013100 \u00b0C \u2192 0\u20131, or sensor raw \u2192 percent). Clamps to the output range by default.",
+      "description": "Remap a number from one range into another (e.g. 0–100 °C → 0–1, or sensor raw → percent). Clamps to the output range by default.",
       "color": "#6b9bd1",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "math",
-        "remap",
-        "scale"
-      ],
+      "tags": ["math", "remap", "scale"],
       "simple_mode": true,
       "properties": [
         {
@@ -27,11 +23,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input",
           "help": "Incoming value to remap"
         },
@@ -43,11 +35,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input range"
         },
         {
@@ -58,11 +46,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input range"
         },
         {
@@ -73,10 +57,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
+          "accepts": ["number", "percent"],
           "group": "Output range"
         },
         {
@@ -87,10 +68,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
+          "accepts": ["number", "percent"],
           "group": "Output range"
         },
         {
@@ -102,7 +80,7 @@
           "help": "If on, result stays between out min and out max"
         }
       ],
-      "lua_expr": "(function()\n  local v, a, b, c, d = {value}, {in_min}, {in_max}, {out_min}, {out_max}\n  local span = b - a\n  if span == 0 then return c end\n  local t = (v - a) / span\n  local r = c + t * (d - c)\n  if {clamp_out} then\n    local lo, hi = math.min(c, d), math.max(c, d)\n    if r < lo then r = lo elseif r > hi then r = hi end\n  end\n  return r\nend)()"
+      "lua_expr": "(function()\n local v, a, b, c, d = {value}, {in_min}, {in_max}, {out_min}, {out_max}\n local span = b - a\n if span == 0 then return c end\n local t = (v - a) / span\n local r = c + t * (d - c)\n if {clamp_out} then\n local lo, hi = math.min(c, d), math.max(c, d)\n if r < lo then r = lo elseif r > hi then r = hi end\n end\n return r\nend)()"
     },
     {
       "id": "logic.lerp",
@@ -110,15 +88,11 @@
       "label": "Lerp",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Linear blend between A and B by T (0 = all A, 1 = all B). T is clamped to 0\u20131.",
+      "description": "Linear blend between A and B by T (0 = all A, 1 = all B). T is clamped to 0–1.",
       "color": "#7a9ed6",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "math",
-        "blend",
-        "mix"
-      ],
+      "tags": ["math", "blend", "mix"],
       "simple_mode": true,
       "properties": [
         {
@@ -129,11 +103,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Values"
         },
         {
@@ -144,31 +114,24 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Values"
         },
         {
           "key": "t",
-          "label": "T (0\u20131)",
+          "label": "T (0–1)",
           "kind": "float",
           "default": 0.5,
           "minimum": 0,
           "maximum": 1,
           "step": 0.01,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
+          "accepts": ["number", "percent"],
           "group": "Mix",
-          "help": "Blend factor. Wire a percent source and divide by 100 upstream, or use 0\u20131 directly."
+          "help": "Blend factor. Wire a percent source and divide by 100 upstream, or use 0–1 directly."
         }
       ],
-      "lua_expr": "(function()\n  local t = {t}\n  if t < 0 then t = 0 elseif t > 1 then t = 1 end\n  return {a} + ({b} - {a}) * t\nend)()"
+      "lua_expr": "(function()\n local t = {t}\n if t < 0 then t = 0 elseif t > 1 then t = 1 end\n return {a} + ({b} - {a}) * t\nend)()"
     },
     {
       "id": "logic.threshold",
@@ -180,11 +143,7 @@
       "color": "#d4a05a",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "compare",
-        "gate",
-        "trigger"
-      ],
+      "tags": ["compare", "gate", "trigger"],
       "simple_mode": true,
       "properties": [
         {
@@ -195,11 +154,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input"
         },
         {
@@ -210,11 +165,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input"
         },
         {
@@ -222,16 +173,8 @@
           "label": "Mode",
           "kind": "enum",
           "default": "above",
-          "choices": [
-            "above",
-            "below",
-            "equal"
-          ],
-          "choice_labels": [
-            "Above (\u2265)",
-            "Below (\u2264)",
-            "Equal (\u00b1\u03b5)"
-          ],
+          "choices": ["above", "below", "equal"],
+          "choice_labels": ["Above (≥)", "Below (≤)", "Equal (±ε)"],
           "group": "Compare"
         },
         {
@@ -239,22 +182,14 @@
           "label": "Output",
           "kind": "enum",
           "default": "binary",
-          "choices": [
-            "binary",
-            "gate",
-            "invert_binary"
-          ],
-          "choice_labels": [
-            "0 or 1",
-            "Pass value when true, else 0",
-            "1 or 0 (inverted)"
-          ],
+          "choices": ["binary", "gate", "invert_binary"],
+          "choice_labels": ["0 or 1", "Pass value when true, else 0", "1 or 0 (inverted)"],
           "group": "Output",
-          "help": "binary \u2192 1 when condition holds. gate \u2192 original value when true, else 0. invert_binary flips the 0/1."
+          "help": "binary → 1 when condition holds. gate → original value when true, else 0. invert_binary flips the 0/1."
         },
         {
           "key": "epsilon",
-          "label": "Equal \u03b5",
+          "label": "Equal ε",
           "kind": "float",
           "default": 0.01,
           "minimum": 0,
@@ -264,7 +199,7 @@
           "help": "Tolerance used only when Mode is Equal"
         }
       ],
-      "lua_expr": "(function()\n  local v, th, eps = {value}, {threshold}, {epsilon}\n  local mode, outm = '{mode}', '{output_mode}'\n  local ok = false\n  if mode == 'above' then ok = (v >= th)\n  elseif mode == 'below' then ok = (v <= th)\n  else ok = (math.abs(v - th) <= eps)\n  end\n  if outm == 'gate' then return ok and v or 0 end\n  if outm == 'invert_binary' then return ok and 0 or 1 end\n  return ok and 1 or 0\nend)()"
+      "lua_expr": "(function()\n local v, th, eps = {value}, {threshold}, {epsilon}\n local mode, outm = '{mode}', '{output_mode}'\n local ok = false\n if mode == 'above' then ok = (v >= th)\n elseif mode == 'below' then ok = (v <= th)\n else ok = (math.abs(v - th) <= eps)\n end\n if outm == 'gate' then return ok and v or 0 end\n if outm == 'invert_binary' then return ok and 0 or 1 end\n return ok and 1 or 0\nend)()"
     },
     {
       "id": "logic.deadzone",
@@ -276,11 +211,7 @@
       "color": "#8a8fa8",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "filter",
-        "noise",
-        "math"
-      ],
+      "tags": ["filter", "noise", "math"],
       "simple_mode": false,
       "properties": [
         {
@@ -291,11 +222,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input"
         },
         {
@@ -306,10 +233,7 @@
           "minimum": 0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
+          "accepts": ["number", "percent"],
           "group": "Filter",
           "help": "Values with |value| < deadzone become 0 (or are scaled in soft mode)"
         },
@@ -322,7 +246,7 @@
           "help": "If on, rescale so the deadzone is removed and the rest maps smoothly outward"
         }
       ],
-      "lua_expr": "(function()\n  local v, z = {value}, {zone}\n  if z < 0 then z = 0 end\n  local a = math.abs(v)\n  if a <= z then return 0 end\n  if not {soft} then return v end\n  local sign = (v >= 0) and 1 or -1\n  return sign * (a - z)\nend)()"
+      "lua_expr": "(function()\n local v, z = {value}, {zone}\n if z < 0 then z = 0 end\n local a = math.abs(v)\n if a <= z then return 0 end\n if not {soft} then return v end\n local sign = (v >= 0) and 1 or -1\n return sign * (a - z)\nend)()"
     },
     {
       "id": "logic.smooth",
@@ -330,15 +254,11 @@
       "label": "Smooth (EMA)",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Exponential moving average \u2014 tames jittery sensors (CPU, net, GPU) before they hit rings/bars. Each node needs a unique Slot so parallel smoothers do not share state.",
+      "description": "Exponential moving average — tames jittery sensors (CPU, net, GPU) before they hit rings/bars. Each node needs a unique Slot so parallel smoothers do not share state.",
       "color": "#5fb89a",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "filter",
-        "ema",
-        "smooth"
-      ],
+      "tags": ["filter", "ema", "smooth"],
       "simple_mode": true,
       "lua_helpers": "local _cs_plugin_smooth = _cs_plugin_smooth or {}\n",
       "properties": [
@@ -350,11 +270,7 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input"
         },
         {
@@ -366,11 +282,9 @@
           "maximum": 1,
           "step": 0.01,
           "bindable": true,
-          "accepts": [
-            "number"
-          ],
+          "accepts": ["number"],
           "group": "Filter",
-          "help": "1 = no smoothing (follow input). Smaller = heavier lag. 0.15\u20130.3 is a good starting band for CPU/net."
+          "help": "1 = no smoothing (follow input). Smaller = heavier lag. 0.15–0.3 is a good starting band for CPU/net."
         },
         {
           "key": "slot",
@@ -381,10 +295,10 @@
           "maximum": 9999,
           "step": 1,
           "group": "State",
-          "help": "Unique integer per Smooth node in the project (1, 2, 3\u2026). Shared slots share the same smoothed memory."
+          "help": "Unique integer per Smooth node in the project (1, 2, 3…). Shared slots share the same smoothed memory."
         }
       ],
-      "lua_expr": "(function()\n  local k = {slot}\n  local v, a = {value}, {alpha}\n  if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n  local s = _cs_plugin_smooth\n  if s[k] == nil then s[k] = v end\n  s[k] = s[k] + (v - s[k]) * a\n  return s[k]\nend)()"
+      "lua_expr": "(function()\n local k = {slot}\n local v, a = {value}, {alpha}\n if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n local s = _cs_plugin_smooth\n if s[k] == nil then s[k] = v end\n s[k] = s[k] + (v - s[k]) * a\n return s[k]\nend)()"
     },
     {
       "id": "logic.temp_convert",
@@ -392,16 +306,11 @@
       "label": "Temp Convert",
       "author": "conky-studio",
       "version": "1.0.0",
-      "description": "Convert temperature between Fahrenheit and Celsius. Wire your weather (or any \u00b0F/\u00b0C source) in, pick the direction, and feed rings, labels, or thresholds in the unit you want.",
+      "description": "Convert temperature between Fahrenheit and Celsius. Wire your weather (or any °F/°C source) in, pick the direction, and feed rings, labels, or thresholds in the unit you want.",
       "color": "#5eb0c9",
       "subcategory": "Plugins",
       "output_kind": "celsius",
-      "tags": [
-        "weather",
-        "temperature",
-        "units",
-        "convert"
-      ],
+      "tags": ["weather", "temperature", "units", "convert"],
       "simple_mode": true,
       "properties": [
         {
@@ -413,52 +322,32 @@
           "maximum": 200,
           "step": 0.1,
           "bindable": true,
-          "accepts": [
-            "number",
-            "celsius",
-            "percent"
-          ],
+          "accepts": ["number", "celsius", "percent"],
           "group": "Input",
-          "help": "Incoming temperature. Accepts a weather/source node that reports \u00b0F or \u00b0C."
+          "help": "Incoming temperature. Accepts a weather/source node that reports °F or °C."
         },
         {
           "key": "direction",
           "label": "Convert",
           "kind": "enum",
           "default": "f_to_c",
-          "choices": [
-            "f_to_c",
-            "c_to_f"
-          ],
-          "choice_labels": [
-            "\u00b0F \u2192 \u00b0C",
-            "\u00b0C \u2192 \u00b0F"
-          ],
+          "choices": ["f_to_c", "c_to_f"],
+          "choice_labels": ["°F → °C", "°C → °F"],
           "group": "Units",
-          "help": "\u00b0F \u2192 \u00b0C: (F \u2212 32) \u00d7 5/9.  \u00b0C \u2192 \u00b0F: C \u00d7 9/5 + 32."
+          "help": "°F → °C: (F − 32) × 5/9. °C → °F: C × 9/5 + 32."
         },
         {
           "key": "decimals",
           "label": "Round to",
           "kind": "enum",
           "default": "1",
-          "choices": [
-            "none",
-            "0",
-            "1",
-            "2"
-          ],
-          "choice_labels": [
-            "No rounding",
-            "Whole degrees",
-            "1 decimal",
-            "2 decimals"
-          ],
+          "choices": ["none", "0", "1", "2"],
+          "choice_labels": ["No rounding", "Whole degrees", "1 decimal", "2 decimals"],
           "group": "Output",
-          "help": "Optional rounding so labels stay tidy (e.g. 21.3 instead of 21.333\u2026)."
+          "help": "Optional rounding so labels stay tidy (e.g. 21.3 instead of 21.333…)."
         }
       ],
-      "lua_expr": "(function()\n  local v = {value}\n  local dir = '{direction}'\n  local out\n  if dir == 'c_to_f' then\n    out = v * 9 / 5 + 32\n  else\n    out = (v - 32) * 5 / 9\n  end\n  local d = '{decimals}'\n  if d == '0' then return math.floor(out + 0.5)\n  elseif d == '1' then return math.floor(out * 10 + 0.5) / 10\n  elseif d == '2' then return math.floor(out * 100 + 0.5) / 100\n  end\n  return out\nend)()"
+      "lua_expr": "(function()\n local v = {value}\n local dir = '{direction}'\n local out\n if dir == 'c_to_f' then\n out = v * 9 / 5 + 32\n else\n out = (v - 32) * 5 / 9\n end\n local d = '{decimals}'\n if d == '0' then return math.floor(out + 0.5)\n elseif d == '1' then return math.floor(out * 10 + 0.5) / 10\n elseif d == '2' then return math.floor(out * 100 + 0.5) / 100\n end\n return out\nend)()"
     },
     {
       "id": "logic.threshold_chain_10",
@@ -466,19 +355,11 @@
       "label": "Threshold Chain (10-Stage)",
       "author": "conky-studio",
       "version": "1.1.0",
-      "description": "Map one number onto up to 10 progressive stages. Output is a stage index (0 = below all, 1\u2026N = highest step passed). Drive Image Chain slots, Chain Pick (rotation/opacity/scale), text visibility, glow triggers, or any numeric input \u2014 not images only.",
+      "description": "Map one number onto up to 10 progressive stages. Output is a stage index (0 = below all, 1…N = highest step passed). Drive Image Chain slots, Chain Pick (rotation/opacity/scale), text visibility, glow triggers, or any numeric input — not images only.",
       "color": "#d4825a",
       "subcategory": "Plugins",
       "output_kind": "number",
-      "tags": [
-        "chain",
-        "threshold",
-        "multi-stage",
-        "swap",
-        "asset",
-        "battery",
-        "signal"
-      ],
+      "tags": ["chain", "threshold", "multi-stage", "swap", "asset", "battery", "signal"],
       "simple_mode": true,
       "properties": [
         {
@@ -489,13 +370,9 @@
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
+          "accepts": ["number", "percent", "celsius"],
           "group": "Input",
-          "help": "Battery %, signal, RPM, CPU, temperature \u2014 any scalar."
+          "help": "Battery %, signal, RPM, CPU, temperature — any scalar."
         },
         {
           "key": "steps_count",
@@ -505,29 +382,25 @@
           "minimum": 1,
           "maximum": 10,
           "group": "Configuration",
-          "help": "Only the first N thresholds are evaluated (1\u201310)."
+          "help": "Only the first N thresholds are evaluated (1–10)."
         },
         {
           "key": "mode",
           "label": "Mode",
           "kind": "enum",
           "default": "progressive",
-          "choices": [
-            "progressive",
-            "highest",
-            "exact_band"
-          ],
+          "choices": ["progressive", "highest", "exact_band"],
           "choice_labels": [
-            "Progressive (must pass 1, then 2, \u2026)",
-            "Highest only (any step \u2265 its threshold)",
-            "Exact band (step i if t[i] \u2264 v < t[i+1])"
+            "Progressive (must pass 1, then 2, …)",
+            "Highest only (any step ≥ its threshold)",
+            "Exact band (step i if t[i] ≤ v < t[i+1])"
           ],
           "group": "Configuration",
           "help": "Progressive: classic battery bars (must clear lower steps). Highest: last threshold the value meets. Exact band: one stage at a time between cut-points."
         },
         {
           "key": "none_value",
-          "label": "Below all \u2192",
+          "label": "Below all →",
           "kind": "float",
           "default": 0,
           "minimum": 0,
@@ -537,166 +410,903 @@
         },
         {
           "key": "t1",
-          "label": "Step 1 \u2265",
+          "label": "Step 1 ≥",
           "kind": "float",
           "default": 10,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 1 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t2",
-          "label": "Step 2 \u2265",
+          "label": "Step 2 ≥",
           "kind": "float",
           "default": 25,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 2 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t3",
-          "label": "Step 3 \u2265",
+          "label": "Step 3 ≥",
           "kind": "float",
           "default": 50,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 3 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t4",
-          "label": "Step 4 \u2265",
+          "label": "Step 4 ≥",
           "kind": "float",
           "default": 75,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 4 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t5",
-          "label": "Step 5 \u2265",
+          "label": "Step 5 ≥",
           "kind": "float",
           "default": 90,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 5 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t6",
-          "label": "Step 6 \u2265",
+          "label": "Step 6 ≥",
           "kind": "float",
           "default": 100,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 6 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t7",
-          "label": "Step 7 \u2265",
+          "label": "Step 7 ≥",
           "kind": "float",
           "default": 110,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 7 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t8",
-          "label": "Step 8 \u2265",
+          "label": "Step 8 ≥",
           "kind": "float",
           "default": 120,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 8 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t9",
-          "label": "Step 9 \u2265",
+          "label": "Step 9 ≥",
           "kind": "float",
           "default": 130,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 9 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         },
         {
           "key": "t10",
-          "label": "Step 10 \u2265",
+          "label": "Step 10 ≥",
           "kind": "float",
           "default": 140,
           "minimum": -1000000000.0,
           "maximum": 1000000000.0,
           "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Thresholds",
-          "help": "Stage 10 becomes active when input \u2265 this (and previous steps also passed, in progressive mode)."
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Thresholds"
         }
       ],
-      "lua_expr": "(function()\n  local v = {value}\n  if type(v) ~= 'number' then v = tonumber(v) or 0 end\n  local count = math.floor({steps_count} + 0.5)\n  if count < 1 then count = 1 elseif count > 10 then count = 10 end\n  local t = { {t1}, {t2}, {t3}, {t4}, {t5}, {t6}, {t7}, {t8}, {t9}, {t10} }\n  local mode = '{mode}'\n  if mode == 'exact_band' then\n    for i = 1, count do\n      local lo = t[i]\n      local hi = (i < count) and t[i + 1] or nil\n      if type(lo) ~= 'number' then lo = tonumber(lo) or 0 end\n      if hi ~= nil and type(hi) ~= 'number' then hi = tonumber(hi) end\n      if v >= lo and (hi == nil or v < hi) then return i end\n    end\n    -- above last threshold \u2192 last step\n    local last = t[count]\n    if type(last) ~= 'number' then last = tonumber(last) or 0 end\n    if v >= last then return count end\n    return {none_value}\n  end\n  if mode == 'highest' then\n    local best = 0\n    for i = 1, count do\n      local th = t[i]\n      if type(th) ~= 'number' then th = tonumber(th) or 0 end\n      if v >= th then best = i end\n    end\n    if best == 0 then return {none_value} end\n    return best\n  end\n  -- progressive (default): require contiguous pass from step 1\n  local active = 0\n  for i = 1, count do\n    local th = t[i]\n    if type(th) ~= 'number' then th = tonumber(th) or 0 end\n    if v >= th then active = i else break end\n  end\n  if active == 0 then return {none_value} end\n  return active\nend)()"
+      "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local count = math.floor({steps_count} + 0.5)\n if count < 1 then count = 1 elseif count > 10 then count = 10 end\n local t = { {t1}, {t2}, {t3}, {t4}, {t5}, {t6}, {t7}, {t8}, {t9}, {t10} }\n local mode = '{mode}'\n if mode == 'exact_band' then\n for i = 1, count do\n local lo = t[i]\n local hi = (i < count) and t[i + 1] or nil\n if type(lo) ~= 'number' then lo = tonumber(lo) or 0 end\n if hi ~= nil and type(hi) ~= 'number' then hi = tonumber(hi) end\n if v >= lo and (hi == nil or v < hi) then return i end\n end\n local last = t[count]\n if type(last) ~= 'number' then last = tonumber(last) or 0 end\n if v >= last then return count end\n return {none_value}\n end\n if mode == 'highest' then\n local best = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then best = i end\n end\n if best == 0 then return {none_value} end\n return best\n end\n local active = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then active = i else break end\n end\n if active == 0 then return {none_value} end\n return active\nend)()"
+    },
+    {
+      "id": "logic.clamp",
+      "category": "logic",
+      "label": "Clamp",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Clamp a number between min and max.",
+      "color": "#5f8fd6",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "range"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 50,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "lo",
+          "label": "Min",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Range"
+        },
+        {
+          "key": "hi",
+          "label": "Max",
+          "kind": "float",
+          "default": 100,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Range"
+        }
+      ],
+      "lua_expr": "math.min({hi}, math.max({lo}, {value}))"
+    },
+    {
+      "id": "logic.abs",
+      "category": "logic",
+      "label": "Absolute",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Absolute value of a number.",
+      "color": "#6b9bd1",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        }
+      ],
+      "lua_expr": "math.abs({value})"
+    },
+    {
+      "id": "logic.round",
+      "category": "logic",
+      "label": "Round",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Round to nearest, floor, or ceil. Optional decimal places.",
+      "color": "#7a9ed6",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "format"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "mode",
+          "label": "Mode",
+          "kind": "enum",
+          "default": "nearest",
+          "choices": ["nearest", "floor", "ceil"],
+          "choice_labels": ["Nearest", "Floor", "Ceil"],
+          "group": "Rounding"
+        },
+        {
+          "key": "decimals",
+          "label": "Decimal places",
+          "kind": "int",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 6,
+          "group": "Rounding"
+        }
+      ],
+      "lua_expr": "(function()\n local v, d = {value}, math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local m = 10 ^ d\n local mode = '{mode}'\n if mode == 'floor' then return math.floor(v * m) / m\n elseif mode == 'ceil' then return math.ceil(v * m) / m\n end\n return math.floor(v * m + 0.5) / m\nend)()"
+    },
+    {
+      "id": "logic.scale",
+      "category": "logic",
+      "label": "Scale",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Multiply by a factor, then optionally add an offset. Simple gain + bias.",
+      "color": "#5fb89a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "scale"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 1,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "factor",
+          "label": "Factor",
+          "kind": "float",
+          "default": 1,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Scale"
+        },
+        {
+          "key": "offset",
+          "label": "Offset",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Scale"
+        }
+      ],
+      "lua_expr": "(({value}) * ({factor})) + ({offset})"
+    },
+    {
+      "id": "logic.invert_percent",
+      "category": "logic",
+      "label": "Invert %",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "100 − value (clamped 0–100). Handy for free space, remaining battery, or inverted bars.",
+      "color": "#d4a05a",
+      "subcategory": "Plugins",
+      "output_kind": "percent",
+      "tags": ["math", "percent", "invert"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value (0–100)",
+          "kind": "float",
+          "default": 50,
+          "minimum": 0,
+          "maximum": 100,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Input"
+        }
+      ],
+      "lua_expr": "(function()\n local v = {value}\n if v < 0 then v = 0 elseif v > 100 then v = 100 end\n return 100 - v\nend)()"
+    },
+    {
+      "id": "logic.boolean_and",
+      "category": "logic",
+      "label": "AND (0/1)",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Logical AND of two numeric inputs treated as truthy if ≥ threshold. Output 1 or 0.",
+      "color": "#8a8fa8",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["logic", "boolean", "gate"],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "a",
+          "label": "A",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius", "boolean"],
+          "group": "Inputs"
+        },
+        {
+          "key": "b",
+          "label": "B",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius", "boolean"],
+          "group": "Inputs"
+        },
+        {
+          "key": "threshold",
+          "label": "Truthy if ≥",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "group": "Compare"
+        }
+      ],
+      "lua_expr": "((({a}) >= ({threshold}) and ({b}) >= ({threshold})) and 1 or 0)"
+    },
+    {
+      "id": "logic.boolean_or",
+      "category": "logic",
+      "label": "OR (0/1)",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Logical OR of two numeric inputs treated as truthy if ≥ threshold. Output 1 or 0.",
+      "color": "#8a8fa8",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["logic", "boolean", "gate"],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "a",
+          "label": "A",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius", "boolean"],
+          "group": "Inputs"
+        },
+        {
+          "key": "b",
+          "label": "B",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius", "boolean"],
+          "group": "Inputs"
+        },
+        {
+          "key": "threshold",
+          "label": "Truthy if ≥",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "group": "Compare"
+        }
+      ],
+      "lua_expr": "((({a}) >= ({threshold}) or ({b}) >= ({threshold})) and 1 or 0)"
+    },
+    {
+      "id": "logic.boolean_not",
+      "category": "logic",
+      "label": "NOT (0/1)",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Invert a 0/1 (or thresholded) signal.",
+      "color": "#8a8fa8",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["logic", "boolean"],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "boolean"],
+          "group": "Input"
+        },
+        {
+          "key": "threshold",
+          "label": "Truthy if ≥",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "group": "Compare"
+        }
+      ],
+      "lua_expr": "((({value}) >= ({threshold})) and 0 or 1)"
+    },
+    {
+      "id": "logic.pick",
+      "category": "logic",
+      "label": "Pick (A/B)",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "If selector ≥ threshold output A, else B. Simple mux for dual readouts, opacities, or staged values.",
+      "color": "#d4825a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["logic", "mux", "select"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "selector",
+          "label": "Selector",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius", "boolean"],
+          "group": "Control"
+        },
+        {
+          "key": "threshold",
+          "label": "Threshold",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "group": "Control"
+        },
+        {
+          "key": "a",
+          "label": "A (when true)",
+          "kind": "float",
+          "default": 1,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        },
+        {
+          "key": "b",
+          "label": "B (when false)",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        }
+      ],
+      "lua_expr": "((({selector}) >= ({threshold})) and ({a}) or ({b}))"
+    },
+    {
+      "id": "logic.percent_of",
+      "category": "logic",
+      "label": "Percent of",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "value / total × 100. Safe when total is 0. For VRAM used/total, disk used/size, etc.",
+      "color": "#5eb0c9",
+      "subcategory": "Plugins",
+      "output_kind": "percent",
+      "tags": ["math", "percent", "ratio"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "total",
+          "label": "Total",
+          "kind": "float",
+          "default": 100,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        }
+      ],
+      "lua_expr": "((({total}) ~= 0) and (({value}) / ({total}) * 100) or 0)"
+    },
+    {
+      "id": "logic.unit_format",
+      "category": "logic",
+      "label": "Unit Format",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Format a number with prefix, suffix, and decimal places as text (e.g. 42.5 → '42.5 °C').",
+      "color": "#9b8fd6",
+      "subcategory": "Plugins",
+      "output_kind": "text",
+      "tags": ["format", "text", "units"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "decimals",
+          "label": "Decimals",
+          "kind": "int",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 4,
+          "group": "Format"
+        },
+        {
+          "key": "prefix",
+          "label": "Prefix",
+          "kind": "string",
+          "default": "",
+          "group": "Format"
+        },
+        {
+          "key": "suffix",
+          "label": "Suffix",
+          "kind": "string",
+          "default": "",
+          "group": "Format",
+          "help": "e.g. ' %', ' °C', ' KiB/s'"
+        }
+      ],
+      "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local d = math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local s = string.format('%.' .. d .. 'f', v)\n return '{prefix}' .. s .. '{suffix}'\nend)()"
+    },
+    {
+      "id": "logic.rate_limit",
+      "category": "logic",
+      "label": "Rate Limit",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Limit how fast a value can change per refresh (max step). Softens spikes without full EMA lag. Unique Slot per instance.",
+      "color": "#5fb89a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["filter", "smooth", "rate"],
+      "simple_mode": false,
+      "lua_helpers": "local _cs_plugin_ratelimit = _cs_plugin_ratelimit or {}\n",
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "max_step",
+          "label": "Max step",
+          "kind": "float",
+          "default": 5,
+          "minimum": 0.001,
+          "maximum": 1000000000.0,
+          "step": 0.1,
+          "group": "Filter",
+          "help": "Maximum change allowed per sensor refresh."
+        },
+        {
+          "key": "slot",
+          "label": "Slot",
+          "kind": "int",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 9999,
+          "group": "State"
+        }
+      ],
+      "lua_expr": "(function()\n local k = {slot}\n local v, step = {value}, {max_step}\n if step < 0 then step = 0 end\n local s = _cs_plugin_ratelimit\n if s[k] == nil then s[k] = v end\n local d = v - s[k]\n if d > step then d = step elseif d < -step then d = -step end\n s[k] = s[k] + d\n return s[k]\nend)()"
+    },
+    {
+      "id": "logic.hold_peak",
+      "category": "logic",
+      "label": "Hold Peak",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Remembers the highest value seen, with optional slow decay back down. Classic peak-hold for meters.",
+      "color": "#d4a05a",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["filter", "peak", "meter"],
+      "simple_mode": false,
+      "lua_helpers": "local _cs_plugin_peak = _cs_plugin_peak or {}\n",
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "decay",
+          "label": "Decay per tick",
+          "kind": "float",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1000000000.0,
+          "step": 0.1,
+          "group": "Filter",
+          "help": "How much the held peak falls each sensor refresh when below the live value. 0 = freeze forever."
+        },
+        {
+          "key": "slot",
+          "label": "Slot",
+          "kind": "int",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 9999,
+          "group": "State"
+        }
+      ],
+      "lua_expr": "(function()\n local k = {slot}\n local v, dec = {value}, {decay}\n if dec < 0 then dec = 0 end\n local s = _cs_plugin_peak\n if s[k] == nil then s[k] = v end\n if v > s[k] then s[k] = v else s[k] = s[k] - dec end\n if s[k] < v then s[k] = v end\n return s[k]\nend)()"
+    },
+    {
+      "id": "logic.min_max",
+      "category": "logic",
+      "label": "Min / Max",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Output the minimum or maximum of two values.",
+      "color": "#5f8fd6",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "compare"],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "a",
+          "label": "A",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        },
+        {
+          "key": "b",
+          "label": "B",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Values"
+        },
+        {
+          "key": "mode",
+          "label": "Mode",
+          "kind": "enum",
+          "default": "max",
+          "choices": ["min", "max"],
+          "choice_labels": ["Minimum", "Maximum"],
+          "group": "Operation"
+        }
+      ],
+      "lua_expr": "(function()\n if '{mode}' == 'min' then return math.min({a}, {b}) end\n return math.max({a}, {b})\nend)()"
+    },
+    {
+      "id": "logic.modulo",
+      "category": "logic",
+      "label": "Modulo",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "value mod divisor (Lua %). Useful for wrapping angles, cycling indices, or stepped patterns.",
+      "color": "#7a9ed6",
+      "subcategory": "Plugins",
+      "output_kind": "number",
+      "tags": ["math", "wrap"],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "value",
+          "label": "Value",
+          "kind": "float",
+          "default": 0,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent", "celsius"],
+          "group": "Input"
+        },
+        {
+          "key": "divisor",
+          "label": "Divisor",
+          "kind": "float",
+          "default": 360,
+          "minimum": -1000000000.0,
+          "maximum": 1000000000.0,
+          "bindable": true,
+          "accepts": ["number", "percent"],
+          "group": "Input"
+        }
+      ],
+      "lua_expr": "(function()\n local d = {divisor}\n if d == 0 then return 0 end\n return ({value}) % d\nend)()"
+    },
+    {
+      "id": "visual.plugin.hline",
+      "category": "visual",
+      "label": "H-Line",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Horizontal rule / separator line.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "line", "separator"],
+      "simple_mode": true,
+      "properties": [
+        { "key": "x", "label": "X", "kind": "float", "default": 20, "group": "Position" },
+        { "key": "y", "label": "Y", "kind": "float", "default": 40, "group": "Position" },
+        { "key": "width", "label": "Width", "kind": "float", "default": 200, "minimum": 1, "group": "Shape" },
+        { "key": "thickness", "label": "Thickness", "kind": "float", "default": 1.5, "minimum": 0.5, "maximum": 40, "step": 0.5, "group": "Shape" },
+        { "key": "color", "label": "Colour", "kind": "color", "default": "#4fd1c5", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 1, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local r, g, b = {color}\n  cairo_set_source_rgba(cr, r, g, b, {opacity})\n  cairo_set_line_width(cr, {thickness})\n  cairo_move_to(cr, {x}, {y})\n  cairo_line_to(cr, {x} + {width}, {y})\n  cairo_stroke(cr)\n"
+    },
+    {
+      "id": "visual.plugin.vline",
+      "category": "visual",
+      "label": "V-Line",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Vertical rule / separator line.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "line", "separator"],
+      "simple_mode": true,
+      "properties": [
+        { "key": "x", "label": "X", "kind": "float", "default": 40, "group": "Position" },
+        { "key": "y", "label": "Y", "kind": "float", "default": 20, "group": "Position" },
+        { "key": "height", "label": "Height", "kind": "float", "default": 120, "minimum": 1, "group": "Shape" },
+        { "key": "thickness", "label": "Thickness", "kind": "float", "default": 1.5, "minimum": 0.5, "maximum": 40, "step": 0.5, "group": "Shape" },
+        { "key": "color", "label": "Colour", "kind": "color", "default": "#4fd1c5", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 1, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local r, g, b = {color}\n  cairo_set_source_rgba(cr, r, g, b, {opacity})\n  cairo_set_line_width(cr, {thickness})\n  cairo_move_to(cr, {x}, {y})\n  cairo_line_to(cr, {x}, {y} + {height})\n  cairo_stroke(cr)\n"
+    },
+    {
+      "id": "visual.plugin.dot",
+      "category": "visual",
+      "label": "Dot",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Filled circle (status LED, bullet, blip).",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "led", "blip"],
+      "simple_mode": true,
+      "properties": [
+        { "key": "x", "label": "X", "kind": "float", "default": 40, "group": "Position" },
+        { "key": "y", "label": "Y", "kind": "float", "default": 40, "group": "Position" },
+        { "key": "radius", "label": "Radius", "kind": "float", "default": 6, "minimum": 1, "maximum": 200, "group": "Shape" },
+        { "key": "color", "label": "Colour", "kind": "color", "default": "#4fd1c5", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 1, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local r, g, b = {color}\n  cairo_set_source_rgba(cr, r, g, b, {opacity})\n  cairo_arc(cr, {x}, {y}, {radius}, 0, 2 * math.pi)\n  cairo_fill(cr)\n"
+    },
+    {
+      "id": "visual.plugin.ring_track",
+      "category": "visual",
+      "label": "Ring Track",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Static ring (background track) with optional gap. Pair with Arc Gauge for layered dials.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "ring", "gauge"],
+      "simple_mode": true,
+      "properties": [
+        { "key": "cx", "label": "Center X", "kind": "float", "default": 100, "group": "Position" },
+        { "key": "cy", "label": "Center Y", "kind": "float", "default": 100, "group": "Position" },
+        { "key": "radius", "label": "Radius", "kind": "float", "default": 70, "minimum": 4, "maximum": 2000, "group": "Shape" },
+        { "key": "thickness", "label": "Thickness", "kind": "float", "default": 10, "minimum": 1, "maximum": 200, "group": "Shape" },
+        { "key": "start_angle_deg", "label": "Start angle", "kind": "float", "default": -90, "minimum": -360, "maximum": 360, "group": "Shape" },
+        { "key": "sweep_deg", "label": "Sweep", "kind": "float", "default": 360, "minimum": 1, "maximum": 360, "group": "Shape" },
+        { "key": "color", "label": "Colour", "kind": "color", "default": "#33313a", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 0.6, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local r, g, b = {color}\n  local a0 = math.rad({start_angle_deg})\n  local a1 = math.rad({start_angle_deg} + {sweep_deg})\n  cairo_set_source_rgba(cr, r, g, b, {opacity})\n  cairo_set_line_width(cr, {thickness})\n  cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n  cairo_arc(cr, {cx}, {cy}, {radius}, a0, a1)\n  cairo_stroke(cr)\n"
+    },
+    {
+      "id": "visual.plugin.crosshair",
+      "category": "visual",
+      "label": "Crosshair",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Simple + crosshair at a point. Good for radar centres, targeting motifs, or alignment guides.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "cross", "radar"],
+      "simple_mode": false,
+      "properties": [
+        { "key": "cx", "label": "Center X", "kind": "float", "default": 100, "group": "Position" },
+        { "key": "cy", "label": "Center Y", "kind": "float", "default": 100, "group": "Position" },
+        { "key": "size", "label": "Arm length", "kind": "float", "default": 24, "minimum": 2, "maximum": 500, "group": "Shape" },
+        { "key": "gap", "label": "Centre gap", "kind": "float", "default": 4, "minimum": 0, "maximum": 200, "group": "Shape" },
+        { "key": "thickness", "label": "Thickness", "kind": "float", "default": 1.5, "minimum": 0.5, "maximum": 20, "step": 0.5, "group": "Shape" },
+        { "key": "color", "label": "Colour", "kind": "color", "default": "#26fdf1", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 1, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local r, g, b = {color}\n  local s, gap = {size}, {gap}\n  cairo_set_source_rgba(cr, r, g, b, {opacity})\n  cairo_set_line_width(cr, {thickness})\n  cairo_move_to(cr, {cx} - s, {cy}); cairo_line_to(cr, {cx} - gap, {cy})\n  cairo_move_to(cr, {cx} + gap, {cy}); cairo_line_to(cr, {cx} + s, {cy})\n  cairo_move_to(cr, {cx}, {cy} - s); cairo_line_to(cr, {cx}, {cy} - gap)\n  cairo_move_to(cr, {cx}, {cy} + gap); cairo_line_to(cr, {cx}, {cy} + s)\n  cairo_stroke(cr)\n"
+    },
+    {
+      "id": "visual.plugin.rect",
+      "category": "visual",
+      "label": "Rectangle",
+      "author": "conky-studio",
+      "version": "1.0.0",
+      "description": "Filled and/or stroked rectangle. Simple panel background or frame.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": ["shape", "box", "panel"],
+      "simple_mode": true,
+      "properties": [
+        { "key": "x", "label": "X", "kind": "float", "default": 20, "group": "Position" },
+        { "key": "y", "label": "Y", "kind": "float", "default": 20, "group": "Position" },
+        { "key": "width", "label": "Width", "kind": "float", "default": 120, "minimum": 1, "group": "Shape" },
+        { "key": "height", "label": "Height", "kind": "float", "default": 40, "minimum": 1, "group": "Shape" },
+        { "key": "fill", "label": "Fill", "kind": "bool", "default": true, "group": "Style" },
+        { "key": "stroke", "label": "Stroke", "kind": "bool", "default": false, "group": "Style" },
+        { "key": "line_width", "label": "Stroke width", "kind": "float", "default": 1.5, "minimum": 0.5, "maximum": 40, "step": 0.5, "group": "Style" },
+        { "key": "color", "label": "Fill colour", "kind": "color", "default": "#1a2228", "group": "Style" },
+        { "key": "stroke_color", "label": "Stroke colour", "kind": "color", "default": "#4fd1c5", "group": "Style" },
+        { "key": "opacity", "label": "Opacity", "kind": "float", "default": 1, "minimum": 0, "maximum": 1, "step": 0.05, "group": "Style" }
+      ],
+      "lua_draw_body": "  local fr, fg, fb = {color}\n  local sr, sg, sb = {stroke_color}\n  cairo_rectangle(cr, {x}, {y}, {width}, {height})\n  if {fill} then\n    cairo_set_source_rgba(cr, fr, fg, fb, {opacity})\n    if {stroke} then cairo_fill_preserve(cr) else cairo_fill(cr) end\n  end\n  if {stroke} then\n    cairo_set_line_width(cr, {line_width})\n    cairo_set_source_rgba(cr, sr, sg, sb, {opacity})\n    cairo_stroke(cr)\n  end\n"
     }
   ]
 }
