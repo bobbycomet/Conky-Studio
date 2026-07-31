@@ -36,7 +36,7 @@ Conky can draw almost anything on your desktop. The cost has always been the sam
 
 ## Vision
 
-Conky Studio is not only a convenience UI. It is a shift from **manual config hacking** to **visual system design** — without giving up the real Conky runtime.
+Conky Studio is not only a convenience UI. It is a shift from **manual config hacking** to **visual system design** without giving up the real Conky runtime.
 
 > Make Conky as easy to design as it is powerful to run.  
 > **Preview what you ship. Ship what you preview.**
@@ -147,28 +147,28 @@ Overlay behaviour depends on the compositor:
 - Live preview (real Conky instance) — **1:1 with generated output**
 - Theme manager
 - Code generation (`conky.conf`, `render.lua`, `start.sh`, scripts)
-- Import / export
+- Import/export
 - Plugin framework (logic + visual packs)
 - Community store backend
 - Theme wizard (starting points; art packs still expanding)
 - README editor
 - Clickable nodes
 - Colour picker with solid + gradient fills and on-screen colour picking
-- Logic nodes (math, conditionals, remap, gates, and more — see below)
+- Logic nodes (math, conditionals, remap, gates, and more; see below)
 - External + native data sources
 - SVG → Cairo path where supported
-- Save / open project
+- Save/open project
 - Build to folder or build & install to Manager
-- Layer / undockable property workflows
+- Layer/undockable property workflows
 - Generate `theme.json`
 - OpenDesktop integration (opens in browser)
 - Share a project by sharing the JSON saved with the project
-- Legacy theme import (current Conky syntax imports better; importer gets you ~70–90% there — Studio is where you finish)
+- Legacy theme import (current Conky syntax imports better; importer gets you ~70–90% there. Studio is where you finish)
 
 ### Beta
 
 - **Legacy importer** (see below)
-- Music / now-playing nodes with playerctl-style scripts
+- Music/now-playing nodes with playerctl-style scripts
 
 ### In progress (community-driven)
 
@@ -234,35 +234,35 @@ Unused sources are not polled in the generated theme.
 
 Built-in logic sits between sources and visuals (chains evaluate in dependency order each refresh):
 
-| Node | Role |
-|------|------|
-| **Math** | Add, subtract, multiply, divide, average, min, max |
-| **Conditional** | IF input compares to threshold THEN / ELSE values |
-| **String Format** | Template with `{value}` and decimal control |
-| **Map Range** | Remap one numeric range into another (optional clamp) |
-| **Clamp** | Force a value into [min, max] |
-| **Lerp** | Linear blend \(A + (B − A) × T\) |
-| **Threshold Gate** | 0 / 1 from a comparison (drive opacity, LEDs, picks) |
-| **Deadzone** | Quiet noisy sensors around a centre |
-| **Invert Percent** | \(100 − value\) (free disk, remaining battery style) |
-| **Scale / Offset** | \(value × multiply + add\) |
-| **Round** | Round to N decimals |
-| **Absolute** | \(\lvert x \rvert\) |
-| **AND / OR Gate** | Combine truthy numeric signals |
-| **Pick A/B** | Selector ≥ 0.5 → B, else A |
+| Category | Node Name | What It Does (Plain English) | Real-World Example |
+| :--- | :--- | :--- | :--- |
+| **Basic Math** | **Math** | Performs standard math operations (add, subtract, multiply, divide, average, min, max). | Add two separate sensor values together |
+| | **Scale / Offset** | Multiplies and shifts a number up or down. | Convert seconds to minutes (`value × 1/60`) |
+| | **Invert Percent** | Flips a percentage to show remaining capacity (`100 - value`). | Convert **75% used** into **25% remaining disk space** |
+| | **Absolute** | Removes minus signs so all numbers are positive. | Track distance or speed regardless of direction |
+| | **Round** | Trims messy decimals to a set precision. | Round `3.14159` down to `3.14` |
+| **Decisions & Rules** | **Conditional** | Evaluates an IF/THEN rule based on a target value. | **IF** temp > 90° **THEN** show red **ELSE** show green |
+| | **Threshold Gate** | Outputs a simple **1 (ON)** or **0 (OFF)** switch based on a limit. | Turn a warning LED on when speed passes a threshold |
+| | **AND / OR Gate** | Combines multiple signals into a single TRUE/FALSE logic check. | Trigger alert if Door Open **AND** Motion Detected |
+| | **Pick A/B** | Swaps between two choices depending on a control signal. | Show Icon A by default, switch to Icon B when active |
+| **Range & Smoothers** | **Map Range** | Translates a number range into a completely different range. | Translate 0–100% volume to a 0°–180° dial angle |
+| | **Clamp** | Locks a value between strict minimum and maximum limits. | Stop a progress bar from overshooting past 100% |
+| | **Lerp** | Smoothly blends or transitions between two values. | Glide a pointer needle smoothly instead of instant jumping |
+| | **Deadzone** | Ignores minor sensor noise/jitter around a center point. | Stop a needle from flickering when resting at zero |
+| **Formatting** | **String Format** | Wraps raw numbers into customized text labels. | Turn raw number `65` into `"Speed: 65 mph"` |
 
-**Plugins** can add more (e.g. EMA smooth, rate limit, peak hold, multi-stage threshold chains, unit convert, text unit format) without changing core Studio.
+**Plugins** can add more (e.g., EMA smooth, rate limit, peak hold, multi-stage threshold chains, unit convert, text unit format) without changing core Studio.
 
 ### Visuals
 
 | Area | Nodes |
 |------|--------|
 | **Text** | Text Label, Text List, Wall Calendar |
-| **Gauges & bars** | Arc / Ring Gauge, Bar (solid / segmented / trapezoid), Reactor Gauge, Ring Track, LED Dot |
+| **Gauges & bars** | Arc / Ring Gauge, Bar (solid/segmented/trapezoid), Reactor Gauge, Ring Track, LED Dot |
 | **Graphs** | History graph |
 | **Effects** | Glow / Pulse, Spiral, Radar Sweep, Moon Phase, Corner Brackets, Analog Clock |
-| **Shapes** | Rectangle (rounded), Horizontal / Vertical Line, Crosshair, Star, Triangle, Circle (ellipse / arc / pie) |
-| **Media & icons** | Image / Icon (PNG/SVG + threshold swaps), Weather Icon, Album Art, Icon Glyph |
+| **Shapes** | Rectangle (rounded), Horizontal/Vertical Line, Crosshair, Star, Triangle, Circle (ellipse/arc/pie) |
+| **Media & icons** | Image/Icon (PNG/SVG + threshold swaps), Weather Icon, Album Art, Icon Glyph |
 | **Advanced** | **Custom Lua** — raw Cairo in the draw path (text-edit escape hatch) |
 
 **Star styles:** regular N-point star, pentagram, Star of David, Christmas tree star.
