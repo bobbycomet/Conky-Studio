@@ -366,10 +366,14 @@ Support goes toward development time, features, documentation, and stability.
 <img width="1920" height="1080" alt="manager" src="https://github.com/user-attachments/assets/e5ad19c9-b4ab-4eee-90df-f2dc5184966b" />
 <img width="1920" height="1080" alt="nodes" src="https://github.com/user-attachments/assets/6f5ae7f5-aa81-4cec-95e5-47d84b40bade" />
 <img width="1920" height="1080" alt="undocking" src="https://github.com/user-attachments/assets/d0bb0a7b-6559-4519-99b9-3bd648548275" />
-<img width="1920" height="1080" alt="Screenshot_20260730_013306" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
 <img width="1920" height="1080" alt="Screenshot_20260730_013223" src="https://github.com/user-attachments/assets/80dc01ed-28cf-4f4a-9ee4-b2673584b0f5" />
 <img width="1920" height="1080" alt="Screenshot_20260730_013153" src="https://github.com/user-attachments/assets/ad03e7a1-cede-4b61-b07b-51d81366fc5a" />
 <img width="1920" height="1080" alt="Screenshot_20260730_013126" src="https://github.com/user-attachments/assets/a2975d15-ae83-4eda-b73d-5591c5020837" />
+
+## Two of the eight starter themes you can make in a few clicks, and edit down the line
+
+<img width="1920" height="1080" alt="Screenshot_20260730_013306" src="https://github.com/user-attachments/assets/355aba42-f244-4225-9fa4-ae8d6817c003" />
+<img width="1920" height="1080" alt="Screenshot_20260731_004434" src="https://github.com/user-attachments/assets/03cc075f-5add-44d2-a444-de7b1604b045" />
 
 ## Themes built with this tool
 
