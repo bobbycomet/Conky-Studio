@@ -48,7 +48,7 @@ You design in a node graph. You run the same files Conky would run without the e
 3. Wire them  
 4. Hit live preview  
 
-That’s a real Conky widget — not a demo screen.
+That’s a real Conky widget, not a demo screen.
 
 From there, you add logic, layers, gradients, click actions, custom scripts, or full Custom Lua when the palette isn’t enough.
 
@@ -59,7 +59,7 @@ From there, you add logic, layers, gradients, click actions, custom scripts, or 
 - **Visual node editor** — sources → logic → visuals; drag, connect, iterate  
 - **Live preview** — real Conky process; **1:1 with build output**  
 - **Theme manager** — themes under `~/.config/conky` (and `~/.conky`); start/stop, README & `theme.json` editing  
-- **Theme wizard** — starter HUDs by style (Minimal, Gaming, Sci-Fi, Cyberpunk, Terminal, Fantasy, Batman, …) and panels (CPU, GPU, Weather, Music, …)  
+- **Theme wizard** — starter HUDs by style (Minimal, Gaming, Sci-Fi, Cyberpunk, Terminal, Fantasy, Batman, etc) and panels (CPU, GPU, Weather, Music, …)  
 - **Legacy importer (beta)** — conf + TEXT + Lua + scripts → editable graph (~70–90% there; finish in Studio)  
 - **Plugins** — JSON packs for community logic/visual nodes  
 - **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/net/disk hints  
@@ -94,7 +94,7 @@ All Studio builds use a standardized **`start.sh`** (session + lock file) so the
 Studio detects your session and adapts where it can:
 
 - **Display server** — X11 vs Wayland  
-- **Compositor** — KDE, wlroots (Sway, Hyprland, …), Mir-style; **GNOME/Mutter** is a poor fit for this kind of overlay (Conky + GNOME limitation, not a Studio choice)  
+- **Compositor** — KDE, wlroots (Sway, Hyprland, etc), Mir-style; **GNOME/Mutter** is a poor fit for this kind of overlay (Conky + GNOME limitation, not a Studio choice)  
 - **Conky build** — installed or missing, version, Wayland support (some distro packages are X11-only)  
 - **Hardware** — lm-sensors, GPU hints, network iface, disks  
 
@@ -193,7 +193,7 @@ Goes toward development time, features, docs, and stability.
 
 ### Themes built with this tool
 
-*(Red lines redact location info.)*
+*(Red lines are only to redact my location info.)*
 
 <img width="1920" height="1080" alt="Built theme 1" src="https://github.com/user-attachments/assets/f5f6287b-b852-47b7-b895-d5caefea5c19" />
 
