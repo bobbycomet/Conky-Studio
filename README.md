@@ -8,7 +8,7 @@
 
 **Design desktop HUDs visually. Ship real Conky themes.**
 
-No sudo. No package installers. If your distro runs AppImages and Conky, you can run Conky Studio.
+No sudo. No package installers. If your distro runs AppImages and Conky (playerctl and sensors are needed for some nodes), you can run Conky Studio.
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
