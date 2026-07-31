@@ -12,12 +12,6 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
-## Acknowledgments & Disclaimer
-
-This project is an independent tool designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky). 
-
->**Please note:** This project is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers. Conky is licensed under the GPL-3.0 License.
-
 Public release planned for **August 1st 2026**.
 
 [Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki)
@@ -27,6 +21,10 @@ Public release planned for **August 1st 2026**.
 ---
 
 ## Why this exists
+
+Conky Studio started as a personal tool for creating and managing my own Conky themes. Over time, after sharing the themes built with it and receiving positive feedback, I decided to turn it into a public project.
+
+The goal of Conky Studio is to make creating advanced Conky HUDs more accessible while keeping the power and flexibility of Conky's existing workflow.
 
 Conky can draw almost anything on your desktop. The cost has always been the same: Lua, Cairo, shell scripts, and config files edited by hand, then restart, squint, and try again.
 
@@ -57,6 +55,12 @@ You design in a node graph. You run the same files Conky would run without the e
 That’s a real Conky widget, not a demo screen.
 
 From there, you add logic, layers, gradients, click actions, custom scripts, or full Custom Lua when the palette isn’t enough.
+
+## Acknowledgments & Disclaimer
+
+This project is an independent tool designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky). 
+
+>**Please note:** This project is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers. Conky is licensed under the GPL-3.0 License.
 
 ---
 
