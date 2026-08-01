@@ -59,7 +59,7 @@ value was rendered, not in what sources it could bind to.
 
 # Released
 
-v1.0.3 AppImage / AppRun improvements**
+**v1.0.3 AppImage / AppRun improvements**
 
 ### 1. Flat layout with PyInstaller 6+
 Added `--contents-directory .` to the PyInstaller call.  
