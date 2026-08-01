@@ -52,6 +52,8 @@ You design in a node graph. You run the same files Conky would run without the e
 3. Wire them  
 4. Hit live preview  
 
+[Creating your first widget](https://www.youtube.com/watch?v=BhB6O_jakxo)
+
 That’s a real Conky widget, not a demo screen.
 
 From there, you add logic, layers, gradients, click actions, custom scripts, or full Custom Lua when the palette isn’t enough.
