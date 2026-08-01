@@ -1,7 +1,5 @@
 # Changelog
 
-## Older build
-
 ## Version 1.0.1
 
 ### Fixed
@@ -21,8 +19,6 @@
   Segmented Gauge already work. Defaults to `%` to match prior behavior
   for existing projects.
 
-
-## Older build
 
 ## 1.0.2
 
@@ -59,7 +55,7 @@ value was rendered, not in what sources it could bind to.
 
 # Released
 
-**v1.0.3 AppImage / AppRun improvements**
+**v1.0.3 AppImage / AppRun improvements (Latest)**
 
 ### 1. Flat layout with PyInstaller 6+
 Added `--contents-directory .` to the PyInstaller call.  
