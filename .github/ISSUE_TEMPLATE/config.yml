@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord (preferred)
+    url: https://discord.gg/kJZCZWg5nw
+    about: Fastest way to get help, report bugs, or discuss features with Bobby Comet.
+  - name: Security report
+    url: https://discord.gg/kJZCZWg5nw
+    about: Security issues; use the issues forum or message me privately on Discord; do not post exploits publicly.
