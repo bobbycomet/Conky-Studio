@@ -12,7 +12,7 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
-**Conky Studio installs itself to ~/Applications for stability. You can move or remove it at any time.**
+**Conky Studio installs itself to ~/Applications for stability. You can move or remove it at any time. See [Packaging](https://github.com/bobbycomet/Conky-Studio/wiki/Packaging)**
 
 [Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki) · [Best paired with this updater](https://github.com/bobbycomet/GriffinUpdater) · [Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.3/Conky-Studio-1.0.3_x86_64.AppImage)
 
@@ -119,6 +119,8 @@ All Studio builds use a standardized **`start.sh`** (session + lock file) so the
 
 Studio detects your session and adapts where it can:
 
+See [Packaging](https://github.com/bobbycomet/Conky-Studio/wiki/Packaging) & [Compatibility Here](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
+
 - **Display server** — X11 vs Wayland
 - `QT_QPA_PLATFORM` is now set to `wayland;xcb` when `$WAYLAND_DISPLAY` is present. Qt tries Wayland first and silently falls back to `XCB if` needed.
 - **Compositor** — KDE, wlroots (Sway, Hyprland, etc), Mir-style; **GNOME/Mutter** is a poor fit for this kind of overlay (Conky + GNOME limitation, not a Studio choice)  
@@ -127,13 +129,12 @@ Studio detects your session and adapts where it can:
 
 Use **Tools → Hardware & Session** when a preview looks empty or misplaced.
 
-Check [Compatibility Here](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 ---
 
 ## [Architecture](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-Architecture-Codegen) (short)
 
-```text
+```
 conkystudio/
 ├── model/      Project JSON
 ├── nodes/      Sources, logic, visuals
@@ -148,7 +149,7 @@ conkystudio/
 
 **Built theme layout**
 
-```text
+```
 <ThemeName>/
 ├── theme.json · start.sh · conky.conf · render.lua
 ├── images/ · fonts/ · scripts/
@@ -160,6 +161,8 @@ conkystudio/
 ---
 
 ## [Nodes](https://github.com/bobbycomet/Conky-Studio/wiki/Node-Reference) (overview)
+
+See [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) for any packages you may need for sensors. 
 
 **Sources** — CPU, RAM, disk, network, uptime, battery, clock, GPU/temps, weather, music (playerctl), **Custom Script** (`execi` or daemon). Unused sources are not polled in the export.
 
@@ -204,7 +207,7 @@ Custom Script nodes are text-editable and can be paired with Custom Lua nodes fo
 ---
 
 
-### After installing
+### After installing [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements)
 
 ```
 conky -v          # confirm Conky; look for Wayland if you use a Wayland session
