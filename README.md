@@ -124,7 +124,7 @@ Check [Compatibility Here](https://github.com/bobbycomet/Conky-Studio/wiki/Compa
 
 ---
 
-## Architecture (short)
+## [Architecture](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-Architecture-Codegen) (short)
 
 ```text
 conkystudio/
@@ -152,7 +152,7 @@ conkystudio/
 
 ---
 
-## Nodes (overview)
+## [Nodes](https://github.com/bobbycomet/Conky-Studio/wiki/Node-Reference) (overview)
 
 **Sources** — CPU, RAM, disk, network, uptime, battery, clock, GPU/temps, weather, music (playerctl), **Custom Script** (`execi` or daemon). Unused sources are not polled in the export.
 
@@ -182,6 +182,8 @@ Custom Script nodes are text-editable and can be paired with Custom Lua nodes fo
 >
 >This importer will improve over time, but some limitations are inherent to how Conky themes are written. Think of it as a migration and remixing tool: it gets existing themes into Studio quickly, while preserving complex sections through Custom Lua when automatic conversion isn’t possible.
 
+[Check the Nodes Reference for more details](https://github.com/bobbycomet/Conky-Studio/wiki/Node-Reference)
+
 ---
 
 ## Status
@@ -195,7 +197,7 @@ Custom Script nodes are text-editable and can be paired with Custom Lua nodes fo
 
 ### After installing
 
-```bash
+```
 conky -v          # confirm Conky; look for Wayland if you use a Wayland session
 which playerctl   # music nodes
 sensors           # temperatures (after sensors-detect where applicable)
@@ -236,7 +238,7 @@ Goes toward development time, features, docs, and stability.
 
 ### Starter themes (a few clicks, then edit)
 
-These are purposefully unfinished, they are to help you learn and explore, while also giving you a headstart on a clean looking HUD.
+These are purposefully unfinished; they are to help you learn and explore, while also giving you a head start on a clean-looking HUD.
 
 <img width="1920" height="1080" alt="Screenshot_20260731_150901" src="https://github.com/user-attachments/assets/c00d10ef-eb56-40f7-9c81-bba90cd90946" />
 
