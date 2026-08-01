@@ -165,9 +165,12 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 - Warnings are summarized (not one line per unknown token)
 - Images cannot currently be reconstructed from legacy theme references. Re-add assets through Studio after import.
 
-Then you edit and **build** like any native project; preview and export stay **1:1** for what’s on the canvas.
-
-This will be  improved as time goes on, but it cannot create a magical way to be 100% accurate if the limitation is beyond Conky Studio's control. Think of this as a migration and remixing tool: it gets existing themes into Studio quickly, while preserving complex sections through Custom Lua when automatic conversion is not possible.
+>**Custom scripts & Lua:**
+Custom Script nodes are text-editable and can be paired with Custom Lua nodes for advanced integrations. This allows complex or non-standard logic from legacy themes to remain usable inside Studio, though behavior depends on the original script design. 
+>
+>Then you edit and build like any native project; preview and export stay 1:1 for what’s on the canvas.
+>
+>This importer will improve over time, but some limitations are inherent to how Conky themes are written. Think of it as a migration and remixing tool: it gets existing themes into Studio quickly, while preserving complex sections through Custom Lua when automatic conversion isn’t possible.
 
 ---
 
