@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Conky Studio
+GenericName=Conky Theme Builder
+Comment=Visual node editor for building Conky + Lua/Cairo HUDs
+Exec=conky-studio
+Icon=conky-studio
+Categories=Utility;
+Terminal=false
+StartupNotify=true

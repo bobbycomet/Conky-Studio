@@ -1,0 +1,17 @@
+{
+  "api_version": "1.0",
+  "updated_at": "2026-07-25",
+  "themes": [
+    {
+      "id": "example-theme-1.0",
+      "name": "Example Theme",
+      "author": "Your Name",
+      "version": "1.0.0",
+      "description": "Replace this entry with your own theme once you've exported a .zip from the Manager tab.",
+      "tags": ["example"],
+      "preview_url": "https://raw.githubusercontent.com/YOUR-USERNAME/conky-studio-community-themes/main/themes/ExampleTheme/preview.png",
+      "download_url": "https://raw.githubusercontent.com/YOUR-USERNAME/conky-studio-community-themes/main/themes/ExampleTheme/ExampleTheme.zip",
+      "sha256": "REPLACE-WITH-OUTPUT-OF-sha256sum-ExampleTheme.zip"
+    }
+  ]
+}

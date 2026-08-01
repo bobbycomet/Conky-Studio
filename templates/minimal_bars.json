@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "name": "Minimal Bars",
+  "author": "",
+  "description": "The simplest useful HUD: CPU and RAM as two bars, meant as a first template to open and understand before building something more ambitious.",
+  "canvas": {
+    "width": 260,
+    "height": 110,
+    "alignment": "top_right",
+    "gap_x": 24,
+    "gap_y": 24,
+    "fps": 10,
+    "stats_hz": 1.0,
+    "window_type": "auto",
+    "window_class": "conky-studio",
+    "transparent": true
+  },
+  "nodes": [
+    {
+      "id": "canvas",
+      "type": "canvas.root",
+      "x": -260,
+      "y": 0,
+      "label": "",
+      "props": {
+        "width": 260,
+        "height": 110,
+        "alignment": "top_right",
+        "gap_x": 24,
+        "gap_y": 24,
+        "fps": 10,
+        "stats_hz": 1.0,
+        "window_type": "auto",
+        "window_class": "conky-studio",
+        "transparent": true
+      },
+      "z": 0
+    },
+    {
+      "id": "n_89f4a853",
+      "type": "source.cpu_percent",
+      "x": -320,
+      "y": -80,
+      "label": "",
+      "props": {},
+      "z": 0
+    },
+    {
+      "id": "n_ce125673",
+      "type": "source.ram_percent",
+      "x": -320,
+      "y": 40,
+      "label": "",
+      "props": {},
+      "z": 0
+    },
+    {
+      "id": "n_46a96ecd",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "SYSTEM",
+        "x": 10,
+        "y": 18,
+        "font_size": 12,
+        "bold": true,
+        "color": "#9aa2ad"
+      },
+      "z": 0
+    },
+    {
+      "id": "n_95b80a77",
+      "type": "visual.bar",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "x": 10,
+        "y": 34,
+        "width": 240,
+        "height": 16,
+        "style": "solid",
+        "color": "#4fd1c5",
+        "track_color": "#2a2f38"
+      },
+      "z": 1
+    },
+    {
+      "id": "n_7cb56582",
+      "type": "visual.bar",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "x": 10,
+        "y": 62,
+        "width": 240,
+        "height": 16,
+        "style": "solid",
+        "color": "#c9a227",
+        "track_color": "#2a2f38"
+      },
+      "z": 2
+    },
+    {
+      "id": "n_f10cc1a2",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "placeholder",
+        "prefix": "CPU ",
+        "suffix": "%",
+        "x": 14,
+        "y": 46,
+        "font_size": 10,
+        "color": "#0b0d10"
+      },
+      "z": 3
+    },
+    {
+      "id": "n_8a14725f",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "placeholder",
+        "prefix": "RAM ",
+        "suffix": "%",
+        "x": 14,
+        "y": 74,
+        "font_size": 10,
+        "color": "#0b0d10"
+      },
+      "z": 4
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_0672cf6b",
+      "src_node": "n_89f4a853",
+      "dst_node": "n_95b80a77",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_67e1d1e7",
+      "src_node": "n_ce125673",
+      "dst_node": "n_7cb56582",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_3e018319",
+      "src_node": "n_89f4a853",
+      "dst_node": "n_f10cc1a2",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_e72d3f51",
+      "src_node": "n_ce125673",
+      "dst_node": "n_8a14725f",
+      "dst_prop": "value"
+    }
+  ]
+}

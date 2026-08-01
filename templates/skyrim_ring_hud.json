@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "name": "Skyrim Ring HUD",
+  "author": "",
+  "description": "Recreates the spirit of the Skyrim Conky theme with built-in nodes: warm parchment-gold gauges for CPU/GPU temperature, a weather icon, and a slow rotating spiral accent. Swap the CPU/GPU Temperature nodes for Custom Script nodes pointing at skyrim_temp.sh / skyrim_gpu_temp.sh directly if you want pixel-identical behavior to the original hand-written theme.",
+  "canvas": {
+    "width": 420,
+    "height": 420,
+    "alignment": "bottom_right",
+    "gap_x": 24,
+    "gap_y": 24,
+    "fps": 24,
+    "stats_hz": 1.0,
+    "window_type": "auto",
+    "window_class": "conky-studio",
+    "transparent": true
+  },
+  "nodes": [
+    {
+      "id": "canvas",
+      "type": "canvas.root",
+      "x": -260,
+      "y": 0,
+      "label": "",
+      "props": {
+        "width": 420,
+        "height": 420,
+        "alignment": "bottom_right",
+        "gap_x": 24,
+        "gap_y": 24,
+        "fps": 24,
+        "stats_hz": 1.0,
+        "window_type": "auto",
+        "window_class": "conky-studio",
+        "transparent": true
+      },
+      "z": 0
+    },
+    {
+      "id": "n_79d02515",
+      "type": "source.cpu_temp",
+      "x": -380,
+      "y": -160,
+      "label": "",
+      "props": {
+        "poll_mode": "execi",
+        "poll_interval": 3
+      },
+      "z": 0
+    },
+    {
+      "id": "n_506c8ecf",
+      "type": "source.gpu_temp",
+      "x": -380,
+      "y": -40,
+      "label": "",
+      "props": {
+        "poll_mode": "execi",
+        "poll_interval": 3
+      },
+      "z": 0
+    },
+    {
+      "id": "n_a2b530cb",
+      "type": "source.weather_category",
+      "x": -380,
+      "y": 80,
+      "label": "",
+      "props": {
+        "poll_mode": "execi",
+        "poll_interval": 900
+      },
+      "z": 0
+    },
+    {
+      "id": "n_179f6776",
+      "type": "source.hostname",
+      "x": -380,
+      "y": 200,
+      "label": "",
+      "props": {},
+      "z": 0
+    },
+    {
+      "id": "n_7e399655",
+      "type": "visual.spiral",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 210,
+        "cy": 210,
+        "radius_start": 150,
+        "radius_end": 195,
+        "turns": 1.2,
+        "dash_count": 60,
+        "rotation_speed_dps": 8,
+        "color": "#8a701f",
+        "line_width": 2
+      },
+      "z": 0
+    },
+    {
+      "id": "n_da811a4c",
+      "type": "visual.arc_gauge",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 210,
+        "cy": 210,
+        "radius": 120,
+        "thickness": 16,
+        "min_value": 30,
+        "max_value": 95,
+        "start_angle_deg": -210,
+        "sweep_deg": 150,
+        "color": "#c9a227",
+        "track_color": "#3a2f1c",
+        "value_suffix": "\u00b0C CPU"
+      },
+      "z": 1
+    },
+    {
+      "id": "n_6e4da711",
+      "type": "visual.arc_gauge",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 210,
+        "cy": 210,
+        "radius": 96,
+        "thickness": 14,
+        "min_value": 30,
+        "max_value": 95,
+        "start_angle_deg": 30,
+        "sweep_deg": 150,
+        "color": "#b8a888",
+        "track_color": "#2f2a1c",
+        "value_suffix": "\u00b0C GPU"
+      },
+      "z": 2
+    },
+    {
+      "id": "n_58296e88",
+      "type": "visual.weather_icon",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 210,
+        "cy": 210,
+        "size": 46,
+        "color": "#b8a888"
+      },
+      "z": 3
+    },
+    {
+      "id": "n_12234aac",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "placeholder",
+        "x": 210,
+        "y": 380,
+        "align": "center",
+        "font_size": 13,
+        "color": "#8a701f",
+        "halo": true
+      },
+      "z": 4
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_d4379030",
+      "src_node": "n_79d02515",
+      "dst_node": "n_da811a4c",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_ed1cff4b",
+      "src_node": "n_506c8ecf",
+      "dst_node": "n_6e4da711",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_c8a8ab8f",
+      "src_node": "n_a2b530cb",
+      "dst_node": "n_58296e88",
+      "dst_prop": "category"
+    },
+    {
+      "id": "edge_9d2a43a8",
+      "src_node": "n_179f6776",
+      "dst_node": "n_12234aac",
+      "dst_prop": "value"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "name": "Glow Radial Gauge",
+  "author": "Bobby",
+  "description": "A mid-complexity example: a glowing pulse ring behind an arc gauge, a decorative dashed spiral, a weather icon, and text bound to live data -- the kind of 'radial menu' look requested as a north star for this tool.",
+  "canvas": {
+    "width": 360,
+    "height": 360,
+    "alignment": "top_left",
+    "gap_x": 24,
+    "gap_y": 24,
+    "fps": 20,
+    "stats_hz": 1.0,
+    "window_type": "normal",
+    "window_class": "conky-studio",
+    "transparent": true
+  },
+  "nodes": [
+    {
+      "id": "canvas",
+      "type": "canvas.root",
+      "x": -260,
+      "y": 0,
+      "label": "",
+      "props": {
+        "width": 360,
+        "height": 360,
+        "alignment": "top_left",
+        "gap_x": 24,
+        "gap_y": 24,
+        "fps": 20,
+        "stats_hz": 1.0,
+        "window_type": "normal",
+        "window_class": "conky-studio",
+        "transparent": true
+      },
+      "z": 0
+    },
+    {
+      "id": "n_48258f04",
+      "type": "source.cpu_percent",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {},
+      "z": 0
+    },
+    {
+      "id": "n_23c32037",
+      "type": "source.weather_category",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "poll_mode": "daemon",
+        "poll_interval": 1800
+      },
+      "z": 0
+    },
+    {
+      "id": "n_e6fb2944",
+      "type": "source.hostname",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {},
+      "z": 0
+    },
+    {
+      "id": "n_d70e96f5",
+      "type": "visual.glow_pulse",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 180,
+        "cy": 180,
+        "radius": 90,
+        "color": "#4fd1c5",
+        "pulse_hz": 0.4,
+        "layers": 5
+      },
+      "z": 0
+    },
+    {
+      "id": "n_90b32454",
+      "type": "visual.arc_gauge",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 180,
+        "cy": 180,
+        "radius": 90,
+        "thickness": 14,
+        "start_angle_deg": -90,
+        "sweep_deg": 300,
+        "color": "#4fd1c5",
+        "track_color": "#2a2830"
+      },
+      "z": 1
+    },
+    {
+      "id": "n_6c4f5884",
+      "type": "visual.spiral",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 180,
+        "cy": 180,
+        "radius_start": 100,
+        "radius_end": 140,
+        "turns": 1.0,
+        "dash_count": 40,
+        "rotation_speed_dps": 20,
+        "color": "#c9a227"
+      },
+      "z": 2
+    },
+    {
+      "id": "n_0143c2b0",
+      "type": "visual.image_icon",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "path": "/home/claude/test_assets/test_icon.png",
+        "x": 148,
+        "y": 148,
+        "size": 64
+      },
+      "z": 3
+    },
+    {
+      "id": "n_ce37dcac",
+      "type": "visual.weather_icon",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "cx": 60,
+        "cy": 60,
+        "size": 40,
+        "category": "storm"
+      },
+      "z": 4
+    },
+    {
+      "id": "n_2b80d4eb",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "placeholder",
+        "x": 180,
+        "y": 300,
+        "align": "center",
+        "font_size": 22,
+        "bold": true,
+        "color": "#FFFFFF"
+      },
+      "z": 5
+    },
+    {
+      "id": "n_0d73bd64",
+      "type": "visual.text",
+      "x": 0.0,
+      "y": 0.0,
+      "label": "",
+      "props": {
+        "value": "placeholder",
+        "x": 180,
+        "y": 330,
+        "align": "center",
+        "font_size": 12,
+        "color": "#999999"
+      },
+      "z": 6
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_e7d390fd",
+      "src_node": "n_48258f04",
+      "dst_node": "n_90b32454",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_a539d2b1",
+      "src_node": "n_23c32037",
+      "dst_node": "n_ce37dcac",
+      "dst_prop": "category"
+    },
+    {
+      "id": "edge_2c8bb203",
+      "src_node": "n_48258f04",
+      "dst_node": "n_2b80d4eb",
+      "dst_prop": "value"
+    },
+    {
+      "id": "edge_4c167409",
+      "src_node": "n_e6fb2944",
+      "dst_node": "n_0d73bd64",
+      "dst_prop": "value"
+    }
+  ]
+}
