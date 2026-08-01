@@ -117,7 +117,8 @@ All Studio builds use a standardized **`start.sh`** (session + lock file) so the
 
 Studio detects your session and adapts where it can:
 
-- **Display server** — X11 vs Wayland  
+- **Display server** — X11 vs Wayland
+- `QT_QPA_PLATFORM` is now set to `wayland;xcb` when `$WAYLAND_DISPLAY` is present. Qt tries Wayland first and silently falls back to `XCB if` needed.
 - **Compositor** — KDE, wlroots (Sway, Hyprland, etc), Mir-style; **GNOME/Mutter** is a poor fit for this kind of overlay (Conky + GNOME limitation, not a Studio choice)  
 - **Conky build** — installed or missing, version, Wayland support (some distro packages are X11-only)  
 - **Hardware** — lm-sensors, GPU hints, network iface, disks  
