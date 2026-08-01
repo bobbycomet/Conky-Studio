@@ -54,6 +54,8 @@ You design in a node graph. You run the same files Conky would run without the e
 
 [Creating your first widget](https://www.youtube.com/watch?v=BhB6O_jakxo)
 
+>A working widget can be created in 30 seconds. The rest of the 60-second video shows customization options like gradients, colors, and sizing.
+
 That’s a real Conky widget, not a demo screen.
 
 From there, you add logic, layers, gradients, click actions, custom scripts, or full Custom Lua when the palette isn’t enough.
