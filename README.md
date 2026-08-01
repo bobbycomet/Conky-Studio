@@ -12,6 +12,8 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
+**Conky Studio installs itself to ~/Applications for stability. You can move or remove it at any time.**
+
 [Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki) · [Best paired with this updater](https://github.com/bobbycomet/GriffinUpdater) · [Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.3/Conky-Studio-1.0.3_x86_64.AppImage)
 
 </div>
