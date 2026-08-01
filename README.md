@@ -164,7 +164,7 @@ conkystudio/
 
 **Visuals** — text, calendars, arc/ring gauges, bars, history graphs, glow/pulse, radar, moon, shapes, images/icons, weather icons, album art, **Custom Lua**.
 
-84 nodes in total.
+61 nodes in total.
 
 Fill-capable nodes support **solid, linear, and radial gradients**.
 
