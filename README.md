@@ -85,6 +85,16 @@ This project is an independent tool designed to generate and manage HUDs for [Co
 
 ---
 
+## [Runtime Performance](https://github.com/bobbycomet/Conky-Studio/wiki/Runtime-Performance)
+
+Conky Studio is an authoring tool, not a runtime interpreter.
+
+Your node graph is converted into standard Conky files (`conky.conf`, `render.lua`, and scripts) during build. Exported themes run independently of Studio using Conky's normal pipeline.
+
+The number of nodes in your project does not directly affect runtime performance. Runtime cost depends on the generated Lua logic, update intervals, and normal Conky execution.
+
+---
+
 ## [Sharing](https://github.com/bobbycomet/Conky-Studio/wiki/Sharing-Projects) & [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 | Goal | What to share |
