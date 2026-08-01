@@ -12,8 +12,6 @@ No sudo. No package installers. If your distro runs AppImages and Conky, you can
 
 **Live preview = export.** Same pipeline. Not a mockup.
 
-Public release planned for **August 1st 2026**.
-
 [Video Showcase](https://youtu.be/RbUr9pFosDc) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [WIKI](https://github.com/bobbycomet/Conky-Studio/wiki)
 
 </div>
