@@ -78,7 +78,7 @@ This project is an independent tool designed to generate and manage HUDs for [Co
 - **Clean exports** — `start.sh`, conf, Lua, scripts, images, fonts  
 - **Gradients**, click actions, Custom Lua** — solid → full Cairo escape hatch
 - **Canvas** is your resolution. New blank HUDs start with a CPU and text example; resolution starts at 460x640 and can be adjusted to 4096x2160
-- Update checker. Also, integrated into [Griffin Updater's](https://github.com/bobbycomet/GriffinUpdater) app registry for dedicated updating
+- **Update checker:** Also, integrated into [Griffin Updater's](https://github.com/bobbycomet/GriffinUpdater) app registry for dedicated updating
 
 | Task | Traditional | Studio |
 |------|-------------|--------|
