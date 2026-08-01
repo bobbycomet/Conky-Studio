@@ -78,7 +78,8 @@ This project is an independent tool designed to generate and manage HUDs for [Co
 - **Plugins** — JSON packs for community logic/visual nodes  
 - **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/net/disk hints  
 - **Clean exports** — `start.sh`, conf, Lua, scripts, images, fonts  
-- **Gradients, click actions, Custom Lua** — solid → full Cairo escape hatch  
+- **Gradients**, click actions, Custom Lua** — solid → full Cairo escape hatch
+- **Canvas** is your resolution. New blank HUDs start with a CPU and text example; resolution starts at 460x640 and can be adjusted to 4096x2160
 
 | Task | Traditional | Studio |
 |------|-------------|--------|
@@ -196,7 +197,7 @@ Custom Script nodes are text-editable and can be paired with Custom Lua nodes fo
 
 **Actively developed.** Core editor, live preview, manager, codegen, wizard, plugins, importer, gradients, studio tour, and support links are in place.
 
-**Community-driven (maybe):** animation keyframes, built-in profiler; depends on feedback.
+**Community-driven (maybe):** animation keyframes, built-in profiler, multi-monitor support; depends on feedback.
 
 ---
 
