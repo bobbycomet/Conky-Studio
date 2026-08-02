@@ -4700,7 +4700,7 @@
         "ribbon",
         "backdrop"
       ],
-      "simple_mode": false,
+      "simple_mode": true,
       "properties": [
         {
           "key": "x",
