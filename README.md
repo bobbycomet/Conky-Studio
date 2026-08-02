@@ -82,7 +82,7 @@ From there, build complete HUDs with:
 * custom scripts
 * click actions
 * Custom Lua/Cairo rendering
-* 88 nodes, and more planned
+* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 22-node plugin pack (18 logic, 4 visual) for 120 total nodes.
 
 ---
 
