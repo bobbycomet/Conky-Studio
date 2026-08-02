@@ -55,7 +55,7 @@ value was rendered, not in what sources it could bind to.
 
 # Released
 
-**v1.0.3 AppImage / AppRun improvements (Latest)**
+**v1.0.3 AppImage / AppRun improvements**
 
 ### 1. Flat layout with PyInstaller 6+
 Added `--contents-directory .` to the PyInstaller call.  
@@ -86,3 +86,11 @@ Details:
 - Re-copies automatically when a newer AppImage is run (so shipping an update only requires launching the new file once).
 - Detects when it is already running from the installed copy (`readlink -f` comparison) and skips the copy step to avoid loops.
 - To fix an existing broken `.desktop` entry that points at a dead path: delete it once (`rm ~/.local/share/applications/conky-studio.desktop`) or simply launch the AppImage directly; the install logic will recreate a correct entry.
+
+### v1.0.4 Small Bug Fix (Latest)
+
+**Layers dock no longer steals focus when reordering**
+
+Clicking a row in the Layers list starts a drag on that row on mouse-down, before any drag begins. That selection fired `itemSelectionChanged` and pushed the node onto the canvas scene, which raised the tabified Properties dock and swapped Layers out from under the pointer, interrupting the drag.
+
+Selection driven from Layers is now guarded so the property panel content still updates in the background, but Properties is not raised; a direct click on a node in the canvas still opens Properties as before. After a drop, the Layers list rebuild no longer clears the highlight on the row you just moved; it is re-selected by id so the active layer stays visibly selected.
