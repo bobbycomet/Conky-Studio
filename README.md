@@ -3,7 +3,7 @@
 **2 nodes = 1 widget in 30 seconds. Start simple. Scale to anything.**
 
 <p align="center">
-  <img src="node.gif" alt="Conky Studio Node Demo" width="100%">
+  <img src="node.gif" alt="Conky Studio Node Demo" width="50%">
 </p>
 
 <div align="center">
