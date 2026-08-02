@@ -100,7 +100,7 @@ Selection driven from Layers is now guarded so the property panel content still 
 
 ---
 
-# v1.0.5 Legacy and custom scripts overhaul (Latest)
+# v1.0.5 Legacy and custom scripts overhaul
 
 ### Honesty limits (unchanged by design)
 - Arbitrary Cairo is not decompiled into Arc/Bar/Star nodes.
@@ -141,3 +141,62 @@ Selection driven from Layers is now guarded so the property panel content still 
 - Arbitrary Cairo is not decompiled into Arc/Bar/Star nodes.
 - Wiring a native Bar does not change an imported Custom Lua HUD until you edit that Lua to read `in1`…`in12`.
 - TEXT layout and `${if_…}` handling remain best-effort/simplified.
+
+# New nodes and some fixes
+
+## Version 1.0.6
+
+### Added
+
+- **Needle Gauge (`visual.needle_gauge`).**  
+Analog dial with ok/warn/danger zones, ticks, needle, and optional centre readout with `value_suffix` (e.g., `%`, ` RPM`, ` MHz`, `°C`). Bind any numeric source (percent, celsius, or plain number) the same way as Arc Gauge or Bar.
+
+- **Moon Phase: blood moons and eclipse countdown.**  
+  Still draws synodic phase and illumination, and now also:
+  - Approximates total lunar eclipses (blood moons) from a near-term JD table  
+  - Surfaces **BLOOD** / **Eclipse** timing when an event is close  
+  - Flags solar-eclipse seasons near new moon  
+  - Tags **N/S** on the extra line from `southern_hemisphere`  
+
+  **Eclipse schedule in the table:**
+  - **2026-08-27/28** — deep partial lunar eclipse  
+  - **2028-12-31 / 2029-01-01** — next total (blood moon)  
+  - Further listed totals through **2033**  
+
+  Timings are approximate (± about a day), not a full ephemeris.
+
+- **History Graph & Multi-Series Line Graph: bindable `title_label`.**  
+  Optional caption above the plot. Accepts any kind so a graph can show a live title or readout without a separate Text Label.
+
+- **Text Label & Text List accept all wire kinds.**  
+`value` is no longer limited to a small set of source kinds; any upstream that stringifies cleanly can drive a label (logic outputs, formatted values, and so on).
+
+- **Nodes palette starts collapsed.**  
+  - Category sections (Data Sources / Logic / Visuals) start collapsed  
+  - Subcategories start collapsed  
+  - Search still expands matching sections and subcats  
+
+- **Sources (3)** — `nodes/sources_extra.py`  
+ | Node | Behaviour |
+ | --- | --- |
+ | **Load Average** | `source.loadavg` (`all` / 1 / 5 / 15) |  
+ | **Thread Count** | `source.threads`  |
+ | **Running Processes** | `source.running_processes`  |
+
+- **Logic (5)** — `nodes/logic_extra.py` + generators  
+
+  | Node | Behaviour |
+  | --- | --- |
+  | **Smooth (EMA)** | Persistent smoothing for noisy sensors |
+  | **Rate of Change** | Δ over N look-back samples |
+  | **Hysteresis** | On above High, off below Low (no LED flicker) |
+  | **String Join** | A + separator + B, optional skip-empty |
+  | **Enum Map** | Category/token → number (weather → index, etc.) |
+
+- **Visuals (3)** — `nodes/visuals_extra.py` + generators  
+
+  | Node | Behaviour |
+  | --- | --- |
+  | **Top Processes Table** | Classic `${top name/cpu/mem}` table, N rows |
+  | **CPU Core Strip** | Per-core bars via `${cpu cpuN}`, optional heat-map |
+  | **Orbit Field** | Decorative orbits; optional Trigger scales speed |
