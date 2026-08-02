@@ -4561,6 +4561,256 @@
         }
       ],
       "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local val = tonumber({value}) or 0\n local fr, fg, fb = {face_color}\n local tkr, tkg, tkb = {tick_color}\n local nr, ng, nb = {needle_color}\n local ar, ag, ab = {accent_color}\n -- face\n cairo_set_source_rgba(cr, fr, fg, fb, {opacity})\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_fill(cr)\n -- 10 major ticks (0..9 x 1000 ft style around dial)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)\n for i = 0, 9 do\n  local a = -math.pi/2 + i * (2 * math.pi / 10)\n  cairo_set_line_width(cr, 2.5)\n  cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n  cairo_move_to(cr, cx + math.cos(a)*(R-4), cy + math.sin(a)*(R-4))\n  cairo_line_to(cr, cx + math.cos(a)*(R-16), cy + math.sin(a)*(R-16))\n  cairo_stroke(cr)\n  -- minor\n  cairo_set_line_width(cr, 1.2)\n  for j = 1, 4 do\n   local am = a + j * (2 * math.pi / 50)\n   cairo_move_to(cr, cx + math.cos(am)*(R-4), cy + math.sin(am)*(R-4))\n   cairo_line_to(cr, cx + math.cos(am)*(R-10), cy + math.sin(am)*(R-10))\n   cairo_stroke(cr)\n  end\n end\n -- needles: long = hundreds (0-1000 maps full circle), short = thousands\n local hundreds = (val % 1000) / 1000\n local thousands = (val / 10000) % 1\n local a_h = -math.pi/2 + hundreds * 2 * math.pi\n local a_t = -math.pi/2 + thousands * 2 * math.pi\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n -- thousand (short, fat)\n cairo_set_line_width(cr, 3.5)\n cairo_set_source_rgba(cr, nr, ng, nb, {opacity})\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_t)*R*0.45, cy + math.sin(a_t)*R*0.45)\n cairo_stroke(cr)\n -- hundred (long)\n cairo_set_line_width(cr, 2)\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_h)*R*0.78, cy + math.sin(a_h)*R*0.78)\n cairo_stroke(cr)\n -- hub\n cairo_set_source_rgba(cr, ar, ag, ab, {opacity})\n cairo_arc(cr, cx, cy, 5, 0, 2 * math.pi)\n cairo_fill(cr)\n if {show_value} and studio_draw_text then\n  studio_draw_text(cr, string.format('%.0f', val), cx, cy + R * 0.55, {family='Sans', size=12, r=tkr, g=tkg, b=tkb, a={opacity}, align='center', halo=true})\n end\n"
+    },
+    {
+      "id": "visual.plugin.soft_shadow_circle",
+      "category": "visual",
+      "label": "Soft Shadow Circle",
+      "author": "community-pack",
+      "version": "1.0.0",
+      "description": "Filled circle with a multi-pass soft drop shadow for depth. Use as a premium status disc, avatar plate, or floating marker.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": [
+        "circle",
+        "shadow",
+        "soft",
+        "premium",
+        "ui"
+      ],
+      "simple_mode": true,
+      "properties": [
+        {
+          "key": "cx",
+          "label": "Center X",
+          "kind": "float",
+          "default": 60,
+          "group": "Position"
+        },
+        {
+          "key": "cy",
+          "label": "Center Y",
+          "kind": "float",
+          "default": 60,
+          "group": "Position"
+        },
+        {
+          "key": "radius",
+          "label": "Radius",
+          "kind": "float",
+          "default": 28,
+          "minimum": 2,
+          "maximum": 800,
+          "group": "Shape"
+        },
+        {
+          "key": "color",
+          "label": "Fill colour",
+          "kind": "color",
+          "default": "#1a2433",
+          "group": "Style"
+        },
+        {
+          "key": "opacity",
+          "label": "Fill opacity",
+          "kind": "float",
+          "default": 0.95,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Style"
+        },
+        {
+          "key": "shadow_opacity",
+          "label": "Shadow opacity",
+          "kind": "float",
+          "default": 0.4,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Shadow"
+        },
+        {
+          "key": "shadow_spread",
+          "label": "Shadow spread",
+          "kind": "float",
+          "default": 14,
+          "minimum": 0,
+          "maximum": 80,
+          "group": "Shadow"
+        },
+        {
+          "key": "shadow_offset_x",
+          "label": "Shadow X offset",
+          "kind": "float",
+          "default": 0,
+          "minimum": -40,
+          "maximum": 40,
+          "group": "Shadow"
+        },
+        {
+          "key": "shadow_offset_y",
+          "label": "Shadow Y offset",
+          "kind": "float",
+          "default": 5,
+          "minimum": -40,
+          "maximum": 40,
+          "group": "Shadow"
+        },
+        {
+          "key": "ring",
+          "label": "Draw rim ring",
+          "kind": "bool",
+          "default": false,
+          "group": "Style"
+        },
+        {
+          "key": "ring_color",
+          "label": "Rim colour",
+          "kind": "color",
+          "default": "#4fd1c5",
+          "group": "Style"
+        },
+        {
+          "key": "ring_width",
+          "label": "Rim width",
+          "kind": "float",
+          "default": 1.5,
+          "minimum": 0.5,
+          "maximum": 12,
+          "step": 0.5,
+          "group": "Style"
+        }
+      ],
+      "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local ox, oy = {shadow_offset_x}, {shadow_offset_y}\n local spread = {shadow_spread}\n local sop = {shadow_opacity}\n -- soft shadow: several expanding translucent discs\n if spread > 0 and sop > 0 then\n  for i = 4, 1, -1 do\n   local t = i / 4\n   local rr = R + spread * t\n   local a = sop * (0.12 + 0.18 * (1 - t))\n   cairo_set_source_rgba(cr, 0, 0, 0, a)\n   cairo_arc(cr, cx + ox, cy + oy, rr, 0, 2 * math.pi)\n   cairo_fill(cr)\n  end\n end\n -- body\n local r, g, b = {color}\n cairo_set_source_rgba(cr, r, g, b, {opacity})\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_fill(cr)\n -- optional rim\n if {ring} then\n  local rr, gg, bb = {ring_color}\n  cairo_set_line_width(cr, {ring_width})\n  cairo_set_source_rgba(cr, rr, gg, bb, {opacity})\n  cairo_arc(cr, cx, cy, R - {ring_width} * 0.5, 0, 2 * math.pi)\n  cairo_stroke(cr)\n end\n"
+    },
+    {
+      "id": "visual.plugin.aurora_veil",
+      "category": "visual",
+      "label": "Aurora Veil",
+      "author": "community-pack",
+      "version": "1.0.0",
+      "description": "Cinematic aurora ribbons: layered translucent sine bands that drift and breathe. Soft, premium motion for a backdrop or hero accent. Optional Trigger boosts brightness and speed.",
+      "color": "#8a5fd6",
+      "subcategory": "Plugins",
+      "tags": [
+        "aurora",
+        "animation",
+        "premium",
+        "ribbon",
+        "backdrop"
+      ],
+      "simple_mode": false,
+      "properties": [
+        {
+          "key": "x",
+          "label": "X",
+          "kind": "float",
+          "default": 20,
+          "group": "Position"
+        },
+        {
+          "key": "y",
+          "label": "Y",
+          "kind": "float",
+          "default": 40,
+          "group": "Position"
+        },
+        {
+          "key": "width",
+          "label": "Width",
+          "kind": "float",
+          "default": 260,
+          "minimum": 40,
+          "maximum": 4000,
+          "group": "Shape"
+        },
+        {
+          "key": "height",
+          "label": "Height",
+          "kind": "float",
+          "default": 120,
+          "minimum": 20,
+          "maximum": 2000,
+          "group": "Shape"
+        },
+        {
+          "key": "bands",
+          "label": "Ribbon count",
+          "kind": "int",
+          "default": 4,
+          "minimum": 1,
+          "maximum": 8,
+          "group": "Shape"
+        },
+        {
+          "key": "amplitude",
+          "label": "Wave height",
+          "kind": "float",
+          "default": 22,
+          "minimum": 2,
+          "maximum": 200,
+          "group": "Shape"
+        },
+        {
+          "key": "line_width",
+          "label": "Ribbon thickness",
+          "kind": "float",
+          "default": 14,
+          "minimum": 2,
+          "maximum": 60,
+          "group": "Shape"
+        },
+        {
+          "key": "color_a",
+          "label": "Colour A",
+          "kind": "color",
+          "default": "#4fd1c5",
+          "group": "Style"
+        },
+        {
+          "key": "color_b",
+          "label": "Colour B",
+          "kind": "color",
+          "default": "#8a5fd6",
+          "group": "Style"
+        },
+        {
+          "key": "opacity",
+          "label": "Opacity",
+          "kind": "float",
+          "default": 0.55,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Style"
+        },
+        {
+          "key": "speed",
+          "label": "Drift speed",
+          "kind": "float",
+          "default": 0.35,
+          "minimum": 0.02,
+          "maximum": 3,
+          "step": 0.05,
+          "group": "Animation"
+        },
+        {
+          "key": "trigger",
+          "label": "Trigger",
+          "kind": "float",
+          "default": 50,
+          "bindable": true,
+          "accepts": [
+            "number",
+            "percent",
+            "celsius"
+          ],
+          "group": "Drive",
+          "help": "0-100: higher = brighter and slightly faster motion."
+        }
+      ],
+      "lua_draw_body": "\n local x0, y0, W, H = {x}, {y}, {width}, {height}\n local amp = {amplitude}\n local lw = {line_width}\n local n = math.floor({bands} + 0.5)\n if n < 1 then n = 1 end\n local energy = math.min(math.max((tonumber({trigger}) or 0) / 100, 0), 1)\n local speed = {speed} * (0.7 + 0.6 * energy)\n local t = wall_clock() * speed\n local ra, ga, ba = {color_a}\n local rb, gb, bb = {color_b}\n local steps = math.max(48, math.floor(W / 4))\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\n for band = 1, n do\n  local u = (band - 1) / math.max(n - 1, 1)\n  local r = ra + (rb - ra) * u\n  local g = ga + (gb - ga) * u\n  local b = ba + (bb - ba) * u\n  local phase = t * (1.0 + u * 0.55) + band * 1.7\n  local ybase = y0 + H * (0.2 + 0.6 * u)\n  local band_amp = amp * (0.65 + 0.35 * math.sin(band * 1.3 + t * 0.4))\n  local a = {opacity} * (0.35 + 0.65 * energy) * (0.55 + 0.45 * (1 - math.abs(u - 0.5) * 1.2))\n  -- soft under-glow pass\n  cairo_set_line_width(cr, lw * 1.8)\n  cairo_set_source_rgba(cr, r, g, b, a * 0.25)\n  cairo_new_path(cr)\n  for i = 0, steps do\n   local px = i / steps\n   local xx = x0 + px * W\n   local yy = ybase\n     + math.sin(px * 2.4 * math.pi + phase) * band_amp\n     + math.sin(px * 5.1 * math.pi - phase * 1.3) * (band_amp * 0.28)\n   if i == 0 then cairo_move_to(cr, xx, yy) else cairo_line_to(cr, xx, yy) end\n  end\n  cairo_stroke(cr)\n  -- main ribbon\n  cairo_set_line_width(cr, lw)\n  cairo_set_source_rgba(cr, r, g, b, a)\n  cairo_new_path(cr)\n  for i = 0, steps do\n   local px = i / steps\n   local xx = x0 + px * W\n   local yy = ybase\n     + math.sin(px * 2.4 * math.pi + phase) * band_amp\n     + math.sin(px * 5.1 * math.pi - phase * 1.3) * (band_amp * 0.28)\n   if i == 0 then cairo_move_to(cr, xx, yy) else cairo_line_to(cr, xx, yy) end\n  end\n  cairo_stroke(cr)\n end\n"
     }
   ]
 }
