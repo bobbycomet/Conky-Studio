@@ -19,6 +19,7 @@
   Segmented Gauge already work. Defaults to `%` to match prior behavior
   for existing projects.
 
+---
 
 ## 1.0.2
 
@@ -53,7 +54,7 @@ Reactor Gauge's `value` input already accepted any numeric source
 (percent, celsius, or plain number); the bug was purely in how that
 value was rendered, not in what sources it could bind to.
 
-# Released
+---
 
 **v1.0.3 AppImage / AppRun improvements**
 
@@ -87,10 +88,56 @@ Details:
 - Detects when it is already running from the installed copy (`readlink -f` comparison) and skips the copy step to avoid loops.
 - To fix an existing broken `.desktop` entry that points at a dead path: delete it once (`rm ~/.local/share/applications/conky-studio.desktop`) or simply launch the AppImage directly; the install logic will recreate a correct entry.
 
-### v1.0.4 Small Bug Fix (Latest)
+---
+
+### v1.0.4 Small Bug Fix
 
 **Layers dock no longer steals focus when reordering**
 
 Clicking a row in the Layers list starts a drag on that row on mouse-down, before any drag begins. That selection fired `itemSelectionChanged` and pushed the node onto the canvas scene, which raised the tabified Properties dock and swapped Layers out from under the pointer, interrupting the drag.
 
 Selection driven from Layers is now guarded so the property panel content still updates in the background, but Properties is not raised; a direct click on a node in the canvas still opens Properties as before. After a drop, the Layers list rebuild no longer clears the highlight on the row you just moved; it is re-selected by id so the active layer stays visibly selected.
+
+---
+
+# v1.0.5 Legacy and custom scripts overhaul (Latest)
+
+### Honesty limits (unchanged by design)
+- Arbitrary Cairo is not decompiled into Arc/Bar/Star nodes.
+- Wiring a native Bar does not change an imported Custom Lua HUD until you edit that Lua to read `in1`…`in12`.
+- TEXT layout and `${if_…}` handling remain best-effort / simplified.
+
+### Legacy import; escape-hatch model
+- Imported Cairo themes land as self-contained **Custom Lua** nodes. Internal vitals, cache reads, and draw logic stay in that text; Studio does **not** auto-rewire them onto graph sources.
+- Companion shells (`sensors.sh`, `weather.sh`, …) become **Custom Script** nodes. Self-caching scripts keep their original basename and cache paths; no stdout wrapper that would break Lua `read_kv_cache` expectations.
+- Unwired **daemon** Custom Scripts still run from `start.sh`, so pure-Lua HUDs keep getting fresh cache files even when nothing is wired in the graph.
+- Cache/asset path rewrite toward theme-local `CACHE_DIR`, `ASSETS_DIR`, and `.runtime-cache`.
+- Companion `.conf` files next to scripts are copied into `scripts/` when present.
+- Clearer import warnings: Custom Lua / Custom Script are independent escape hatches; graph nodes are optional extra layers.
+
+### Custom Lua
+- Bindable inputs expanded from **1–6** to **1–12**.
+- Unwired inputs inject as **`nil`** (not `0`) so authors can write `tonumber(in1) or fallback` safely.
+- Works as a first-class palette node without the importer: same draw path as other visuals (`cr`, `W`, `H` + framework helpers).
+- Offset X/Y still shifts the whole block without editing Lua.
+
+### Custom Script
+- **Inline script** continues to win over Script path at Build.
+- Self-caching detection (patterns such as `CACHE_FILE`, `sensors.cache`, `weather.cache`) avoids the generic cache wrapper.
+- Documented as a palette escape hatch for ad-hoc shell and legacy companions, not only an import artifact.
+
+### Builder / start.sh
+- Daemon family collection includes unwired `source.custom_script` nodes with `poll_mode: daemon`.
+- Build copies Custom Lua `asset_paths` into both `assets/` and `images/` when present.
+
+### Docs
+- README Legacy Import section and wiki pages updated for the escape-hatch model:
+  - Legacy Importer Internals
+  - Theme Architecture & Codegen Pipeline
+  - Node Reference — Visuals (Custom Lua)
+  - Node Reference — Sources (Custom Script)
+
+### Honesty limits (unchanged by design)
+- Arbitrary Cairo is not decompiled into Arc/Bar/Star nodes.
+- Wiring a native Bar does not change an imported Custom Lua HUD until you edit that Lua to read `in1`…`in12`.
+- TEXT layout and `${if_…}` handling remain best-effort/simplified.
