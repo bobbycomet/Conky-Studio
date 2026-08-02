@@ -188,21 +188,24 @@ Fill-capable nodes support **solid, linear, and radial gradients**.
 
 **Project → Import Legacy Theme** is semantic, not a pixel-perfect clone:
 
-- Converts conf settings (including colour palette/default font when present), TEXT layout (best-effort), common `${…}` sources (CPU, RAM, disk, battery, net, time, …), bars/graphs/`${hr}` when recognized, images, known scripts, and Cairo Lua into **Custom Lua** nodes
+- Converts conf settings (including colour palette/default font when present), TEXT layout (best-effort), common `${…}` sources (CPU, RAM, disk, battery, net, time, …), bars/graphs/`${hr}` when recognized, images when a file is found, known scripts, and Cairo Lua into **Custom Lua** nodes
 - Deduplicates identical sources and lays out the graph so sources sit in a left column and visuals near their draw positions
 - Does **not** reverse-engineer arbitrary Cairo into Arc/Bar nodes
 - `${if_…}` is simplified; layout from pure TEXT is approximate
 - Warnings are summarized (not one line per unknown token)
-- Images cannot currently be reconstructed from legacy theme references. Re-add assets through Studio after import.
+- Pure-Lua themes keep drawing images **inside Custom Lua**; Build copies listed `asset_paths` into `assets/` and `images/`. Separate Image nodes are not auto-created for that case—re-add Image nodes in Studio only if you want a second, independent layer
 
->**Custom scripts & Lua:**
-Custom Script nodes are text-editable and can be paired with Custom Lua nodes for advanced integrations. This allows complex or non-standard logic from legacy themes to remain usable inside Studio, though behavior depends on the original script design. 
+> **Custom Script & Custom Lua (escape hatches)**  
+> Treat these as independent, text-editable “IDE” surfaces—not as Studio-managed logic graphs.
 >
->Then you edit and build like any native project; preview and export stay 1:1 for what’s on the canvas.
+> - **Custom Lua** holds the original Cairo / HUD logic (helpers + draw-hook body). Studio only strips surface create/destroy so the code uses the shared `cr` / `W` / `H`, and rewrites common asset/cache paths toward `THEME_DIR` / `ASSETS_DIR` / `CACHE_DIR`. Internal refresh/stats logic stays in that text until *you* edit it.
+> - **Custom Script** holds companion shells (`sensors.sh`, `weather.sh`, …). Small files get an **Inline script** body for Properties editing. Self-caching scripts run under their original basename in **daemon** mode so `start.sh` keeps writing the cache files the Lua expects—even when nothing in the graph is wired to them.
+> - Studio does **not** auto-wire graph sources into imported Lua or rewrite its vitals to use the node graph. To mix Studio sources with Custom Lua later, wire **Input 1–12** yourself and change the Lua to read `in1`…`in12` (unwired inputs are `nil` at runtime).
 >
->This importer will improve over time, but some limitations are inherent to how Conky themes are written. Think of it as a migration and remixing tool: it gets existing themes into Studio quickly, while preserving complex sections through Custom Lua when automatic conversion isn’t possible.
+> Then you edit and build like any native project; preview and export stay 1:1 for what’s on the canvas (including standalone Custom Lua + daemon scripts).
+>
+> This importer will improve over time, but some limitations are inherent to how Conky themes are written. Think of it as a **migration and remixing tool**: it gets existing themes into Studio quickly, preserves complex sections through Custom Lua / Custom Script, and leaves native node conversion for TEXT-style themes where that mapping is reliable.
 
-[Check the Nodes Reference for more details](https://github.com/bobbycomet/Conky-Studio/wiki/Node-Reference)
 
 ---
 
