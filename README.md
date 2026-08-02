@@ -71,7 +71,7 @@ The goal is simple:
 3. Connect them
 4. Enable live preview
 
-That is a real Conky widget—not a mockup.
+That is a real Conky widget, not a mockup.
 
 [Creating your first widget](https://www.youtube.com/watch?v=BhB6O_jakxo)
 
@@ -82,6 +82,7 @@ From there, build complete HUDs with:
 * custom scripts
 * click actions
 * Custom Lua/Cairo rendering
+* 88 nodes, and more planned
 
 ---
 
