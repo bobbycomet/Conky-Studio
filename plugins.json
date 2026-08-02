@@ -202,7 +202,7 @@
             "number"
           ],
           "group": "Filter",
-          "help": "1 = no smoothing. Smaller = heavier lag. 0.15\u20130.3 is a good start for CPU/net."
+          "help": "1 = no smoothing. Smaller = heavier lag. 0.15-0.3 is a good start for CPU/net."
         },
         {
           "key": "slot",
@@ -213,7 +213,7 @@
           "maximum": 9999,
           "step": 1,
           "group": "State",
-          "help": "Unique integer per Smooth node (1, 2, 3\u2026). Shared slots share memory."
+          "help": "Unique integer per Smooth node (1, 2, 3...). Shared slots share memory."
         }
       ],
       "lua_expr": "(function()\n local k = {slot}\n local v, a = {value}, {alpha}\n if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n local s = _cs_plugin_smooth\n if s[k] == nil then s[k] = v end\n s[k] = s[k] + (v - s[k]) * a\n return s[k]\nend)()"
@@ -916,7 +916,7 @@
           "kind": "string",
           "default": "",
           "group": "Format",
-          "help": "e.g. ' %', ' \u00b0C', ' KiB/s'"
+          "help": "e.g. ' %', '  degC', ' KiB/s'"
         }
       ],
       "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local d = math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local s = string.format('%.' .. d .. 'f', v)\n return '{prefix}' .. s .. '{suffix}'\nend)()"
@@ -1788,13 +1788,13 @@
         },
         {
           "key": "ellipsis",
-          "label": "Add \u2026 if truncated",
+          "label": "Add ... if truncated",
           "kind": "bool",
           "default": true,
           "group": "Slice"
         }
       ],
-      "lua_expr": "(function() local s = tostring({input} or ''); local a = math.floor({start}); local n = math.floor({length}); if a < 1 then a = 1 end; local out = s:sub(a, a + n - 1); if {ellipsis} and #s > (a + n - 1) and n > 0 then out = out .. '\u2026' end; return out end)()"
+      "lua_expr": "(function() local s = tostring({input} or ''); local a = math.floor({start}); local n = math.floor({length}); if a < 1 then a = 1 end; local out = s:sub(a, a + n - 1); if {ellipsis} and #s > (a + n - 1) and n > 0 then out = out .. '...' end; return out end)()"
     },
     {
       "id": "logic.remap_curve",
@@ -1972,7 +1972,7 @@
         },
         {
           "key": "value",
-          "label": "Value (0\u2013100)",
+          "label": "Value (0-100)",
           "kind": "float",
           "default": 70,
           "bindable": true,
@@ -2387,7 +2387,7 @@
             "percent"
           ],
           "group": "Drive",
-          "help": "Scales amplitude. 0\u2013100 typical."
+          "help": "Scales amplitude. 0-100 typical."
         },
         {
           "key": "harmonics",
@@ -3217,7 +3217,7 @@
         },
         {
           "key": "value",
-          "label": "Value (0\u2013100)",
+          "label": "Value (0-100)",
           "kind": "float",
           "default": 60,
           "bindable": true,
@@ -3626,7 +3626,7 @@
           "label": "Filename prefix",
           "kind": "string",
           "default": "frame_",
-          "help": "Files must be images/<prefix>01.png, <prefix>02.png, \u2026 (zero-padded to Digits).",
+          "help": "Files must be images/<prefix>01.png, <prefix>02.png, ... (zero-padded to Digits).",
           "group": "Frames"
         },
         {
@@ -4423,7 +4423,7 @@
           "label": "Start angle",
           "kind": "float",
           "default": 140,
-          "help": "Degrees from 3-o'clock; ~140\u219240 gives a classic ~260\u00b0 sweep.",
+          "help": "Degrees from 3-o'clock; ~140\u219240 gives a classic ~260 deg sweep.",
           "group": "Shape"
         },
         {
@@ -4556,7 +4556,7 @@
         },
         {
           "key": "value",
-          "label": "Value (\u00d71000)",
+          "label": "Value (x1000)",
           "kind": "float",
           "default": 3.5,
           "bindable": true,
@@ -4657,7 +4657,7 @@
           "key": "unit_label",
           "label": "Unit label",
           "kind": "string",
-          "default": "\u00d71000",
+          "default": "x1000",
           "group": "Label"
         },
         {
@@ -4891,7 +4891,7 @@
           "group": "Style"
         }
       ],
-      "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local val = tonumber({value}) or 0\n local fr, fg, fb = {face_color}\n local tkr, tkg, tkb = {tick_color}\n local nr, ng, nb = {needle_color}\n local ar, ag, ab = {accent_color}\n -- face\n cairo_set_source_rgba(cr, fr, fg, fb, {opacity})\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_fill(cr)\n -- 10 major ticks (0..9 \u00d7 1000 ft style around dial)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)\n for i = 0, 9 do\n  local a = -math.pi/2 + i * (2 * math.pi / 10)\n  cairo_set_line_width(cr, 2.5)\n  cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n  cairo_move_to(cr, cx + math.cos(a)*(R-4), cy + math.sin(a)*(R-4))\n  cairo_line_to(cr, cx + math.cos(a)*(R-16), cy + math.sin(a)*(R-16))\n  cairo_stroke(cr)\n  -- minor\n  cairo_set_line_width(cr, 1.2)\n  for j = 1, 4 do\n   local am = a + j * (2 * math.pi / 50)\n   cairo_move_to(cr, cx + math.cos(am)*(R-4), cy + math.sin(am)*(R-4))\n   cairo_line_to(cr, cx + math.cos(am)*(R-10), cy + math.sin(am)*(R-10))\n   cairo_stroke(cr)\n  end\n end\n -- needles: long = hundreds (0-1000 maps full circle), short = thousands\n local hundreds = (val % 1000) / 1000\n local thousands = (val / 10000) % 1\n local a_h = -math.pi/2 + hundreds * 2 * math.pi\n local a_t = -math.pi/2 + thousands * 2 * math.pi\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n -- thousand (short, fat)\n cairo_set_line_width(cr, 3.5)\n cairo_set_source_rgba(cr, nr, ng, nb, {opacity})\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_t)*R*0.45, cy + math.sin(a_t)*R*0.45)\n cairo_stroke(cr)\n -- hundred (long)\n cairo_set_line_width(cr, 2)\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_h)*R*0.78, cy + math.sin(a_h)*R*0.78)\n cairo_stroke(cr)\n -- hub\n cairo_set_source_rgba(cr, ar, ag, ab, {opacity})\n cairo_arc(cr, cx, cy, 5, 0, 2 * math.pi)\n cairo_fill(cr)\n if {show_value} and studio_draw_text then\n  studio_draw_text(cr, string.format('%.0f', val), cx, cy + R * 0.55, {family='Sans', size=12, r=tkr, g=tkg, b=tkb, a={opacity}, align='center', halo=true})\n end\n"
+      "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local val = tonumber({value}) or 0\n local fr, fg, fb = {face_color}\n local tkr, tkg, tkb = {tick_color}\n local nr, ng, nb = {needle_color}\n local ar, ag, ab = {accent_color}\n -- face\n cairo_set_source_rgba(cr, fr, fg, fb, {opacity})\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_fill(cr)\n -- 10 major ticks (0..9 x 1000 ft style around dial)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)\n for i = 0, 9 do\n  local a = -math.pi/2 + i * (2 * math.pi / 10)\n  cairo_set_line_width(cr, 2.5)\n  cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n  cairo_move_to(cr, cx + math.cos(a)*(R-4), cy + math.sin(a)*(R-4))\n  cairo_line_to(cr, cx + math.cos(a)*(R-16), cy + math.sin(a)*(R-16))\n  cairo_stroke(cr)\n  -- minor\n  cairo_set_line_width(cr, 1.2)\n  for j = 1, 4 do\n   local am = a + j * (2 * math.pi / 50)\n   cairo_move_to(cr, cx + math.cos(am)*(R-4), cy + math.sin(am)*(R-4))\n   cairo_line_to(cr, cx + math.cos(am)*(R-10), cy + math.sin(am)*(R-10))\n   cairo_stroke(cr)\n  end\n end\n -- needles: long = hundreds (0-1000 maps full circle), short = thousands\n local hundreds = (val % 1000) / 1000\n local thousands = (val / 10000) % 1\n local a_h = -math.pi/2 + hundreds * 2 * math.pi\n local a_t = -math.pi/2 + thousands * 2 * math.pi\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n -- thousand (short, fat)\n cairo_set_line_width(cr, 3.5)\n cairo_set_source_rgba(cr, nr, ng, nb, {opacity})\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_t)*R*0.45, cy + math.sin(a_t)*R*0.45)\n cairo_stroke(cr)\n -- hundred (long)\n cairo_set_line_width(cr, 2)\n cairo_move_to(cr, cx, cy)\n cairo_line_to(cr, cx + math.cos(a_h)*R*0.78, cy + math.sin(a_h)*R*0.78)\n cairo_stroke(cr)\n -- hub\n cairo_set_source_rgba(cr, ar, ag, ab, {opacity})\n cairo_arc(cr, cx, cy, 5, 0, 2 * math.pi)\n cairo_fill(cr)\n if {show_value} and studio_draw_text then\n  studio_draw_text(cr, string.format('%.0f', val), cx, cy + R * 0.55, {family='Sans', size=12, r=tkr, g=tkg, b=tkb, a={opacity}, align='center', halo=true})\n end\n"
     }
   ]
 }
