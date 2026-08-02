@@ -130,7 +130,7 @@ Studio detects your session and adapts where it can:
 See [Packaging](https://github.com/bobbycomet/Conky-Studio/wiki/Packaging) & [Compatibility Here](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
 - **Display server** — X11 vs Wayland
-- `QT_QPA_PLATFORM` is now set to `wayland;xcb` when `$WAYLAND_DISPLAY` is present. Qt tries Wayland first and silently falls back to `XCB if` needed.
+- `QT_QPA_PLATFORM` is now set to `wayland;xcb` when `$WAYLAND_DISPLAY` is present. Qt tries Wayland first and silently falls back to `XCB` if needed.
 - **Compositor** — KDE, wlroots (Sway, Hyprland, etc), Mir-style; **GNOME/Mutter** is a poor fit for this kind of overlay (Conky + GNOME limitation, not a Studio choice)  
 - **Conky build** — installed or missing, version, Wayland support (some distro packages are X11-only)  
 - **Hardware** — lm-sensors, GPU hints, network iface, disks  
