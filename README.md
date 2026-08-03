@@ -89,6 +89,20 @@ Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater)
 
 ---
 
+## Features
+
+* **Visual node editor** — sources → logic → visuals
+* **Live preview** — runs a real Conky process
+* **Theme manager** — manage themes in `~/.config/conky`
+* **Theme wizard** — generate starter HUDs by style
+* **Legacy importer (beta)** — convert existing themes into editable projects
+* **Plugins** — community JSON node extensions
+* **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/network hints; see [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) for details
+* **Clean exports** — standard Conky theme folders
+* **Custom Lua support** — full Cairo escape hatch when nodes are not enough
+
+---
+
 ## Built for Conky
 
 Conky Studio is an independent project designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky).
@@ -99,19 +113,6 @@ Conky is licensed under the GPL-3.0 License.
 
 ---
 
-## Features
-
-* **Visual node editor** — sources → logic → visuals
-* **Live preview** — runs a real Conky process
-* **Theme manager** — manage themes in `~/.config/conky`
-* **Theme wizard** — generate starter HUDs by style
-* **Legacy importer (beta)** — convert existing themes into editable projects
-* **Plugins** — community JSON node extensions
-* **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/network hints
-* **Clean exports** — standard Conky theme folders
-* **Custom Lua support** — full Cairo escape hatch when nodes are not enough
-
----
 
 ## Runtime Performance
 
