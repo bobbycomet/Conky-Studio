@@ -25,7 +25,7 @@ Rename for a typo for Altitude indicator, as a typo had it as Attitude indicator
 
 To get these fixes:
 
-* Uninstall them
+* Uninstall the plugins
 * Reinstall them
 
 ---
