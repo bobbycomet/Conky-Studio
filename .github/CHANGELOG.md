@@ -18,7 +18,8 @@
   - `logic.boolean_and`
   - `logic.boolean_or`
   - `logic.pick`
-  These were forgotten to be removed once the equivalent nodes became part of the core (`logic.py` / `logic_extra.py`). They have now been cleaned up.
+
+These were forgotten to be removed once the equivalent nodes became part of the core (`logic.py` / `logic_extra.py`). They have now been cleaned up.
 
 ---
 
