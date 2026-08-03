@@ -20,6 +20,7 @@
   - `logic.pick`
 
 These were forgotten to be removed once the equivalent nodes became part of the core (`logic.py` / `logic_extra.py`). They have now been cleaned up.
+Updated Plugin node reference in the wiki to match the removals.
 
 ---
 
