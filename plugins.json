@@ -4415,9 +4415,9 @@
       "lua_draw_body": "\n local maps = {\n  ['0']={1,1,1,1,1,1,0}, ['1']={0,1,1,0,0,0,0}, ['2']={1,1,0,1,1,0,1},\n  ['3']={1,1,1,1,0,0,1}, ['4']={0,1,1,0,0,1,1}, ['5']={1,0,1,1,0,1,1},\n  ['6']={1,0,1,1,1,1,1}, ['7']={1,1,1,0,0,0,0}, ['8']={1,1,1,1,1,1,1},\n  ['9']={1,1,1,1,0,1,1},\n }\n local h = tonumber(os.date('%H')) or 0\n local m = tonumber(os.date('%M')) or 0\n local s = tonumber(os.date('%S')) or 0\n if not {twenty_four} then\n  h = h % 12\n  if h == 0 then h = 12 end\n end\n local function two(n) return string.format('%02d', n) end\n local parts = {two(h), two(m)}\n if {show_seconds} then parts[#parts+1] = two(s) end\n local dw, dh, th, gap = {digit_width}, {digit_height}, {thickness}, {gap}\n local onr, ong, onb = {color}\n local offr, offg, offb = {dim_color}\n local function seg(on, x1, y1, x2, y2)\n  if on then cairo_set_source_rgba(cr, onr, ong, onb, {opacity})\n  else cairo_set_source_rgba(cr, offr, offg, offb, {opacity} * 0.35) end\n  cairo_set_line_width(cr, th)\n  cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n  cairo_move_to(cr, x1, y1); cairo_line_to(cr, x2, y2); cairo_stroke(cr)\n end\n local function draw_digit(ch, ox, oy)\n  local mseg = maps[ch] or maps['0']\n  local mid = oy + dh / 2\n  seg(mseg[1]==1, ox+th, oy, ox+dw-th, oy)\n  seg(mseg[2]==1, ox+dw, oy+th, ox+dw, mid-th/2)\n  seg(mseg[3]==1, ox+dw, mid+th/2, ox+dw, oy+dh-th)\n  seg(mseg[4]==1, ox+th, oy+dh, ox+dw-th, oy+dh)\n  seg(mseg[5]==1, ox, mid+th/2, ox, oy+dh-th)\n  seg(mseg[6]==1, ox, oy+th, ox, mid-th/2)\n  seg(mseg[7]==1, ox+th, mid, ox+dw-th, mid)\n end\n local function draw_colon(ox, oy, on)\n  local r = th * 0.55\n  if on then cairo_set_source_rgba(cr, onr, ong, onb, {opacity})\n  else cairo_set_source_rgba(cr, offr, offg, offb, {opacity} * 0.25) end\n  cairo_arc(cr, ox, oy + dh * 0.35, r, 0, 2*math.pi); cairo_fill(cr)\n  cairo_arc(cr, ox, oy + dh * 0.65, r, 0, 2*math.pi); cairo_fill(cr)\n end\n local colon_on = true\n if {blink_colon} then colon_on = (s % 2 == 0) end\n local ox = {x}\n local oy = {y}\n for pi, part in ipairs(parts) do\n  if pi > 1 then\n   local cw = gap * 0.9 + th\n   draw_colon(ox + cw * 0.45, oy, colon_on)\n   ox = ox + cw\n  end\n  for i = 1, #part do\n   draw_digit(part:sub(i,i), ox, oy)\n   ox = ox + dw + gap\n  end\n end\n"
     },
     {
-      "id": "visual.plugin.attitude_indicator",
+      "id": "visual.plugin.altititude_indicator",
       "category": "visual",
-      "label": "Attitude Indicator",
+      "label": "Altititude Indicator",
       "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Aircraft artificial-horizon style gauge. Pitch (vertical shift) and Bank (roll rotation) inputs. Decorative / aviation HUD element — not a real AHRS.",
@@ -4427,7 +4427,7 @@
         "plane",
         "aviation",
         "horizon",
-        "attitude",
+        "altititude",
         "gauge"
       ],
       "simple_mode": false,
