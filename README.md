@@ -85,6 +85,8 @@ From there, build complete HUDs with:
 * 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (19 logic, 37 visual) for 156 total nodes.
 * Check [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
+Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
+
 ---
 
 ## Built for Conky
