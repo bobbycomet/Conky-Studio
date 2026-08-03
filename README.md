@@ -101,28 +101,6 @@ Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater)
 * **Clean exports** — standard Conky theme folders
 * **Custom Lua support** — full Cairo escape hatch when nodes are not enough
 
----
-
-## Built for Conky
-
-Conky Studio is an independent project designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky).
-
-It is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers.
-
-Conky is licensed under the GPL-3.0 License.
-
----
-
-
-## Runtime Performance
-
-Conky Studio is an authoring tool, not a runtime interpreter.
-
-The node graph is converted into normal Conky files during build. The exported theme runs independently of Studio.
-
-Node count does not directly determine runtime performance. Performance depends on the generated Lua logic, update intervals, and normal Conky execution.
-
----
 
 ## Theme Compatibility
 
@@ -149,6 +127,26 @@ See [Theme Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-
 
 ---
 
+## Runtime Performance
+
+Conky Studio is an authoring tool, not a runtime interpreter.
+
+The node graph is converted into normal Conky files during build. The exported theme runs independently of Studio.
+
+Node count does not directly determine runtime performance. Performance depends on the generated Lua logic, update intervals, and normal Conky execution.
+
+---
+
+## Built for Conky
+
+Conky Studio is an independent project designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky).
+
+It is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers.
+
+Conky is licensed under the GPL-3.0 License.
+
+---
+
 ## Continue exploring
 
 The sections below cover on the wiki:
@@ -159,7 +157,6 @@ The sections below cover on the wiki:
 * Nodes
 * Legacy Import details
 * Requirements
-* Screenshots
 * Starter themes
 * Built examples
 
