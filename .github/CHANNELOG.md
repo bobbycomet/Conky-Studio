@@ -214,6 +214,6 @@ Analog dial with ok/warn/danger zones, ticks, needle, and optional centre readou
 - **Plugin loader:** `loaded_plugins()` returns entries sorted by label for consistent UI ordering.
 
 
-#Plugins
+## plugins.json
 
 Added a total of 54 plugins; 33 are visual (Battery, Network bars, Digital clock, and more), quite a few are animated (Aurora veil, Bubbles, Embers, and more), and the rest are logic bridges. 
