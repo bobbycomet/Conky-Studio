@@ -200,3 +200,15 @@ Analog dial with ok/warn/danger zones, ticks, needle, and optional centre readou
   | **Top Processes Table** | Classic `${top name/cpu/mem}` table, N rows |
   | **CPU Core Strip** | Per-core bars via `${cpu cpuN}`, optional heat-map |
   | **Orbit Field** | Decorative orbits; optional Trigger scales speed |
+
+## v1.0.6.1
+
+### Navigation fix
+
+**Plugins & palette organization**
+
+- **Nodes palette:** Node types within each category and subcategory are listed in **alphabetical order** (A→Z by label), including installed plugins.
+- **Tools → Plugins:**
+  - Installed and catalogue lists are sorted **alphabetically by plugin name**.
+  - **Category filter** (All/Logic/Visual/Source) on both Installed and Fetch lists so you can focus on one plugin type when installing or uninstalling.
+- **Plugin loader:** `loaded_plugins()` returns entries sorted by label for consistent UI ordering.
