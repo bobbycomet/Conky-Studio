@@ -123,6 +123,31 @@ Node count does not directly determine runtime performance. Performance depends 
 
 ---
 
+## Theme Compatibility
+
+Conky Studio's Manager is flexible enough to run and manage any Conky theme that provides a standard `start.sh` entry script.
+
+This includes:
+
+* Themes created with Conky Studio
+* Manually built Conky themes
+* Compatible third-party themes
+
+Conky Studio does not need to build a theme in order to manage it. If a theme has its own folder and a working `start.sh`, it can be launched, stopped, and organized through the Manager.
+
+You can also run themes manually:
+
+```
+cd ~/.config/conky/<theme-folder>
+./start.sh
+```
+
+Conky Studio acts as the manager and launcher after a theme is built; it does not need to remain open while themes are running.
+
+See [Theme Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-Compatibility) for an example of the start.sh
+
+---
+
 ## Continue exploring
 
 The sections below cover on the wiki:
