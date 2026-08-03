@@ -82,7 +82,7 @@ From there, build complete HUDs with:
 * custom scripts
 * click actions
 * Custom Lua/Cairo rendering
-* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (21 logic, 37 visual) for 156 total nodes.
+* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (19 logic, 37 visual) for 156 total nodes.
 * Check [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
 ---
