@@ -1100,6 +1100,8 @@
           "label": "X",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1107,6 +1109,8 @@
           "label": "Y",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1115,7 +1119,7 @@
           "kind": "float",
           "default": 6,
           "minimum": 1,
-          "maximum": 200,
+          "maximum": 4000,
           "group": "Shape"
         },
         {
@@ -1323,6 +1327,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1330,6 +1336,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1526,6 +1534,8 @@
           "label": "X",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1533,6 +1543,8 @@
           "label": "Y",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1584,7 +1596,7 @@
       "id": "logic.coerce_number",
       "category": "logic",
       "label": "Coerce Number",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Force any input (text, category, percent, \u2026) into a number. Non-numeric strings become Default. Bridge text sources into gauges/bars that only accept numbers.",
       "color": "#5f8fd6",
@@ -1630,7 +1642,7 @@
       "id": "logic.coerce_text",
       "category": "logic",
       "label": "Coerce Text",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Turn any value into a string. Lets numeric sources feed Text Label / Badge / String Join cleanly when the socket kinds would otherwise refuse the wire.",
       "color": "#5f8fd6",
@@ -1675,7 +1687,7 @@
       "id": "logic.truthy",
       "category": "logic",
       "label": "Truthy Gate",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Outputs 1 if Input is non-zero / non-empty string, else 0. Universal 'is there a value?' bridge for LEDs and triggers.",
       "color": "#5f8fd6",
@@ -1711,7 +1723,7 @@
       "id": "logic.string_length",
       "category": "logic",
       "label": "String Length",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Character length of the input string. Useful for dynamic layout or 'is text empty?' checks.",
       "color": "#5f8fd6",
@@ -1743,7 +1755,7 @@
       "id": "logic.substring",
       "category": "logic",
       "label": "Substring",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Extract a slice of text (1-based start, length). Truncate long process names or SSID labels.",
       "color": "#5f8fd6",
@@ -1800,7 +1812,7 @@
       "id": "logic.remap_curve",
       "category": "logic",
       "label": "Remap Curve",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Map 0\u20131 (or any range) through ease-in / ease-out / smoothstep / gamma. Makes bars and glows feel less linear.",
       "color": "#5f8fd6",
@@ -1887,7 +1899,7 @@
       "id": "logic.counter",
       "category": "logic",
       "label": "Frame Counter",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Increments every sensor refresh while Enabled \u2265 0.5. Resets when Enabled drops. Useful for stepped animations and cycle indexes.",
       "color": "#5f8fd6",
@@ -1943,7 +1955,7 @@
       "id": "visual.plugin.signal_bars",
       "category": "visual",
       "label": "Signal Bars",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Classic cellular / Wi-Fi style signal bars driven by a 0\u2013100 value. Unlit bars use Track colour.",
       "color": "#8a5fd6",
@@ -1961,6 +1973,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -1968,6 +1982,8 @@
           "label": "Y (baseline)",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2051,7 +2067,7 @@
       "id": "visual.plugin.thermometer",
       "category": "visual",
       "label": "Thermometer",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Vertical thermometer: bulb + stem fill mapped from Min\u2192Max. Optional heat-map colour on the mercury.",
       "color": "#8a5fd6",
@@ -2068,6 +2084,8 @@
           "label": "Center X",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2075,6 +2093,8 @@
           "label": "Top Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2169,7 +2189,7 @@
       "id": "visual.plugin.seven_segment",
       "category": "visual",
       "label": "Seven Segment",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Classic 7-segment digit display for 0\u20139 (and limited letters). Bind Value for a retro digital readout.",
       "color": "#8a5fd6",
@@ -2187,6 +2207,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2194,6 +2216,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2286,7 +2310,7 @@
       "id": "visual.plugin.wave_line",
       "category": "visual",
       "label": "Wave Line",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Animated sine / multi-sine wave. Amplitude scales with optional Trigger (CPU%, volume proxy, \u2026).",
       "color": "#8a5fd6",
@@ -2304,6 +2328,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2311,6 +2337,8 @@
           "label": "Baseline Y",
           "kind": "float",
           "default": 80,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2405,7 +2433,7 @@
       "id": "visual.plugin.spinner",
       "category": "visual",
       "label": "Spinner",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Circular loading spinner (arc that rotates). Dim when Active < 0.5.",
       "color": "#8a5fd6",
@@ -2504,7 +2532,7 @@
       "id": "visual.plugin.heartbeat",
       "category": "visual",
       "label": "Heartbeat Line",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "ECG-style heartbeat polyline that scrolls. Spike rate / height can follow Trigger.",
       "color": "#8a5fd6",
@@ -2522,6 +2550,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2529,6 +2559,8 @@
           "label": "Baseline Y",
           "kind": "float",
           "default": 60,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2603,7 +2635,7 @@
       "id": "visual.plugin.liquid_fill",
       "category": "visual",
       "label": "Liquid Fill",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Rounded vessel with animated wavy liquid surface. Fill level follows Value (min\u2192max).",
       "color": "#8a5fd6",
@@ -2621,6 +2653,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2628,6 +2662,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2733,7 +2769,7 @@
       "id": "visual.plugin.traffic_light",
       "category": "visual",
       "label": "Traffic Light",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Three stacked lamps. Lights green / amber / red based on Value vs Warn / Danger thresholds.",
       "color": "#8a5fd6",
@@ -2750,6 +2786,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2757,6 +2795,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -2849,7 +2889,7 @@
       "id": "visual.plugin.hex_tile",
       "category": "visual",
       "label": "Hex Tile",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Single filled hexagon, optional stroke. Building block for honeycomb HUDs.",
       "color": "#8a5fd6",
@@ -2947,7 +2987,7 @@
       "id": "visual.plugin.hex_gauge",
       "category": "visual",
       "label": "Hex Gauge",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Hexagonal ring gauge: track + progressive fill along the six sides. Distinct from circular arc gauges.",
       "color": "#8a5fd6",
@@ -3056,7 +3096,7 @@
       "id": "visual.plugin.dot_matrix",
       "category": "visual",
       "label": "Dot Matrix Field",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Grid of dots whose brightness follows a radial falloff from centre, modulated by Trigger. Soft ambient / equalizer backdrop.",
       "color": "#8a5fd6",
@@ -3074,6 +3114,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3081,6 +3123,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3162,7 +3206,7 @@
       "id": "visual.plugin.chevron_row",
       "category": "visual",
       "label": "Chevron Row",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Row of chevrons that chase / light up. Good for directional flow or progress indication.",
       "color": "#8a5fd6",
@@ -3179,6 +3223,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3186,6 +3232,8 @@
           "label": "Y",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3267,7 +3315,7 @@
       "id": "visual.plugin.bubble_meter",
       "category": "visual",
       "label": "Bubble Meter",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Vertical tube with rising bubbles; fill height follows Value. Decorative capacity / tank gauge.",
       "color": "#8a5fd6",
@@ -3285,6 +3333,8 @@
           "label": "X",
           "kind": "float",
           "default": 30,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3292,6 +3342,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3378,7 +3430,7 @@
       "id": "visual.plugin.concentric_pulse",
       "category": "visual",
       "label": "Concentric Pulse",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Expanding concentric rings from a centre \u2014 sonar / ripple effect. Speed and intensity follow Trigger.",
       "color": "#8a5fd6",
@@ -3477,7 +3529,7 @@
       "id": "visual.plugin.spark_burst",
       "category": "visual",
       "label": "Spark Burst",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Radial sparks / star-burst lines. Intensity and count scale with Trigger \u2014 celebration or alert chrome.",
       "color": "#8a5fd6",
@@ -3585,7 +3637,7 @@
       "id": "visual.plugin.soft_shadow_panel",
       "category": "visual",
       "label": "Soft Shadow Panel",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Filled rounded panel with multi-pass drop shadow for depth. Pair with Glass Panel for layered UI cards.",
       "color": "#8a5fd6",
@@ -3603,6 +3655,8 @@
           "label": "X",
           "kind": "float",
           "default": 24,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3610,6 +3664,8 @@
           "label": "Y",
           "kind": "float",
           "default": 24,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3691,7 +3747,7 @@
       "id": "visual.plugin.led_bar_horizontal",
       "category": "visual",
       "label": "LED Bar (Horizontal)",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Segmented LED-style horizontal meter with optional heat colours per segment.",
       "color": "#8a5fd6",
@@ -3709,6 +3765,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3716,6 +3774,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3865,7 +3925,7 @@
           "kind": "float",
           "default": 60,
           "minimum": 8,
-          "maximum": 2000,
+          "maximum": 4000,
           "step": 1.0,
           "choices": null,
           "choice_labels": null,
@@ -3969,7 +4029,7 @@
       "id": "visual.plugin.minimap_grid",
       "category": "visual",
       "label": "Minimap Grid",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Blueprint / tactical grid with optional crosshair and animated scan. Background chrome for maps or status panels.",
       "color": "#8a5fd6",
@@ -3987,6 +4047,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -3994,6 +4056,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4070,7 +4134,7 @@
       "id": "visual.plugin.value_arc_ticks",
       "category": "visual",
       "label": "Value Arc Ticks",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Arc made of discrete ticks that light proportionally to Value \u2014 between continuous arc gauges and segmented rings.",
       "color": "#8a5fd6",
@@ -4206,7 +4270,7 @@
       "id": "visual.plugin.digital_clock",
       "category": "visual",
       "label": "Digital Alarm Clock",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Retro digital alarm-clock readout using 7-segment digits for hours:minutes (optional seconds). System time; colon blinks.",
       "color": "#8a5fd6",
@@ -4225,6 +4289,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4232,6 +4298,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4322,7 +4390,7 @@
       "id": "visual.plugin.attitude_indicator",
       "category": "visual",
       "label": "Attitude Indicator",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Aircraft artificial-horizon style gauge. Pitch (vertical shift) and Bank (roll rotation) inputs. Decorative / aviation HUD element \u2014 not a real AHRS.",
       "color": "#8a5fd6",
@@ -4443,7 +4511,7 @@
       "id": "visual.plugin.altimeter",
       "category": "visual",
       "label": "Altimeter",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Aviation-style altimeter face: outer scale, long needle (100s) and short needle (1000s). Bind Value as altitude units of your choice.",
       "color": "#8a5fd6",
@@ -4542,7 +4610,7 @@
       "id": "visual.plugin.soft_shadow_circle",
       "category": "visual",
       "label": "Soft Shadow Circle",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Filled circle with a multi-pass soft drop shadow for depth. Use as a premium status disc, avatar plate, or floating marker.",
       "color": "#8a5fd6",
@@ -4664,7 +4732,7 @@
       "id": "visual.plugin.aurora_veil",
       "category": "visual",
       "label": "Aurora Veil",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Cinematic aurora ribbons: layered translucent sine bands that drift and breathe. Soft, premium motion for a backdrop or hero accent. Optional Trigger boosts brightness and speed.",
       "color": "#8a5fd6",
@@ -4683,6 +4751,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4690,6 +4760,8 @@
           "label": "Y",
           "kind": "float",
           "default": 40,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4792,7 +4864,7 @@
       "id": "visual.plugin.capsule_bar",
       "category": "visual",
       "label": "Capsule Bar",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Fully rounded stadium/capsule progress bar. Cleaner than a square bar for modern HUDs.",
       "color": "#8a5fd6",
@@ -4810,6 +4882,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4817,6 +4891,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4895,7 +4971,7 @@
       "id": "visual.plugin.ember_field",
       "category": "visual",
       "label": "Ember Field",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Rising ember particles in a box. Trigger increases density and speed \u2014 great ambient heat/CPU chrome.",
       "color": "#8a5fd6",
@@ -4913,6 +4989,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -4920,6 +4998,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -5004,7 +5084,7 @@
       "id": "visual.plugin.scrolling_text",
       "category": "visual",
       "label": "Scrolling Text",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Horizontal marquee for long strings (track titles, status lines). Scrolls when text is wider than the box; otherwise centres.",
       "color": "#8a5fd6",
@@ -5022,6 +5102,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -5029,6 +5111,8 @@
           "label": "Y",
           "kind": "float",
           "default": 30,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -5104,7 +5188,7 @@
       "id": "visual.plugin.battery_icon",
       "category": "visual",
       "label": "Battery Icon",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.0.0",
       "description": "Classic battery silhouette with fill level from Value (0-100). Optional charging mark when Charging is truthy.",
       "color": "#8a5fd6",
@@ -5122,6 +5206,8 @@
           "label": "X",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -5129,6 +5215,8 @@
           "label": "Y",
           "kind": "float",
           "default": 20,
+          "minimum": 1,
+          "maximum": 4000,
           "group": "Position"
         },
         {
@@ -5220,7 +5308,7 @@
       "id": "visual.plugin.speedometer",
       "category": "visual",
       "label": "Speedometer",
-      "author": "community-pack",
+      "author": "Conky-Studio",
       "version": "1.1.0",
       "description": "Universal dial gauge for any numeric source (fans, speed, load, custom). Set Min/Max to match your scale; major tick labels show those values (e.g. 10, 20, 30). No unit text baked in - pair with a Text Label for RPM, km/h, etc.",
       "color": "#8a5fd6",
