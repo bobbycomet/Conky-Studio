@@ -201,7 +201,7 @@ Analog dial with ok/warn/danger zones, ticks, needle, and optional centre readou
   | **CPU Core Strip** | Per-core bars via `${cpu cpuN}`, optional heat-map |
   | **Orbit Field** | Decorative orbits; optional Trigger scales speed |
 
-## v1.0.6.1
+## v1.0.6.1 (Latest)
 
 ### Navigation fix
 
@@ -212,3 +212,8 @@ Analog dial with ok/warn/danger zones, ticks, needle, and optional centre readou
   - Installed and catalogue lists are sorted **alphabetically by plugin name**.
   - **Category filter** (All/Logic/Visual/Source) on both Installed and Fetch lists so you can focus on one plugin type when installing or uninstalling.
 - **Plugin loader:** `loaded_plugins()` returns entries sorted by label for consistent UI ordering.
+
+
+#Plugins
+
+Added a total of 54 plugins; 33 are visual (Battery, Network bars, Digital clock, and more), quite a few are animated (Aurora veil, Bubbles, Embers, and more), and the rest are logic bridges. 
