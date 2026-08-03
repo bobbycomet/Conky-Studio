@@ -2,9 +2,9 @@
 
 # plugin.json fixes: no version change for Conky Studio
 
-Altimeter, Altitude meter, and 8 others using the "cx, cy (Center x, Center y)" keys positioning fix
+Altimeter, Altitude meter, and 8 others using the "`cx`, `cy` (`Center x`, `Center y`)" keys positioning fix
 
-Issue: It was defaulting to 0-100 due to an added " typo, likely from copy-paste when trying to do mass edits in the text editor
+Issue: It was defaulting to 0-100 due to an added `"` typo, likely from copy-paste when trying to do mass edits in the text editor
 Fix: Position now allows 1-4000
 
 Rename for a typo for Altitude meter, as a typo had it as Attitude meter.
