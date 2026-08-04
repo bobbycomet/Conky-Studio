@@ -92,6 +92,7 @@ Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater)
 ## Features
 
 * **Visual node editor** — sources → logic → visuals
+* **Node properties** — Resize visuals, add gradients, create CRT effects, control animation speed, move visuals, edit values, and much more.
 * **Live preview** — runs a real Conky process
 * **Theme manager** — manage themes in `~/.config/conky`
 * **Theme wizard** — generate starter HUDs by style
@@ -100,6 +101,7 @@ Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater)
 * **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/network hints; see [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) for details
 * **Clean exports** — standard Conky theme folders
 * **Custom Lua support** — full Cairo escape hatch when nodes are not enough
+
 
 
 ## Theme Compatibility
