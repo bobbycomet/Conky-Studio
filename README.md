@@ -21,7 +21,7 @@ Start simple. Scale to anything.
 
 Build desktop HUDs visually with a node-based workflow, then export standard Conky themes that run without Conky Studio.
 
-[Video Showcase](https://www.youtube.com/watch?v=ys-cg211jsE) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki) · [Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.3/Conky-Studio-1.0.3_x86_64.AppImage) · [Conky Studio History](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
+[Video Showcase](https://www.youtube.com/watch?v=ys-cg211jsE) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki) · [Dowload the Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7/Conky-Studio-x86_64.AppImage) · [Conky Studio History](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
 
 </div>
 
