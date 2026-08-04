@@ -1,5 +1,68 @@
 # Changelog
 
+# 1.0.7 (Latest)
+
+## Highlights
+
+Conky Studio 1.0.7 improves compatibility with existing third-party Conky themes and adds new animated HUD components.
+
+### Main improvements:
+- Better ZIP/TAR theme importing
+- Automatic launcher generation for compatible themes
+- Improved Manager compatibility
+- 7 new visual nodes
+- More reliable third-party theme handling
+- Theme compatibility and node reference wiki pages updated to reflect these changes
+
+## Theme install & Manager compatibility
+
+Archive drop in the Manager tab is more reliable for real-world third-party packs (zip and tar.gz), and missing launchers are handled without pretending a broken theme is fixed.
+
+### Archive install (`installer.py`)
+
+- **Auto-generate `start.sh`** when a dropped archive has a Conky config but no launcher. The generated script uses the same `setsid` + PID-file lock pattern as Studio-built themes, so Manager Start/Stop works.
+- **Config detection** is no longer limited to `conky.conf`. Prefers `conky.conf`, then `<folder-name>.conf` (and common shortened names), then any top-level `*.conf`. Nested leftover packs can still resolve a conf one level down.
+- **Nested archive layouts** (e.g., in my tests, `RidgeV2/RidgeV2/*.conf`) are unwrapped by peeling single-child directory chains until a real theme root is found (markers: `theme.json`, `conky.conf`, `start.sh`, or any `*.conf`).
+- **`.tar.gz` / `.tgz` / `.tar`** are first-class alongside `.zip`, with case-insensitive type detection and correct theme-name stripping (`Foo.tar.gz` → folder `Foo`, not `Foo.tar`).
+- **Background scripts:** generated launchers only start `scripts/*.sh`. Lua and other helpers are left for Conky (`lua_load` / `${execi}`) so files like `music-controls.lua` are never executed as shell.
+- **Install feedback** always reports what happened: generated `start.sh` (and which conf), kept existing `start.sh`, or no conf found so no launcher was created.
+
+### Manager UI (`manager_tab.py`)
+
+- Drop area and browse dialog explicitly accept `.zip`, `.tar.gz`, `.tgz`, and `.tar`.
+- Unsupported file types are reported clearly.
+- Successful installs show an info dialog with the installer’s status message (including `start.sh` generation).
+
+### Compatibility expectations (not bugs)
+
+- A working or generated `start.sh` **only launches** the theme. It does not fix wrong paths, missing API keys, or broken configs.
+- Themes still need their **system dependencies** (`jq`, `playerctl`, `xmlstarlet`, etc.) installed on the host.
+- **Distro, session (X11 vs Wayland), DE, and compositor** affect window type, transparency, and layering. A theme tuned for KWin may misbehave under Cinnamon, GNOME, XFCE, or Hyprland; that is outside the installer.
+- Lua is loaded by Conky via the config, not by `start.sh`.
+
+---
+
+## New visual nodes
+
+| Node | Description |
+|------|-------------|
+| **`visual.spinning_fan`** | Drawn fan (curved Bézier blades + hub) that rotates; speed from a bound value. Pairs with the fan_sensors script family. Optional motion-blur ghost-blade pass so motion reads clearly even at slow Conky refresh rates. |
+| **`visual.radar_chart`** | Polar/spider chart with up to 6 bound axes. Plots multiple series on one shape (e.g., CPU / RAM / GPU / Disk / Net/Temp as one polygon). |
+| **`visual.radial_spectrum`** | Equalizer-style bars arranged in a ring. |
+| **`visual.vinyl_spinner`** | Spinning record with grooves, label, spindle, and specular sheen. Freezes on a bound spin gate via STATE + delta-time (not naive `wall_clock() * rpm`), so pause does not jump angle. |
+| **`visual.matrix_rain`** | Matrix-style falling code, fully procedural (time + index hashing; no per-frame random seed to manage). |
+| **`visual.flip_digit`** | Split-flap/departure-board digit with fold-and-shrink animation on value change (`cairo_scale` + STATE tracking the previous value). |
+| **`visual.loading_dots`** | Small bouncing-ellipsis loader. |
+
+---
+
+## Files touched (theme compatibility)
+
+- `installer.py` — archive extraction, theme-root detection, conf discovery, minimal `start.sh` generation  
+- `manager_tab.py` — drop/browse filters, install result dialogs  
+
+Visual node registrations and generators ship with the Studio node registry/visual generator modules for this release.
+
 ---
 
 # plugin.json fixes: no version change for Conky Studio
@@ -30,7 +93,7 @@ To get these fixes:
 
 ---
 
-## v1.0.6.2 (latest)
+## v1.0.6.2
 ### Fixed
 - **`lua_gen.py` – `_gen_glow_pulse`**
   - Removed the entire first gating block (`if trig > 0 or {thresh} < 1000`). It was computed and then immediately discarded by the second block, making it pure dead code.
