@@ -111,6 +111,7 @@ This includes:
 * Themes created with Conky Studio
 * Manually built Conky themes
 * Compatible third-party themes
+* Auto-generates a `start.sh` for themes without one: 1.0.7+ feature
 
 Conky Studio does not need to build a theme in order to manage it. If a theme has its own folder and a working `start.sh`, it can be launched, stopped, and organized through the Manager. This is different from the legacy importer, as the importer is trying to make it usable and editable within the Studio and its nodes.
 
