@@ -21,7 +21,7 @@ Start simple. Scale to anything.
 
 Build desktop HUDs visually with a node-based workflow, then export standard Conky themes that run without Conky Studio.
 
-[Video Showcase](https://www.youtube.com/watch?v=ys-cg211jsE) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki) · [Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.3/Conky-Studio-1.0.3_x86_64.AppImage)
+[Video Showcase](https://www.youtube.com/watch?v=ys-cg211jsE) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki) · [Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.3/Conky-Studio-1.0.3_x86_64.AppImage) · [Conky Studio History](Conky-Studio-History)
 
 </div>
 
@@ -82,7 +82,7 @@ From there, build complete HUDs with:
 * custom scripts
 * click actions
 * Custom Lua/Cairo rendering
-* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (19 logic, 37 visual) for 156 total nodes.
+* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (12 logic, 37 visual) for 149 total nodes.
 * Check [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
 Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
