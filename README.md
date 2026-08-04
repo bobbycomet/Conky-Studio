@@ -27,26 +27,6 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 
 ---
 
-## What makes this different
-
-Conky Studio is a **visual authoring tool for Conky**, not a replacement runtime.
-
-Your designs are converted into normal Conky files:
-
-* `conky.conf`
-* `render.lua`
-* `start.sh`
-* custom scripts
-* assets and resources
-
-Exported themes run independently using Conky's normal pipeline.
-
-**Live preview = export.**
-
-The preview uses the same build path as the final theme, meaning what you see is what you ship.
-
----
-
 ## Why this exists
 
 Conky is extremely powerful, but creating advanced HUDs traditionally means:
@@ -85,10 +65,6 @@ From there, build complete HUDs with:
 * 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (12 logic, 37 visual) for 149 total nodes.
 * Check [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
-Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
-
----
-
 ## Features
 
 * **Visual node editor** — sources → logic → visuals
@@ -98,11 +74,33 @@ Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater)
 * **Theme wizard** — generate starter HUDs by style
 * **Legacy importer (beta)** — convert existing themes into editable projects
 * **Plugins** — community JSON node extensions
-* **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/network hints; see [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) for details
+* **Smart system detection** — X11/Wayland, compositor, Conky build, sensors, GPU/network hints
 * **Clean exports** — standard Conky theme folders
 * **Custom Lua support** — full Cairo escape hatch when nodes are not enough
 
+Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
 
+---
+
+## What makes this different
+
+Conky Studio is a **visual authoring tool for Conky**, not a replacement runtime.
+
+Your designs are converted into normal Conky files:
+
+* `conky.conf`
+* `render.lua`
+* `start.sh`
+* custom scripts
+* assets and resources
+
+Exported themes run independently using Conky's normal pipeline.
+
+**Live preview = export.**
+
+The preview uses the same build path as the final theme, meaning what you see is what you ship.
+
+---
 
 ## Theme Compatibility
 
