@@ -141,6 +141,8 @@ Node count does not directly determine runtime performance. Performance depends 
 
 Conky Studio is an independent project designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky).
 
+Conky is a free software project developed by the Conky maintainers and contributors. Conky Studio is an independent third-party tool that uses Conky as its output target.
+
 It is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers.
 
 Conky is licensed under the GPL-3.0 License.
