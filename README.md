@@ -8,11 +8,11 @@
 
 **2 nodes = 1 widget in 30 seconds.**
 
-* No Lua editing  
-* No restart loops  
-* No fake previews
-* Advanced options for power users
-* Build simple, or build something complex
+No Lua editing  
+No restart loops  
+No fake previews
+Advanced options for power users
+Build simple, or build something complex
 </div>
 
 <div align="center">
