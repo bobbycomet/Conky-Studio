@@ -8,6 +8,14 @@
 
 **2 nodes = 1 widget in 30 seconds.**
 
+* No Lua editing  
+* No restart loops  
+* No fake previews
+* Advanced options for power users
+* Build simple, or build something complex
+
+Design visually → export real Conky themes.
+
 Start simple. Scale to anything.
 
 </div>
