@@ -87,24 +87,19 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 
 ### Screenshots
 
-| Studio | Live Preview | Theme Manager | Preview | Starter Theme |
-|:------:|:------------:|:-------------:|:-------:|:-------------:|
-| <img src="screenshots/studio.png" width="180"> | <img src="screenshots/live_preview.png" width="180"> | <img src="screenshots/manager.png" width="180"> | <img src="screenshots/preview.png" width="180"> | <img src="screenshots/starter_theme.png" width="180"> |
+| Studio | Live Preview | Theme Manager | Starter Theme |
+|:------:|:------------:|:-------------:|:-------------:|
+| <img src="screenshots/studio.png" width="180"> | <img src="screenshots/live_preview.png" width="180"> | <img src="screenshots/manager.png" width="180"> | <img src="screenshots/starter_theme.png" width="180"> |
 
-| Gamer Theme | Colour | Speed | Batman | Undocking |
-|:-----------:|:------:|:-----:|:------:|:---------:|
-| <img src="screenshots/starter_theme_gamer.png" width="180"> | <img src="screenshots/colour.png" width="180"> | <img src="screenshots/speed.png" width="180"> | <a href="https://www.opendesktop.org/p/2366693/"><img src="screenshots/batman.png" width="180"></a> | <img src="screenshots/undocking.png" width="180"> |
+| Gamer Theme | Colour | Speed  Undocking |
+|:-----------:|:------:|:-----:|:------:|<img src="screenshots/preview.png" width="180"> |
+| <img src="screenshots/starter_theme_gamer.png" width="180"> | <img src="screenshots/colour.png" width="180"> | <img src="screenshots/speed.png" width="180"> | <img src="screenshots/undocking.png" width="180"> |
 
-| Skyrim Vanilla | Skyrim Parchment |
-|:--------------:|:----------------:|
-| <a href="https://www.opendesktop.org/p/2287070/"><img src="screenshots/skyrin_vanilla_preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2366029/"><img src="screenshots/skyrim_parchment_preview.png" width="180"></a> |
+### Current Official Compatible Themes: click an image
 
-
-### Current Compatible Themes
-- [Batman](https://www.opendesktop.org/p/2366693/)
-- [Skyrim Parchment](https://www.opendesktop.org/p/2366029/)
-- [Skyrim Vanilla](https://www.opendesktop.org/p/2287070/)
-
+| Skyrim Vanilla | Skyrim Parchment | CorePulse | Batman |
+|:--------------:|:----------------:|:---------:|:------:|
+| <a href="https://www.opendesktop.org/p/2287070/"><img src="screenshots/skyrin_vanilla_preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2366029/"><img src="screenshots/skyrim_parchment_preview.png" width="180"></a> | <a herf="https://www.opendesktop.org/p/2367501/"><img src="screenshots/preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2366693/"><img src="screenshots/batman.png" width="180"></a> |
 
 ---
 
