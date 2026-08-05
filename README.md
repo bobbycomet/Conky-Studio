@@ -36,6 +36,7 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 [![Wiki](https://img.shields.io/badge/Wiki-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki)
 [![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7.1/Conky-Studio-1.0.7.1x86_64.AppImage)
 [![Conky Studio History](https://img.shields.io/badge/Conky_Studio_History-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
+[![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
 </div>
 
 ---
@@ -76,7 +77,7 @@ From there, build complete HUDs with:
 * 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (12 logic, 37 visual) for 149 total nodes.
 * Check [![Requirements](https://img.shields.io/badge/Requirements-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [![Compatibility](https://img.shields.io/badge/Compatibility-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
-## Features
+[![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
 
 * **Visual node editor** — sources → logic → visuals
 * **Node properties** — Resize visuals, add gradients, create CRT effects, control animation speed, move visuals, edit values, and much more.
