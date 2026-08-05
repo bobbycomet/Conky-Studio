@@ -183,12 +183,4 @@ The 1.1.0 release focuses on expanding the Conky Studio ecosystem.
 * **HUD Vault** — community theme sharing platform for discovering and installing complete Conky HUDs
 * **Source plugins** — allow new data providers without modifying the core application
 * **Canvas plugins** — allow new visual components and rendering systems
-# 1.1.0 Roadmap
-
-The 1.1.0 release focuses on expanding the Conky Studio ecosystem.
-
-* **Node Vault** — community plugin distribution for extending Conky Studio with new sources, logic, and canvas nodes
-* **HUD Vault** — community theme sharing platform for discovering and installing complete Conky HUDs
-* **Source plugins** — allow new data providers without modifying the core application
-* **Canvas plugins** — allow new visual components and rendering systems
 * **Native multi-monitor support** — support building HUD layouts across multiple displays. This will be a core Studio feature, not a plugin, because it changes how projects are built and exported. Existing projects remain compatible through automatic migration from the current single-canvas format to the new window-based format.
