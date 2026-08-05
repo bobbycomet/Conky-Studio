@@ -96,7 +96,7 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 | <img src="screenshots/starter_theme_gamer.png" width="180"> | <img src="screenshots/colour.png" width="180"> | <img src="screenshots/speed.png" width="180"> | <img src="screenshots/undocking.png" width="180"> |
 
 ### Current Official Compatible Themes  
-*click an image*
+*click an image, download the zip, drop in manager*
 
 | Skyrim Vanilla | Skyrim Parchment | CorePulse | Batman |
 |:--------------:|:----------------:|:---------:|:------:|
