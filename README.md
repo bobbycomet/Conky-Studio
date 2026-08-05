@@ -83,15 +83,17 @@ From there, build complete HUDs with:
 
 Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
 
+---
+
 ### Screenshots
 
-| Studio | Live Preview | Theme Manager |
-|:------:|:------------:|:-------------:|
-| <img src="screenshots/studio.png" width="280"> | <img src="screenshots/live_preview.png" width="280"> | <img src="screenshots/manager.png" width="280"> |
+| Studio | Live Preview | Theme Manager | Preview | Starter Theme |
+|:------:|:------------:|:-------------:|:-------:|:-------------:|
+| <img src="screenshots/studio.png" width="180"> | <img src="screenshots/live_preview.png" width="180"> | <img src="screenshots/manager.png" width="180"> | <img src="screenshots/preview.png" width="180"> | <img src="screenshots/starter_theme.png" width="180"> |
 
-| Preview | Starter Theme | Gamer Theme |
-|:-------:|:-------------:|:-----------:|
-| <img src="screenshots/preview.png" width="280"> | <img src="screenshots/starter_theme.png" width="280"> | <img src="screenshots/starter_theme_gamer.png" width="280"> |
+| Gamer Theme | Colour | Speed | Batman | Undocking |
+|:-----------:|:------:|:-----:|:------:|:---------:|
+| <img src="screenshots/starter_theme_gamer.png" width="180"> | <img src="screenshots/colour.png" width="180"> | <img src="screenshots/speed.png" width="180"> | <img src="screenshots/batman.png" width="180"> | <img src="screenshots/undocking.png" width="180"> |
 
 ---
 
