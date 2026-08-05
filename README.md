@@ -148,6 +148,20 @@ It is not affiliated with, endorsed by, or sponsored by the official Conky proje
 
 Conky is licensed under the GPL-3.0 License.
 
+> **IMPORTANT:** If you encounter a bug with Conky Studio, please do **not** report it to the Conky developers or maintainers.
+>
+> The Conky team only handles issues related to the Conky project itself. Conky Studio is a separate application that generates standard Conky configuration files, Lua scripts, and related assets.
+>
+> Conky Studio issues should be reported to the Conky Studio project. In rare cases, Conky Studio may be affected by an upstream Conky bug, but Conky Studio does not modify or introduce bugs into the Conky codebase.
+>
+> If an exported theme fails when run outside Conky Studio, first verify whether the issue is with the generated files or with Conky itself. To test this, open a terminal in the exported theme directory (where `start.sh` is located) and run:
+>
+> ```
+> ./start.sh
+> ```
+>
+> Running the exported theme directly will provide diagnostic output that can help identify whether the problem comes from the generated files or from Conky itself.
+
 ---
 
 ## Continue exploring
