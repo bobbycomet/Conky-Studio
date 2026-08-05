@@ -35,13 +35,12 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 ## Why this exists
 
 Conky is extremely powerful, but creating advanced HUDs traditionally means:
-
-| Traditional workflow                         | Conky Studio                            |
+| Traditional workflow | Conky Studio |
 | -------------------------------------------- | --------------------------------------- |
-| Edit Lua → restart → repeat                  | Change properties and preview instantly |
-| Manually position `${goto}` and drawing code | Arrange elements visually               |
-| Connect scripts by hand                      | Use sources as nodes                    |
-| Risk breaking existing themes                | Import, edit, and rebuild safely        |
+| Edit Lua → restart → repeat | Change properties and preview instantly |
+| Manually position `${goto}` and drawing code | Arrange elements visually |
+| Connect scripts by hand | Use sources as nodes |
+| Risk breaking existing themes | Import, edit, and rebuild safely |
 
 The goal is simple:
 
@@ -58,7 +57,7 @@ The goal is simple:
 
 That is a real Conky widget, not a mockup.
 
-[Creating your first widget](https://www.youtube.com/watch?v=BhB6O_jakxo)
+[![Creating your first widget](https://img.shields.io/badge/Creating_your_first_widget-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=BhB6O_jakxo)
 
 From there, build complete HUDs with:
 
@@ -68,7 +67,7 @@ From there, build complete HUDs with:
 * click actions
 * Custom Lua/Cairo rendering
 * 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (12 logic, 37 visual) for 149 total nodes.
-* Check [Requirements](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
+* Check [![Requirements](https://img.shields.io/badge/Requirements-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [![Compatibility](https://img.shields.io/badge/Compatibility-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
 ## Features
 
@@ -83,14 +82,12 @@ From there, build complete HUDs with:
 * **Clean exports** — standard Conky theme folders
 * **Custom Lua support** — full Cairo escape hatch when nodes are not enough
 
-Combine with the [Griffin Updater](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
+Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-2ea44f?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
 
 ---
 
 ## What makes this different
-
 Conky Studio is a **visual authoring tool for Conky**, not a replacement runtime.
-
 Your designs are converted into normal Conky files:
 
 * `conky.conf`
@@ -108,9 +105,7 @@ The preview uses the same build path as the final theme, meaning what you see is
 ---
 
 ## Theme Compatibility
-
 Conky Studio's Manager is flexible enough to run and manage any Conky theme that provides a standard `start.sh` entry script.
-
 This includes:
 
 * Themes created with Conky Studio
@@ -119,38 +114,29 @@ This includes:
 * Auto-generates a `start.sh` for themes without one: 1.0.7+ feature
 
 Conky Studio does not need to build a theme in order to manage it. If a theme has its own folder and a working `start.sh`, it can be launched, stopped, and organized through the Manager. This is different from the legacy importer, as the importer is trying to make it usable and editable within the Studio and its nodes.
-
 You can also run themes manually:
-
 ```
 cd ~/.config/conky/<theme-folder>
 ./start.sh
 ```
 
 Conky Studio acts as the manager and launcher after a theme is built; it does not need to remain open while themes are running.
-
-See [Theme Compatibility](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-Compatibility) for an example of the start.sh
+See [![Theme Compatibility](https://img.shields.io/badge/Theme_Compatibility-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Theme-Compatibility) for an example of the start.sh
 
 ---
 
 ## Runtime Performance
-
 Conky Studio is an authoring tool, not a runtime interpreter.
-
 The node graph is converted into normal Conky files during build. The exported theme runs independently of Studio.
-
 Node count does not directly determine runtime performance. Performance depends on the generated Lua logic, update intervals, and normal Conky execution.
 
 ---
 
-## Built for Conky
+## Built for Conky, not a replacement or fork
 
-Conky Studio is an independent project designed to generate and manage HUDs for [Conky](https://github.com/brndnmtthws/conky).
-
+Conky Studio is an independent project designed to generate and manage HUDs for [![Conky](https://img.shields.io/badge/Conky-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/brndnmtthws/conky).
 Conky is a free software project developed by the Conky maintainers and contributors. Conky Studio is an independent third-party tool that uses Conky as its output target.
-
 It is not affiliated with, endorsed by, or sponsored by the official Conky project or its maintainers.
-
 Conky is licensed under the GPL-3.0 License.
 
 > **IMPORTANT:** If you encounter a bug with Conky Studio, please do **not** report it to the Conky developers or maintainers.
@@ -170,7 +156,6 @@ Conky is licensed under the GPL-3.0 License.
 ---
 
 ## Continue exploring
-
 The sections below cover on the wiki:
 
 * Sharing projects
@@ -181,5 +166,4 @@ The sections below cover on the wiki:
 * Requirements
 * Starter themes
 * Built examples
-
-For the full technical documentation, see the [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki).
+For the full technical documentation, see the [![Wiki](https://img.shields.io/badge/Wiki-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki).
