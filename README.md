@@ -21,7 +21,12 @@ Start simple. Scale to anything.
 
 Build desktop HUDs visually with a node-based workflow, then export standard Conky themes that run without Conky Studio.
 
-[Video Showcase](https://www.youtube.com/watch?v=ys-cg211jsE) · [Discord](https://discord.gg/kJZCZWg5nw) · [YouTube](https://www.youtube.com/@BobbyComet) · [Wiki](https://github.com/bobbycomet/Conky-Studio/wiki) · [Dowload the Latest Build](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7/Conky-Studio-x86_64.AppImage) · [Conky Studio History](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
+[![Video Showcase](https://img.shields.io/badge/Video_Showcase-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=ys-cg211jsE)
+[![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/kJZCZWg5nw)
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/@BobbyComet)
+[![Wiki](https://img.shields.io/badge/Wiki-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki)
+[![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7/Conky-Studio-x86_64.AppImage)
+[![Conky Studio History](https://img.shields.io/badge/Conky_Studio_History-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
 
 </div>
 
