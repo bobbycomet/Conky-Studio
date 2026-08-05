@@ -172,3 +172,11 @@ The sections below cover on the wiki:
 * Built examples
 
 For the full technical documentation, see the [![Wiki](https://img.shields.io/badge/Wiki-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki).
+
+---
+
+# 1.1.0 Roadmap
+
+* Community Store (1.0.7 already has the skeleton for this)
+* Source plugins
+* Canvas plugins
