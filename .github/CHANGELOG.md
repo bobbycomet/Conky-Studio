@@ -1,6 +1,33 @@
 # Changelog
 
-# 1.0.7 (Latest)
+# 1.0.7.1 (Latest)
+
+**Patch release** — OpenDesktop / Pling Store fixes/Theme preview in the manager
+
+#### Fixed
+- **openDesktop search failed with HTTP 410**  
+The provider base URL now points at the live endpoint `https://api.opendesktop.org/ocs/v1/`.
+
+- **Pling search always showed “No results”**  
+ Pling’s OCS JSON is flat (`data` is a list of content objects). The client only handled the classic nested shape (`data.content` / `data` as a dict), so every successful response was treated as empty. Parsing now accepts both formats.
+
+- **Status / rate-limit handling on flat responses**  
+  Top-level `statuscode` / `status` / `message` (Pling-style) are checked when a nested `meta` block is missing, so rate limits and API errors surface correctly in the UI.
+
+- **Theme preview**
+Fixed an issue that caused the theme preview to not show up because it searched *.png in all files, so if you had assets, it confused the manager which image to target. It now points directly to a preview.png.
+
+#### Technical
+- Updated `DEFAULT_PROVIDERS["opendesktop"]` in `store/ocs_client.py`
+- Hardened `_data_list()` and `_parse_contents()` for list-shaped `data` payloads
+- `categories()` relies on the shared status validation path instead of a separate empty-meta check
+
+#### Notes
+- Community Store (static `index.json`) is unchanged
+- Install / `ocs://` handling is unchanged
+- Verified live against Pling and `api.opendesktop.org` with search query `conky`
+
+# 1.0.7
 
 ## Highlights
 
