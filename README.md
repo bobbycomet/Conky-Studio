@@ -11,7 +11,9 @@
 No Lua editing  
 No restart loops  
 No fake previews
+
 Advanced options for power users
+
 Build simple, or build something complex
 </div>
 
