@@ -7,13 +7,13 @@
 ## **Design Conky HUDs visually. Ship real themes.**
 
 **2 nodes = 1 widget in 30 seconds.**
-</div>
 
 * No Lua editing  
 * No restart loops  
 * No fake previews
 * Advanced options for power users
 * Build simple, or build something complex
+</div>
 
 <div align="center">
 
