@@ -83,6 +83,16 @@ From there, build complete HUDs with:
 
 Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
 
+### Screenshots
+
+| Studio | Live Preview | Theme Manager |
+|:------:|:------------:|:-------------:|
+| <img src="screenshots/studio.png" width="280"> | <img src="screenshots/live_preview.png" width="280"> | <img src="screenshots/manager.png" width="280"> |
+
+| Preview | Starter Theme | Gamer Theme |
+|:-------:|:-------------:|:-----------:|
+| <img src="screenshots/preview.png" width="280"> | <img src="screenshots/starter_theme.png" width="280"> | <img src="screenshots/starter_theme_gamer.png" width="280"> |
+
 ---
 
 ## What makes this different
