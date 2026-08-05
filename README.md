@@ -89,7 +89,7 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 
 | Studio | Live Preview | Theme Manager | Starter Theme |
 |:------:|:------------:|:-------------:|:-------------:|
-| <img src="screenshots/studio.png" width="180"> | <img src="screenshots/live_preview.png" width="180"> | <img src="screenshots/manager.png" width="180"> | <img src="screenshots/starter_theme.png" width="180"> |
+| <img src="screenshots/studio.png" width="180"> | <img src="screenshots/live_preview.png" width="180"> | <img src="" width="180"> | <img src="screenshots/starter_theme.png" width="180"> |
 
 | Gamer Theme | Colour | Speed | Undocking |
 |:-----------:|:------:|:-----:|:---------:|
