@@ -95,6 +95,12 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 |:-----------:|:------:|:-----:|:------:|:---------:|
 | <img src="screenshots/starter_theme_gamer.png" width="180"> | <img src="screenshots/colour.png" width="180"> | <img src="screenshots/speed.png" width="180"> | <img src="screenshots/batman.png" width="180"> | <img src="screenshots/undocking.png" width="180"> |
 
+Current compatible Themes:
+
+[Batman](https://www.opendesktop.org/p/2366693/)
+[Skyrim Parchment](https://www.opendesktop.org/p/2366029/)
+[Skyrim Vanilla](https://www.opendesktop.org/p/2287070/)
+
 ---
 
 ## What makes this different
