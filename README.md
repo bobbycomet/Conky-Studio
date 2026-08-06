@@ -144,7 +144,7 @@ Conky Studio isn't just a theme launcher or a simple configuration editor—it i
 
 | Capability | Raw Lua/Text Editing | Conky Manager | **Conky Studio** |
 | :--- | :---: | :---: | :---: |
-| **Visual Node Authoring** | None | None | ** Yes (Sources → Logic → Visuals)** |
+| **Visual Node Authoring** | None | None | **Yes (Sources → Logic → Visuals)** |
 | **Real Process Live Preview** | Manual terminal reloads | None | **Yes (~350ms instant feedback)** |
 | **Procedural Animation (PAS)** | Hand-coded Cairo math | None | **Yes (Sensor refresh, Draw FPS, Smooth nodes)** |
 | **Theme Lifecycle Manager** | Manual file moving |  Basic toggle | **Yes (Start/Stop, Zip, Duplicate)** |
