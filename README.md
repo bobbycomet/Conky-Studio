@@ -8,13 +8,6 @@
 
 **2 nodes = 1 widget in 30 seconds.**
 
-No Lua editing  
-No restart loops  
-No fake previews
-
-Advanced options for power users
-
-Build simple, or build something complex
 </div>
 
 <div align="center">
@@ -58,7 +51,15 @@ Conky is extremely powerful, but creating advanced HUDs traditionally means:
 
 The goal is simple:
 
-> Make Conky as easy to design as it is powerful to run.
+Make Conky as easy to design as it is powerful to run.
+
+* No Lua editing (unless you want to)
+* No restart loops
+* No fake previews (real conky process refreshes as you edit)
+* Advanced options for power users
+* Build simple, or build something complex
+
+[![Getting Started](https://img.shields.io/badge/Getting-Started-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Getting-Started)
 
 ---
 
