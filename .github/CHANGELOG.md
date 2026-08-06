@@ -1,8 +1,20 @@
 # Changelog
 
-# 1.0.7.1 (Latest)
+# 1.0.7.2 (Latest)
 
-**Patch release** — OpenDesktop / Pling Store fixes/Theme preview in the manager
+**OCS/Pling /OpenDesktop installer Fix**
+* When a downloaded theme has no `start.sh`, Conky Studio now writes a minimal one automatically.
+* The generated script:
+  * Changes into the theme directory
+  * Makes `scripts/*.sh` and `*.sh` executable
+  * Prefers `conky.conf`, then falls back to the first `*.conf` / `*.conkyrc`
+  * Launches Conky with that config
+* Install success message notes when a `start.sh` was added (`… (added a minimal start.sh)`).
+* Themes that already ship with a `start.sh` are left unchanged.
+
+# 1.0.7.1
+
+**Patch release** — OpenDesktop/Pling Store fixes/Theme preview in the manager
 
 #### Fixed
 - **openDesktop search failed with HTTP 410**  
