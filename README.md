@@ -161,9 +161,63 @@ See [![Theme Compatibility](https://img.shields.io/badge/Theme_Compatibility-1f6
 
 ---
 
+## DE Compatibility  
+
+*Check* [![Compatibility](https://img.shields.io/badge/Compatibility-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) *for more info*
+
+### Likely to work (Wayland desktop overlays)
+
+| Compositor/DE | Notes |
+|-----------------|--------|
+| **Sway** | Explicitly listed; wlr-layer-shell |
+| **Hyprland** | Same family |
+| **Wayfire, labwc, river, niri, mangowc, waybox** | Listed as layer-shell likely |
+| **KDE Plasma (Wayland)** | Supported path; often uses dock-style window type |
+| **Mir-based** | Listed as likely |
+
+Requirements:
+
+1. A **Wayland-enabled Conky** (`conky -v` should mention Wayland)
+
+2. Session is real Wayland (`WAYLAND_DISPLAY` / `XDG_SESSION_TYPE=wayland`)
+
+3. For overlays, prefer window type **auto** (or **desktop** / **dock** as recommended), not only for Live Preview (preview forces **normal** on purpose)
+
+### Works, different model
+
+| Environment | Notes |
+|-------------|--------|
+| **X11** (any WM: i3, openbox, XFCE, GNOME on Xorg, etc) | Most predictable; `own_window_type=normal` + undecorated/below hints |
+
+### Unlikely/broken for desktop overlays
+
+| Environment | Why |
+|-------------|-----|
+| **GNOME Wayland (Mutter)** | No wlr-layer-shell — Studio marks this as **block** |
+| **Ubuntu/Unity/Budgie Wayland** (Mutter-style) | Same limitation |
+| Wayland + **X11-only Conky package** | May only work poorly via XWayland 
+
+On X11:
+
+* normal, desktop, dock → predictable-ish
+
+On Wayland:
+
+* These are intent hints, not guarantees
+* wlroots respects them via layer-shell
+* KDE kinda maps them
+* GNOME ignores half of it
+
+Your window_type="desktop" is not a contract; it’s a best-effort strategy
+
+Live Preview uses normal window mode intentionally.
+Final exported themes may behave differently depending on your compositor.
+
+---
+
 ## Runtime Performance
 Conky Studio is an authoring tool, not a runtime interpreter.
-The node graph is converted into normal Conky files during build. The exported theme runs independently of Studio.
+The node graph is converted into normal Conky files during the build. The exported theme runs independently of Studio.
 Node count does not directly determine runtime performance. Performance depends on the generated Lua logic, update intervals, and normal Conky execution.
 
 ---
