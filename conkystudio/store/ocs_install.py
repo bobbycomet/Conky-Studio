@@ -6,7 +6,10 @@ Pipeline:
   2. Unpack archives (.zip / .tar* / plain folder).
   3. Detect a Conky theme (conky.conf, .conkyrc, start.sh, render.lua, …).
   4. Copy into ~/.config/conky/<name> (or DEFAULT_INSTALL_ROOT).
-  5. Optionally run the legacy importer if available.
+  5. If the installed theme has no start.sh, write a minimal one that
+     launches the main conky config (so Pling / openDesktop downloads
+     are runnable from the Manager tab).
+  6. Optionally run the legacy importer if available.
 
 This module is UI-agnostic; the Store tab / main window call install_from_url().
 """
@@ -143,6 +146,73 @@ def _find_theme_root(extracted: Path) -> Optional[Path]:
     return candidates[0]
 
 
+def _pick_conf_name(theme_dir: Path) -> str:
+    """Choose the best Conky config filename inside theme_dir."""
+    for candidate in ("conky.conf", "conkyrc", ".conkyrc"):
+        if (theme_dir / candidate).is_file():
+            return candidate
+    for p in sorted(theme_dir.iterdir()):
+        if p.is_file() and (p.suffix.lower() == ".conf" or p.name.endswith(".conkyrc")):
+            return p.name
+    return "conky.conf"
+
+
+def _ensure_start_sh(theme_dir: Path, progress: ProgressCb = None) -> bool:
+    """
+    If theme_dir has no usable start.sh, write a minimal one that:
+      - makes scripts executable
+      - prefers conky.conf, otherwise the first *.conf / *.conkyrc
+      - launches conky from the theme directory
+    Returns True if a start.sh was created (or replaced an empty/non-executable stub).
+    """
+    start_sh = theme_dir / "start.sh"
+    # Treat missing, empty, or non-file the same: we need a real launcher.
+    if start_sh.is_file() and start_sh.stat().st_size > 0:
+        # Ensure it's executable even if the archive dropped the bit.
+        try:
+            mode = start_sh.stat().st_mode
+            if not (mode & 0o111):
+                start_sh.chmod(mode | 0o755)
+        except OSError:
+            pass
+        return False
+
+    conf_name = _pick_conf_name(theme_dir)
+
+    content = f'''#!/usr/bin/env bash
+# Minimal start.sh added by Conky Studio (theme had none).
+# Launches the theme's Conky config from this directory.
+
+DIR="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
+cd "$DIR" || exit 1
+
+# Make helper scripts executable when present
+chmod +x scripts/*.sh 2>/dev/null || true
+chmod +x *.sh 2>/dev/null || true
+
+CONF="{conf_name}"
+if [[ ! -f "$CONF" ]]; then
+    # Fallback: first .conf / .conkyrc in the theme root
+    CONF="$(ls *.conf *.conkyrc .conkyrc 2>/dev/null | head -n1 || true)"
+fi
+if [[ -z "$CONF" || ! -f "$CONF" ]]; then
+    echo "No Conky config found in $DIR" >&2
+    exit 1
+fi
+
+exec conky -c "$DIR/$CONF"
+'''
+    try:
+        start_sh.write_text(content, encoding="utf-8")
+        start_sh.chmod(0o755)
+    except OSError as e:
+        _log(progress, f"Could not write start.sh: {e}")
+        return False
+
+    _log(progress, "No start.sh found — added a minimal one.")
+    return True
+
+
 def install_from_url(
     url: str,
     *,
@@ -196,9 +266,16 @@ def install_from_url(
         _log(progress, f"Installing to {target}…")
         shutil.copytree(theme_root, target)
 
+        # Always ensure start.sh on the *final* installed copy so Pling /
+        # openDesktop themes without one are still launchable from Manager.
+        added_start = _ensure_start_sh(target, progress=progress)
+
+        msg = f"Installed theme to {target}"
+        if added_start:
+            msg += " (added a minimal start.sh)"
         return InstallResult(
             success=True,
-            message=f"Installed theme to {target}",
+            message=msg,
             install_dir=str(target),
             theme_name=name,
             source_path=str(archive),
