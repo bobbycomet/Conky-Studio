@@ -138,6 +138,19 @@ Exported themes run independently using Conky's normal pipeline.
 
 The preview uses the same build path as the final theme, meaning what you see is what you ship.
 
+## How Conky Studio Compares
+
+Conky Studio isn't just a theme launcher or a simple configuration editor—it is a **complete visual IDE and management engine** for desktop HUDs.
+
+| Capability | Raw Lua/Text Editing | Conky Manager | **Conky Studio** |
+| :--- | :---: | :---: | :---: |
+| **Visual Node Authoring** | None | None | ** Yes (Sources → Logic → Visuals)** |
+| **Real Process Live Preview** | Manual terminal reloads | None | ** Yes (~350ms instant feedback)** |
+| **Procedural Animation (PAS)** | Hand-coded Cairo math | None | ** Yes (Sensor refresh, Draw FPS, Smooth nodes)** |
+| **Theme Lifecycle Manager** | Manual file moving |  Basic toggle | ** Yes (Start/Stop, Zip, Duplicate)** |
+| **No Runtime Lock-In** |  Native |  Native | ** Yes (Exports standard Conky)** |
+| **Plugin Ecosystem** | None | None | ** Yes (`plugin.json` with a `manifest.json` store planned)** |
+
 ---
 
 ## Theme Compatibility
@@ -267,10 +280,11 @@ For the full technical documentation, see the [![Wiki](https://img.shields.io/ba
 
 # 1.1.0 Roadmap
 
-The 1.1.0 release focuses on expanding the Conky Studio ecosystem.
+The 1.1.0 release focuses on expanding the Conky Studio ecosystem and scaling the core engine for complex setups.
 
-* **Node Vault** — community plugin distribution for extending Conky Studio with new sources, logic, and canvas nodes
-* **HUD Vault** — community theme sharing platform for discovering and installing complete Conky HUDs
-* **Source plugins** — allow new data providers without modifying the core application
-* **Canvas plugins** — allow new visual components and rendering systems
-* **Native multi-monitor support** — support building HUD layouts across multiple displays. This will be a core Studio feature, not a plugin, because it changes how projects are built and exported. Existing projects remain compatible through automatic migration from the current single-canvas format to the new window-based format.
+* **Node Vault** — Community plugin distribution hub for discovering and installing custom sources, logic processors, and visual canvas nodes.
+* **HUD Vault** — Integrated community sharing platform to publish, browse, and install complete Conky HUD themes in one click.
+* **Source Plugins** — Author and load custom data providers via standard `manifest.json` schemas without modifying core application code.
+* **Canvas Plugins** — Build custom visual extensions.
+* **Native Multi-Monitor Support** — Full multi-window and multi-display layout management built into the core Studio architecture. Projects automatically migrate from single-canvas graphs into dynamic, window-based multi-scene configurations.
+* **Streamlined Project Importer** — An evolution of the legacy importer. Rather than fighting edge cases in legacy code parsing, Studio imports existing Conky projects directly into your workspace, scaffolds them with helper nodes, and lets you visually wire, refine, and complete them on the canvas.
