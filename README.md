@@ -96,6 +96,7 @@ From there, build complete HUDs with:
 * **Clean exports** — standard Conky theme folders
 * **Custom Lua support** — full Cairo escape hatch when nodes are not enough
 * **Theme preview** — on the theme manager, you will be able to see the theme via preview.png if there is one in the folder
+* **Procedural Animation System (PAS)** — **Sensor refresh rate** how often values update, **Draw FPS** how often visuals redraw, and a **Smooth logic node** interpolation between states 
 
 Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
 
