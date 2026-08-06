@@ -81,7 +81,7 @@ The preview uses the same build path as the final theme, meaning what you see is
 
 ## How Conky Studio Compares
 
-Conky Studio isn't just a theme launcher or a simple configuration editor—it is a **complete visual IDE and management engine** for desktop HUDs.
+Conky Studio isn't just a theme launcher or a simple configuration editor; it is a **complete visual IDE and management engine** for desktop HUDs.
 
 | Capability | Raw Lua/Text Editing | Conky Manager | **Conky Studio** |
 | :--- | :---: | :---: | :---: |
