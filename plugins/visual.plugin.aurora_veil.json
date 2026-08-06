@@ -1,0 +1,132 @@
+{
+  "id": "visual.plugin.aurora_veil",
+  "category": "visual",
+  "label": "Aurora Veil",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Cinematic aurora ribbons: layered translucent sine bands that drift and breathe. Soft, premium motion for a backdrop or hero accent. Optional Trigger boosts brightness and speed.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "aurora",
+    "animation",
+    "premium",
+    "ribbon",
+    "backdrop"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 40,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "width",
+      "label": "Width",
+      "kind": "float",
+      "default": 260,
+      "minimum": 40,
+      "maximum": 4000,
+      "group": "Shape"
+    },
+    {
+      "key": "height",
+      "label": "Height",
+      "kind": "float",
+      "default": 120,
+      "minimum": 20,
+      "maximum": 2000,
+      "group": "Shape"
+    },
+    {
+      "key": "bands",
+      "label": "Ribbon count",
+      "kind": "int",
+      "default": 4,
+      "minimum": 1,
+      "maximum": 8,
+      "group": "Shape"
+    },
+    {
+      "key": "amplitude",
+      "label": "Wave height",
+      "kind": "float",
+      "default": 22,
+      "minimum": 2,
+      "maximum": 200,
+      "group": "Shape"
+    },
+    {
+      "key": "line_width",
+      "label": "Ribbon thickness",
+      "kind": "float",
+      "default": 14,
+      "minimum": 2,
+      "maximum": 60,
+      "group": "Shape"
+    },
+    {
+      "key": "color_a",
+      "label": "Colour A",
+      "kind": "color",
+      "default": "#4fd1c5",
+      "group": "Style"
+    },
+    {
+      "key": "color_b",
+      "label": "Colour B",
+      "kind": "color",
+      "default": "#8a5fd6",
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 0.55,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    },
+    {
+      "key": "speed",
+      "label": "Drift speed",
+      "kind": "float",
+      "default": 0.35,
+      "minimum": 0.02,
+      "maximum": 3,
+      "step": 0.05,
+      "group": "Animation"
+    },
+    {
+      "key": "trigger",
+      "label": "Trigger",
+      "kind": "float",
+      "default": 50,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Drive",
+      "help": "0-100: higher = brighter and slightly faster motion."
+    }
+  ],
+  "lua_draw_body": "\n local x0, y0, W, H = {x}, {y}, {width}, {height}\n local amp = {amplitude}\n local lw = {line_width}\n local n = math.floor({bands} + 0.5)\n if n < 1 then n = 1 end\n local energy = math.min(math.max((tonumber({trigger}) or 0) / 100, 0), 1)\n local speed = {speed} * (0.7 + 0.6 * energy)\n local t = wall_clock() * speed\n local ra, ga, ba = {color_a}\n local rb, gb, bb = {color_b}\n local steps = math.max(48, math.floor(W / 4))\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\n for band = 1, n do\n  local u = (band - 1) / math.max(n - 1, 1)\n  local r = ra + (rb - ra) * u\n  local g = ga + (gb - ga) * u\n  local b = ba + (bb - ba) * u\n  local phase = t * (1.0 + u * 0.55) + band * 1.7\n  local ybase = y0 + H * (0.2 + 0.6 * u)\n  local band_amp = amp * (0.65 + 0.35 * math.sin(band * 1.3 + t * 0.4))\n  local a = {opacity} * (0.35 + 0.65 * energy) * (0.55 + 0.45 * (1 - math.abs(u - 0.5) * 1.2))\n  -- soft under-glow pass\n  cairo_set_line_width(cr, lw * 1.8)\n  cairo_set_source_rgba(cr, r, g, b, a * 0.25)\n  cairo_new_path(cr)\n  for i = 0, steps do\n   local px = i / steps\n   local xx = x0 + px * W\n   local yy = ybase\n     + math.sin(px * 2.4 * math.pi + phase) * band_amp\n     + math.sin(px * 5.1 * math.pi - phase * 1.3) * (band_amp * 0.28)\n   if i == 0 then cairo_move_to(cr, xx, yy) else cairo_line_to(cr, xx, yy) end\n  end\n  cairo_stroke(cr)\n  -- main ribbon\n  cairo_set_line_width(cr, lw)\n  cairo_set_source_rgba(cr, r, g, b, a)\n  cairo_new_path(cr)\n  for i = 0, steps do\n   local px = i / steps\n   local xx = x0 + px * W\n   local yy = ybase\n     + math.sin(px * 2.4 * math.pi + phase) * band_amp\n     + math.sin(px * 5.1 * math.pi - phase * 1.3) * (band_amp * 0.28)\n   if i == 0 then cairo_move_to(cr, xx, yy) else cairo_line_to(cr, xx, yy) end\n  end\n  cairo_stroke(cr)\n end\n"
+}

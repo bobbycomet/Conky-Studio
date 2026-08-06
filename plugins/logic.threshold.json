@@ -1,0 +1,96 @@
+{
+  "id": "logic.threshold",
+  "category": "logic",
+  "label": "Threshold",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "Compare a value to a threshold. Outputs 0/1, inverted 0/1, or passes the value when true (gate). Richer than the built-in Threshold Gate.",
+  "color": "#d4a05a",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "compare",
+    "gate",
+    "trigger"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 50,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "threshold",
+      "label": "Threshold",
+      "kind": "float",
+      "default": 80,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "mode",
+      "label": "Mode",
+      "kind": "enum",
+      "default": "above",
+      "choices": [
+        "above",
+        "below",
+        "equal"
+      ],
+      "choice_labels": [
+        "Above (≥)",
+        "Below (≤)",
+        "Equal (±ε)"
+      ],
+      "group": "Compare"
+    },
+    {
+      "key": "output_mode",
+      "label": "Output",
+      "kind": "enum",
+      "default": "binary",
+      "choices": [
+        "binary",
+        "gate",
+        "invert_binary"
+      ],
+      "choice_labels": [
+        "0 or 1",
+        "Pass value when true, else 0",
+        "1 or 0 (inverted)"
+      ],
+      "group": "Output",
+      "help": "binary → 1 when condition holds. gate → original value when true, else 0. invert_binary flips the 0/1."
+    },
+    {
+      "key": "epsilon",
+      "label": "Equal ε",
+      "kind": "float",
+      "default": 0.01,
+      "minimum": 0,
+      "maximum": 1000000.0,
+      "step": 0.01,
+      "group": "Compare",
+      "help": "Tolerance used only when Mode is Equal"
+    }
+  ],
+  "lua_expr": "(function()\n local v, th, eps = {value}, {threshold}, {epsilon}\n local mode, outm = '{mode}', '{output_mode}'\n local ok = false\n if mode == 'above' then ok = (v >= th)\n elseif mode == 'below' then ok = (v <= th)\n else ok = (math.abs(v - th) <= eps)\n end\n if outm == 'gate' then return ok and v or 0 end\n if outm == 'invert_binary' then return ok and 0 or 1 end\n return ok and 1 or 0\nend)()"
+}

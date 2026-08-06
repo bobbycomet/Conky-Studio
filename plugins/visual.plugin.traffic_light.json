@@ -1,0 +1,120 @@
+{
+  "id": "visual.plugin.traffic_light",
+  "category": "visual",
+  "label": "Traffic Light",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Three stacked lamps. Lights green / amber / red based on Value vs Warn / Danger thresholds.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "status",
+    "threshold",
+    "led"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "radius",
+      "label": "Lamp radius",
+      "kind": "float",
+      "default": 10,
+      "minimum": 3,
+      "maximum": 80,
+      "group": "Shape"
+    },
+    {
+      "key": "gap",
+      "label": "Gap",
+      "kind": "float",
+      "default": 6,
+      "minimum": 0,
+      "maximum": 40,
+      "group": "Shape"
+    },
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 40,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Data"
+    },
+    {
+      "key": "warn_at",
+      "label": "Amber at ≥",
+      "kind": "float",
+      "default": 60,
+      "group": "Thresholds"
+    },
+    {
+      "key": "danger_at",
+      "label": "Red at ≥",
+      "kind": "float",
+      "default": 85,
+      "group": "Thresholds"
+    },
+    {
+      "key": "green",
+      "label": "Green",
+      "kind": "color",
+      "default": "#3dd68c",
+      "group": "Style"
+    },
+    {
+      "key": "amber",
+      "label": "Amber",
+      "kind": "color",
+      "default": "#e8b84f",
+      "group": "Style"
+    },
+    {
+      "key": "red",
+      "label": "Red",
+      "kind": "color",
+      "default": "#ff6b6b",
+      "group": "Style"
+    },
+    {
+      "key": "off",
+      "label": "Off",
+      "kind": "color",
+      "default": "#2a2e38",
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 1.0,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local cx = {x} + {radius}\n local r = {radius}\n local gap = {gap}\n local val = tonumber({value}) or 0\n local mode = 0 -- 0 green, 1 amber, 2 red\n if val >= {danger_at} then mode = 2\n elseif val >= {warn_at} then mode = 1 end\n local colors = {{color = {green}}, {color = {amber}}, {color = {red}}}\n -- unpack is awkward; draw three\n local function lamp(i, on_rgb, is_on)\n  local cy = {y} + r + i * (2 * r + gap)\n  local rr, gg, bb\n  if is_on then rr, gg, bb = on_rgb[1], on_rgb[2], on_rgb[3]\n  else rr, gg, bb = {off} end\n  cairo_set_source_rgba(cr, rr, gg, bb, {opacity} * (is_on and 1 or 0.55))\n  cairo_arc(cr, cx, cy, r, 0, 2 * math.pi)\n  cairo_fill(cr)\n  if is_on then\n   cairo_set_source_rgba(cr, rr, gg, bb, {opacity} * 0.25)\n   cairo_arc(cr, cx, cy, r * 1.55, 0, 2 * math.pi)\n   cairo_fill(cr)\n  end\n end\n local gr, gg, gb = {green}\n local ar, ag, ab = {amber}\n local rr, rg, rb = {red}\n lamp(0, {gr, gg, gb}, mode == 0)\n lamp(1, {ar, ag, ab}, mode == 1)\n lamp(2, {rr, rg, rb}, mode == 2)\n"
+}

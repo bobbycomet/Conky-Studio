@@ -1,0 +1,60 @@
+{
+  "id": "logic.round",
+  "category": "logic",
+  "label": "Round",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "Round to nearest, floor, or ceil with optional decimal places. Richer than the built-in Round (nearest only).",
+  "color": "#7a9ed6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "math",
+    "format"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "mode",
+      "label": "Mode",
+      "kind": "enum",
+      "default": "nearest",
+      "choices": [
+        "nearest",
+        "floor",
+        "ceil"
+      ],
+      "choice_labels": [
+        "Nearest",
+        "Floor",
+        "Ceil"
+      ],
+      "group": "Rounding"
+    },
+    {
+      "key": "decimals",
+      "label": "Decimal places",
+      "kind": "int",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 6,
+      "group": "Rounding"
+    }
+  ],
+  "lua_expr": "(function()\n local v, d = {value}, math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local m = 10 ^ d\n local mode = '{mode}'\n if mode == 'floor' then return math.floor(v * m) / m\n elseif mode == 'ceil' then return math.ceil(v * m) / m\n end\n return math.floor(v * m + 0.5) / m\nend)()"
+}

@@ -1,0 +1,223 @@
+{
+  "id": "logic.threshold_chain_10",
+  "category": "logic",
+  "label": "Threshold Chain (10-Stage)",
+  "author": "conky-studio",
+  "version": "1.1.0",
+  "description": "Map one number onto up to 10 progressive stages. Output is a stage index. Drive image chains, pickers, glow triggers, etc.",
+  "color": "#d4825a",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "chain",
+    "threshold",
+    "multi-stage",
+    "swap",
+    "battery",
+    "signal"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Input value",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "steps_count",
+      "label": "Active steps",
+      "kind": "int",
+      "default": 4,
+      "minimum": 1,
+      "maximum": 10,
+      "group": "Configuration"
+    },
+    {
+      "key": "mode",
+      "label": "Mode",
+      "kind": "enum",
+      "default": "progressive",
+      "choices": [
+        "progressive",
+        "highest",
+        "exact_band"
+      ],
+      "choice_labels": [
+        "Progressive (must pass 1, then 2, …)",
+        "Highest only (any step ≥ its threshold)",
+        "Exact band (step i if t[i] ≤ v < t[i+1])"
+      ],
+      "group": "Configuration"
+    },
+    {
+      "key": "none_value",
+      "label": "Below all →",
+      "kind": "float",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10,
+      "group": "Output"
+    },
+    {
+      "key": "t1",
+      "label": "Step 1 ≥",
+      "kind": "float",
+      "default": 10,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t2",
+      "label": "Step 2 ≥",
+      "kind": "float",
+      "default": 25,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t3",
+      "label": "Step 3 ≥",
+      "kind": "float",
+      "default": 50,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t4",
+      "label": "Step 4 ≥",
+      "kind": "float",
+      "default": 75,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t5",
+      "label": "Step 5 ≥",
+      "kind": "float",
+      "default": 90,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t6",
+      "label": "Step 6 ≥",
+      "kind": "float",
+      "default": 100,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t7",
+      "label": "Step 7 ≥",
+      "kind": "float",
+      "default": 110,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t8",
+      "label": "Step 8 ≥",
+      "kind": "float",
+      "default": 120,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t9",
+      "label": "Step 9 ≥",
+      "kind": "float",
+      "default": 130,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    },
+    {
+      "key": "t10",
+      "label": "Step 10 ≥",
+      "kind": "float",
+      "default": 140,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Thresholds"
+    }
+  ],
+  "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local count = math.floor({steps_count} + 0.5)\n if count < 1 then count = 1 elseif count > 10 then count = 10 end\n local t = { {t1}, {t2}, {t3}, {t4}, {t5}, {t6}, {t7}, {t8}, {t9}, {t10} }\n local mode = '{mode}'\n if mode == 'exact_band' then\n for i = 1, count do\n local lo = t[i]\n local hi = (i < count) and t[i + 1] or nil\n if type(lo) ~= 'number' then lo = tonumber(lo) or 0 end\n if hi ~= nil and type(hi) ~= 'number' then hi = tonumber(hi) end\n if v >= lo and (hi == nil or v < hi) then return i end\n end\n local last = t[count]\n if type(last) ~= 'number' then last = tonumber(last) or 0 end\n if v >= last then return count end\n return {none_value}\n end\n if mode == 'highest' then\n local best = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then best = i end\n end\n if best == 0 then return {none_value} end\n return best\n end\n local active = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then active = i else break end\n end\n if active == 0 then return {none_value} end\n return active\nend)()"
+}

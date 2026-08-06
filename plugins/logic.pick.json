@@ -1,0 +1,75 @@
+{
+  "id": "logic.pick",
+  "category": "logic",
+  "label": "Pick (A/B)",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "If selector ≥ threshold output A, else B. Explicit threshold (richer than fixed 0.5 built-in).",
+  "color": "#d4825a",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "logic",
+    "mux",
+    "select"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "selector",
+      "label": "Selector",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius",
+        "boolean"
+      ],
+      "group": "Control"
+    },
+    {
+      "key": "threshold",
+      "label": "Threshold",
+      "kind": "float",
+      "default": 0.5,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "group": "Control"
+    },
+    {
+      "key": "a",
+      "label": "A (when true)",
+      "kind": "float",
+      "default": 1,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Values"
+    },
+    {
+      "key": "b",
+      "label": "B (when false)",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Values"
+    }
+  ],
+  "lua_expr": "((({selector}) >= ({threshold})) and ({a}) or ({b}))"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "logic.percent_of",
+  "category": "logic",
+  "label": "Percent of",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "value / total × 100. Safe when total is 0. VRAM used/total, disk used/size, etc.",
+  "color": "#5eb0c9",
+  "subcategory": "Plugins",
+  "output_kind": "percent",
+  "tags": [
+    "math",
+    "percent",
+    "ratio"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "total",
+      "label": "Total",
+      "kind": "float",
+      "default": 100,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    }
+  ],
+  "lua_expr": "((({total}) ~= 0) and (({value}) / ({total}) * 100) or 0)"
+}

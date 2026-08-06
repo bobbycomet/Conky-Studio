@@ -1,0 +1,183 @@
+{
+  "api_version": "1.1",
+  "updated_at": "2026-08-02",
+  "plugins": [
+    {
+      "$ref": "plugins/logic.threshold.json"
+    },
+    {
+      "$ref": "plugins/logic.deadzone.json"
+    },
+    {
+      "$ref": "plugins/logic.smooth.json"
+    },
+    {
+      "$ref": "plugins/logic.temp_convert.json"
+    },
+    {
+      "$ref": "plugins/logic.threshold_chain_10.json"
+    },
+    {
+      "$ref": "plugins/logic.round.json"
+    },
+    {
+      "$ref": "plugins/logic.boolean_and.json"
+    },
+    {
+      "$ref": "plugins/logic.boolean_or.json"
+    },
+    {
+      "$ref": "plugins/logic.boolean_not.json"
+    },
+    {
+      "$ref": "plugins/logic.pick.json"
+    },
+    {
+      "$ref": "plugins/logic.percent_of.json"
+    },
+    {
+      "$ref": "plugins/logic.unit_format.json"
+    },
+    {
+      "$ref": "plugins/logic.rate_limit.json"
+    },
+    {
+      "$ref": "plugins/logic.hold_peak.json"
+    },
+    {
+      "$ref": "plugins/logic.modulo.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.dot.json"
+    },
+    {
+      "$ref": "plugins/logic.data_rate_format.json"
+    },
+    {
+      "$ref": "plugins/logic.text_case.json"
+    },
+    {
+      "$ref": "plugins/logic.hold_min.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.badge.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.tick_ring.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.pulse_dot.json"
+    },
+    {
+      "$ref": "plugins/logic.coerce_number.json"
+    },
+    {
+      "$ref": "plugins/logic.coerce_text.json"
+    },
+    {
+      "$ref": "plugins/logic.truthy.json"
+    },
+    {
+      "$ref": "plugins/logic.string_length.json"
+    },
+    {
+      "$ref": "plugins/logic.substring.json"
+    },
+    {
+      "$ref": "plugins/logic.remap_curve.json"
+    },
+    {
+      "$ref": "plugins/logic.counter.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.signal_bars.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.thermometer.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.seven_segment.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.wave_line.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.spinner.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.heartbeat.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.liquid_fill.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.traffic_light.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.hex_tile.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.hex_gauge.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.dot_matrix.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.chevron_row.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.bubble_meter.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.concentric_pulse.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.spark_burst.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.soft_shadow_panel.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.led_bar_horizontal.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.compass_rose.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.minimap_grid.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.value_arc_ticks.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.digital_clock.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.altititude_indicator.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.altimeter.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.soft_shadow_circle.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.aurora_veil.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.capsule_bar.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.ember_field.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.scrolling_text.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.battery_icon.json"
+    },
+    {
+      "$ref": "plugins/visual.plugin.speedometer.json"
+    }
+  ]
+}

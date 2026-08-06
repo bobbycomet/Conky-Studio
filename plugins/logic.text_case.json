@@ -1,0 +1,48 @@
+{
+  "id": "logic.text_case",
+  "category": "logic",
+  "label": "Text Case",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "Force text to UPPER, lower, or Title Case -- e.g. normalizing Now Playing status or a weather condition string before a Text Label.",
+  "color": "#9b8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "text",
+  "tags": [
+    "format",
+    "text"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "text",
+        "category"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "mode",
+      "label": "Mode",
+      "kind": "enum",
+      "default": "upper",
+      "choices": [
+        "upper",
+        "lower",
+        "title"
+      ],
+      "choice_labels": [
+        "UPPER CASE",
+        "lower case",
+        "Title Case"
+      ],
+      "group": "Format"
+    }
+  ],
+  "lua_expr": "(function()\n local v = tostring({value})\n local mode = '{mode}'\n if mode == 'upper' then return v:upper() end\n if mode == 'lower' then return v:lower() end\n local out = {}\n for word in v:gmatch('%S+') do\n local first = word:sub(1,1):upper()\n local rest = word:sub(2):lower()\n table.insert(out, first .. rest)\n end\n return table.concat(out, ' ')\nend)()"
+}

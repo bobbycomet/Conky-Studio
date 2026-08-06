@@ -1,0 +1,58 @@
+{
+  "id": "logic.deadzone",
+  "category": "logic",
+  "label": "Deadzone",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "Zero-out values whose absolute magnitude is below a threshold. Optional soft ramp. Different model from the built-in centre+radius deadzone.",
+  "color": "#8a8fa8",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "filter",
+    "noise",
+    "math"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "zone",
+      "label": "Deadzone",
+      "kind": "float",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Filter",
+      "help": "Values with |value| < deadzone become 0 (or are scaled in soft mode)"
+    },
+    {
+      "key": "soft",
+      "label": "Soft edge",
+      "kind": "bool",
+      "default": false,
+      "group": "Filter",
+      "help": "If on, rescale so the deadzone is removed and the rest maps smoothly outward"
+    }
+  ],
+  "lua_expr": "(function()\n local v, z = {value}, {zone}\n if z < 0 then z = 0 end\n local a = math.abs(v)\n if a <= z then return 0 end\n if not {soft} then return v end\n local sign = (v >= 0) and 1 or -1\n return sign * (a - z)\nend)()"
+}

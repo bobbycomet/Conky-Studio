@@ -1,0 +1,56 @@
+{
+  "id": "logic.counter",
+  "category": "logic",
+  "label": "Frame Counter",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Increments every sensor refresh while Enabled ≥ 0.5. Resets when Enabled drops. Useful for stepped animations and cycle indexes.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "counter",
+    "animation",
+    "state"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "enabled",
+      "label": "Enabled",
+      "kind": "float",
+      "default": 1.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "boolean"
+      ],
+      "group": "Control"
+    },
+    {
+      "key": "step",
+      "label": "Step",
+      "kind": "float",
+      "default": 1.0,
+      "group": "Control"
+    },
+    {
+      "key": "wrap",
+      "label": "Wrap at",
+      "kind": "float",
+      "default": 0.0,
+      "help": "0 = no wrap. Otherwise counter resets after reaching this value.",
+      "group": "Control"
+    },
+    {
+      "key": "state_key",
+      "label": "State key (unique)",
+      "kind": "string",
+      "default": "counter_a",
+      "help": "Unique id so multiple counters do not share STATE.",
+      "group": "Advanced"
+    }
+  ],
+  "lua_expr": "(function()\n local key = {state_key}\n local en = tonumber({enabled}) or 0\n if en < 0.5 then STATE[key] = 0; return 0 end\n local c = (STATE[key] or 0) + ({step})\n local w = {wrap}\n if w > 0 and c >= w then c = c % w end\n STATE[key] = c\n return c\nend)()"
+}

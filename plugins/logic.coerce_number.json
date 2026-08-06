@@ -1,0 +1,46 @@
+{
+  "id": "logic.coerce_number",
+  "category": "logic",
+  "label": "Coerce Number",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Force any input (text, category, percent, …) into a number. Non-numeric strings become Default. Bridge text sources into gauges/bars that only accept numbers.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "bridge",
+    "adapter",
+    "parse",
+    "text"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "input",
+      "label": "Input",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius",
+        "text",
+        "category",
+        "boolean"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "default",
+      "label": "Default if unparsable",
+      "kind": "float",
+      "default": 0.0,
+      "minimum": -1000000000000.0,
+      "maximum": 1000000000000.0,
+      "group": "Fallback"
+    }
+  ],
+  "lua_expr": "(function() local s = tostring({input} or ''); local n = tonumber(s); if n ~= nil then return n end; local n2 = tonumber(s:match('([%-%d%.]+)')) ; return n2 ~= nil and n2 or ({default}) end)()"
+}
