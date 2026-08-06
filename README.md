@@ -87,6 +87,7 @@ From there, build complete HUDs with:
 * **Visual node editor** — sources → logic → visuals
 * **Node properties** — Resize visuals, add gradients, create CRT effects, control animation speed, move visuals, edit values, and much more.
 * **Live preview** — runs a real Conky process
+* **Node organization** — group, collapse, rename, and move your nodes the way you want
 * **Theme manager** — manage themes in `~/.config/conky`
 * **Theme wizard** — generate starter HUDs by style
 * **Legacy importer (beta)** — convert existing themes into editable projects
