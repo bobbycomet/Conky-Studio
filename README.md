@@ -92,7 +92,7 @@ Conky Studio isn't just a theme launcher or a simple configuration editor; it is
 | **Theme Lifecycle Manager** | Manual file moving |  Basic toggle | **Yes (Start/Stop, Zip, Duplicate)** |
 | **No Runtime Lock-In** |  Native |  Native | **Yes (Exports standard Conky)** |
 | **Plugin Ecosystem** | None | None | **Yes (`plugin.json` with a `manifest.json` store planned)** |
-| **Theme Wizard** | None| None | **Yes (Starter themes to learn, help tab, and other onboarding tools) | 
+| **Theme Wizard** | None| None | **Yes (Starter themes to learn, help tab, and other onboarding tools)** | 
 
 ---
 
