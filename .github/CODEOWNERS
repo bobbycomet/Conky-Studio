@@ -1,2 +1,8 @@
-# Protect the root plugin ecosystem manifest
+# Protect the root official plugin ecosystem manifest
 /plugins.json @bobbycomet
+
+# Protect the official main manifest file
+/manifest.json @bobbycomet
+
+# Protect the official plugins directory and all files within it
+/plugins/ @bobbycomet
