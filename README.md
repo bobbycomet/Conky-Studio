@@ -61,6 +61,39 @@ The goal is simple:
 > Make Conky as easy to design as it is powerful to run.
 
 ---
+
+## What makes this different
+
+Conky Studio is a **visual authoring tool for Conky**, not a replacement runtime.
+Your designs are converted into normal Conky files:
+
+* `conky.conf`
+* `render.lua`
+* `start.sh`
+* custom scripts
+* assets and resources
+
+Exported themes run independently using Conky's normal pipeline.
+
+**Live preview = export.**
+
+The preview uses the same build path as the final theme, meaning what you see is what you ship.
+
+## How Conky Studio Compares
+
+Conky Studio isn't just a theme launcher or a simple configuration editor—it is a **complete visual IDE and management engine** for desktop HUDs.
+
+| Capability | Raw Lua/Text Editing | Conky Manager | **Conky Studio** |
+| :--- | :---: | :---: | :---: |
+| **Visual Node Authoring** | None | None | **Yes (Sources → Logic → Visuals)** |
+| **Real Process Live Preview** | Manual terminal reloads | None | **Yes (~350ms instant feedback)** |
+| **Procedural Animation (PAS)** | Hand-coded Cairo math | None | **Yes (Sensor refresh, Draw FPS, Smooth nodes)** |
+| **Theme Lifecycle Manager** | Manual file moving |  Basic toggle | **Yes (Start/Stop, Zip, Duplicate)** |
+| **No Runtime Lock-In** |  Native |  Native | **Yes (Exports standard Conky)** |
+| **Plugin Ecosystem** | None | None | **Yes (`plugin.json` with a `manifest.json` store planned)** |
+
+---
+
 ## Create your first widget in 30 seconds
 
 1. Drop a **CPU** source
@@ -118,38 +151,6 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 | Skyrim Vanilla | Skyrim Parchment | CorePulse | Batman |
 |:--------------:|:----------------:|:---------:|:------:|
 | <a href="https://www.opendesktop.org/p/2287070/"><img src="screenshots/skyrin_vanilla_preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2366029/"><img src="screenshots/skyrim_parchment_preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2367501/"><img src="screenshots/preview.png" width="180"></a> | <a href="https://www.opendesktop.org/p/2366693/"><img src="screenshots/batman.png" width="180"></a> |
-
----
-
-## What makes this different
-
-Conky Studio is a **visual authoring tool for Conky**, not a replacement runtime.
-Your designs are converted into normal Conky files:
-
-* `conky.conf`
-* `render.lua`
-* `start.sh`
-* custom scripts
-* assets and resources
-
-Exported themes run independently using Conky's normal pipeline.
-
-**Live preview = export.**
-
-The preview uses the same build path as the final theme, meaning what you see is what you ship.
-
-## How Conky Studio Compares
-
-Conky Studio isn't just a theme launcher or a simple configuration editor—it is a **complete visual IDE and management engine** for desktop HUDs.
-
-| Capability | Raw Lua/Text Editing | Conky Manager | **Conky Studio** |
-| :--- | :---: | :---: | :---: |
-| **Visual Node Authoring** | None | None | **Yes (Sources → Logic → Visuals)** |
-| **Real Process Live Preview** | Manual terminal reloads | None | **Yes (~350ms instant feedback)** |
-| **Procedural Animation (PAS)** | Hand-coded Cairo math | None | **Yes (Sensor refresh, Draw FPS, Smooth nodes)** |
-| **Theme Lifecycle Manager** | Manual file moving |  Basic toggle | **Yes (Start/Stop, Zip, Duplicate)** |
-| **No Runtime Lock-In** |  Native |  Native | **Yes (Exports standard Conky)** |
-| **Plugin Ecosystem** | None | None | **Yes (`plugin.json` with a `manifest.json` store planned)** |
 
 ---
 
