@@ -35,6 +35,7 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 [![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7.1/Conky-Studio-1.0.7.1x86_64.AppImage)
 [![Conky Studio History](https://img.shields.io/badge/Conky_Studio_History-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
 [![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
+[![KOFI](https://img.shields.io/badge/KO-FI-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://ko-fi.com/bobby60908)
 </div>
 
 ---
