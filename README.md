@@ -285,9 +285,10 @@ For the full technical documentation, see the [![Wiki](https://img.shields.io/ba
 
 The 1.1.0 release focuses on expanding the Conky Studio ecosystem and scaling the core engine for complex setups.
 
-* **Node Vault** — Community plugin distribution hub for discovering and installing custom sources, logic processors, and visual canvas nodes.
+* **Node Vault** — Community plugin distribution hub for discovering and installing custom sources, logic processors, and visual canvas nodes. 
 * **HUD Vault** — Integrated community sharing platform to publish, browse, and install complete Conky HUD themes in one click.
 * **Source Plugins** — Author and load custom data providers via standard `manifest.json` schemas without modifying core application code.
 * **Canvas Plugins** — Build custom visual extensions.
 * **Native Multi-Monitor Support** — Full multi-window and multi-display layout management built into the core Studio architecture. Projects automatically migrate from single-canvas graphs into dynamic, window-based multi-scene configurations.
 * **Streamlined Project Importer** — An evolution of the legacy importer. Rather than fighting edge cases in legacy code parsing, Studio imports existing Conky projects directly into your workspace, scaffolds them with helper nodes, and lets you visually wire, refine, and complete them on the canvas.
+* **Position Stage** — While doing more tests, I realized that the X, Y sliders and value editing are great but tedious. So, that is where the Position Stage dock comes in. It will let you arrange visual nodes in screen space using drag-and-drop, while keeping the node graph focused purely on data flow. This does not compete with the nodes and moving them via x, y, or the sliders; this is just a more visual way than clicking the sliders to edit position every time.
