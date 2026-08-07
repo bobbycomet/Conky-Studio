@@ -13,5 +13,9 @@ from conkystudio.nodes import logic  # noqa: F401
 from conkystudio.nodes import visuals  # noqa: F401
 from conkystudio.nodes import visuals_niche 
 import conkystudio.extensions_bootstrap  # noqa: F401
-
+from . import logic_extra       # noqa: F401
+from . import sources_extra     # noqa: F401
+from . import visuals_extra     # noqa: F401
+from . import visuals_more      # noqa: F401
+import conkystudio.extensions_bootstrap  # noqa: F401
 __all__ = ["registry"]
