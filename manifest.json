@@ -3,61 +3,40 @@
   "updated_at": "2026-08-02",
   "plugins": [
     {
-      "$ref": "plugins/logic.threshold.json"
+      "$ref": "plugins/logic.plugin.temp_convert.json"
     },
     {
-      "$ref": "plugins/logic.deadzone.json"
+      "$ref": "plugins/logic.plugin.threshold_chain_10.json"
     },
     {
-      "$ref": "plugins/logic.smooth.json"
+      "$ref": "plugins/logic.plugin.boolean_not.json"
     },
     {
-      "$ref": "plugins/logic.temp_convert.json"
+      "$ref": "plugins/logic.plugin.percent_of.json"
     },
     {
-      "$ref": "plugins/logic.threshold_chain_10.json"
+      "$ref": "plugins/logic.plugin.unit_format.json"
     },
     {
-      "$ref": "plugins/logic.round.json"
+      "$ref": "plugins/logic.plugin.rate_limit.json"
     },
     {
-      "$ref": "plugins/logic.boolean_and.json"
+      "$ref": "plugins/logic.plugin.hold_peak.json"
     },
     {
-      "$ref": "plugins/logic.boolean_or.json"
-    },
-    {
-      "$ref": "plugins/logic.boolean_not.json"
-    },
-    {
-      "$ref": "plugins/logic.pick.json"
-    },
-    {
-      "$ref": "plugins/logic.percent_of.json"
-    },
-    {
-      "$ref": "plugins/logic.unit_format.json"
-    },
-    {
-      "$ref": "plugins/logic.rate_limit.json"
-    },
-    {
-      "$ref": "plugins/logic.hold_peak.json"
-    },
-    {
-      "$ref": "plugins/logic.modulo.json"
+      "$ref": "plugins/logic.plugin.modulo.json"
     },
     {
       "$ref": "plugins/visual.plugin.dot.json"
     },
     {
-      "$ref": "plugins/logic.data_rate_format.json"
+      "$ref": "plugins/logic.plugin.data_rate_format.json"
     },
     {
-      "$ref": "plugins/logic.text_case.json"
+      "$ref": "plugins/logic.plugin.text_case.json"
     },
     {
-      "$ref": "plugins/logic.hold_min.json"
+      "$ref": "plugins/logic.plugin.hold_min.json"
     },
     {
       "$ref": "plugins/visual.plugin.badge.json"
@@ -69,25 +48,25 @@
       "$ref": "plugins/visual.plugin.pulse_dot.json"
     },
     {
-      "$ref": "plugins/logic.coerce_number.json"
+      "$ref": "plugins/logic.plugin.coerce_number.json"
     },
     {
-      "$ref": "plugins/logic.coerce_text.json"
+      "$ref": "plugins/logic.plugin.coerce_text.json"
     },
     {
-      "$ref": "plugins/logic.truthy.json"
+      "$ref": "plugins/logic.plugin.truthy.json"
     },
     {
-      "$ref": "plugins/logic.string_length.json"
+      "$ref": "plugins/logic.plugin.string_length.json"
     },
     {
-      "$ref": "plugins/logic.substring.json"
+      "$ref": "plugins/logic.plugin.substring.json"
     },
     {
-      "$ref": "plugins/logic.remap_curve.json"
+      "$ref": "plugins/logic.plugin.remap_curve.json"
     },
     {
-      "$ref": "plugins/logic.counter.json"
+      "$ref": "plugins/logic.plugin.counter.json"
     },
     {
       "$ref": "plugins/visual.plugin.signal_bars.json"
