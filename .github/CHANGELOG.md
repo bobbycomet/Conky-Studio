@@ -1,6 +1,22 @@
 # Changelog
 
-# 1.0.7.2 (Latest)
+# 1.0.7.3 — Fix (Latest)
+
+Fixed missing node and extension imports in `/conky-studio/nodes/__init__.py`.
+
+This resolves an issue where some built-in node groups and extension bootstrap modules were not being loaded correctly.
+
+Added missing imports:
+
+```python
+from . import logic_extra       # noqa: F401
+from . import sources_extra     # noqa: F401
+from . import visuals_extra     # noqa: F401
+from . import visuals_more      # noqa: F401
+import conkystudio.extensions_bootstrap  # noqa: F401
+```
+
+# 1.0.7.2
 
 **OCS/Pling /OpenDesktop installer Fix**
 * When a downloaded theme has no `start.sh`, Conky Studio now writes a minimal one automatically.
