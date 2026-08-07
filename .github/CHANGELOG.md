@@ -1,6 +1,33 @@
 # Changelog
 
-# 1.0.7.3 — Fix (Latest)
+## 1.0.7.4 — Collision fix (Latest)
+
+### The cause
+
+v1.0.7.3
+
+When I imported the missing extras, Lua_gen had no defense against the collision, so it went unnoticed at first glance, as everything looked correct.
+
+### Fixed
+- **Logic plugin ID collisions** with built-ins. Seven plugins reused flat `logic.*` type ids already claimed by core nodes, which could raise on register, silently no-op (`deadzone`), or overwrite codegen templates:
+  - `logic.threshold` → `logic.plugin.threshold`
+  - `logic.deadzone` → `logic.plugin.deadzone`
+  - `logic.smooth` → `logic.plugin.smooth`
+  - `logic.round` → `logic.plugin.round`
+  - `logic.boolean_and` → `logic.plugin.boolean_and`
+  - `logic.boolean_or` → `logic.plugin.boolean_or`
+  - `logic.pick` → `logic.plugin.pick`
+- **Codegen duplicate registration** — `_LOGIC_GENERATORS` / `_VISUAL_GENERATORS` now raise `ValueError` on a second registration of the same type instead of silently overwriting (matches the registry’s intent; plugins must use unique ids such as `logic.plugin.*` / `visual.plugin.*`).
+ 
+### Added
+- **`logic_generators_extra.py`** — Lua generators for the extra logic nodes (`smooth`, `rate_of_change`, `hysteresis`, `string_join`, `enum_map`) so they compile once those modules are imported.
+- Local string/literal helpers in that module so it does not circular-import `lua_gen` during startup.
+
+### Notes / required wiring
+- Projects that still reference the old plugin type strings need a one-time retarget to the `logic.plugin.*` ids (or a loader migration). Just uninstall the plugin, exit the plugin window, refetch the list, and reinstall. This will fix the collision issues.
+- Visual plugins were already namespaced as `visual.plugin.*`; no change there.
+
+# 1.0.7.3 — Fix
 
 Fixed missing node and extension imports in `/conky-studio/nodes/__init__.py`.
 
