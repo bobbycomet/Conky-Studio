@@ -32,7 +32,7 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 [![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/kJZCZWg5nw)
 [![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@BobbyComet)
 [![Wiki](https://img.shields.io/badge/Wiki-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki)
-[![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7.1/Conky-Studio-1.0.7.1x86_64.AppImage)
+[![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7.4/Conky-Studio-1.0.7.4_x86_64.AppImage)
 [![Conky Studio History](https://img.shields.io/badge/Conky_Studio_History-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
 [![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
 [![KOFI](https://img.shields.io/badge/KO-FI-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://ko-fi.com/bobby60908)
@@ -135,6 +135,34 @@ From there, build complete HUDs with:
 * **Procedural Animation System (PAS)** — **Sensor refresh rate** how often values update, **Draw FPS** how often visuals redraw, and a **Smooth logic node** interpolation between states 
 
 Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater) for auto-updates, or force an update without going to GitHub or OpenDesktop.
+
+## How to install
+
+[![Download Latest Build](https://img.shields.io/badge/Download_Latest_Build-2ea44f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/releases/download/v1.0.7.4/Conky-Studio-1.0.7.4_x86_64.AppImage)
+
+### Installation & Running
+
+Before running the AppImage, you need to make it executable. You can do this via the Terminal or standard File Manager GUI:
+
+#### Option 1: Terminal (Recommended)
+Open a terminal in the directory where the file is saved and run:
+
+```bash
+chmod +x Conky-Studio-1.0.7.4_x86_64.AppImage
+./Conky-Studio-1.0.7.4_x86_64.AppImage
+```
+
+You will be able to click on it after this without needing the terminal.
+
+#### Option 2: GUI
+
+* Right-click `Conky-Studio-1.0.7.4_x86_64.AppImage` and select Properties
+
+* Navigate to the Permissions tab
+
+* Check "Allow executing file as program" (or "Is executable" depending on your DE)
+
+* Double-click (or single-click, depending on DE) the file to run
 
 ---
 
@@ -294,3 +322,4 @@ The 1.1.0 release focuses on expanding the Conky Studio ecosystem and scaling th
 * **Streamlined Project Importer** — An evolution of the legacy importer. Rather than fighting edge cases in legacy code parsing, Studio imports existing Conky projects directly into your workspace, scaffolds them with helper nodes, and lets you visually wire, refine, and complete them on the canvas.
 * **Position Stage** — While doing more tests, I realized that the X, Y sliders and value editing are great but tedious. So, that is where the Position Stage dock comes in. It will let you arrange visual nodes in screen space using drag-and-drop, while keeping the node graph focused purely on data flow. This does not compete with the nodes and moving them via x, y, or the sliders; this is just a more visual way than clicking the sliders to edit position every time.
 * **Extend the Lua API** — the ability to make new nodes, no breaking changes, just pure additive
+* **Extend Cairo capabilities** — More visuals, atmospheric effects, animations, particles, and more.
