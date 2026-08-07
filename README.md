@@ -164,6 +164,13 @@ You will be able to click on it after this without needing the terminal.
 
 * Double-click (or single-click, depending on DE) the file to run
 
+### If you download the source code
+
+* Download both the conkystudio file and packaging
+* Packaging goes inside of the conkystudio folder
+* If you download them, be sure they are in the same location eg., ~/downloads/conkystudio, ~/downloads/Packaging
+* Otherwise, retarget where you saved the conkystudio folder
+
 ---
 
 ### Screenshots
