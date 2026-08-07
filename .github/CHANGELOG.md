@@ -1,5 +1,9 @@
 # Changelog
 
+## Cleanup
+
+Removed the 7 duplicate plugins
+
 ## 1.0.7.4 — Collision fix (Latest)
 
 ### The cause
