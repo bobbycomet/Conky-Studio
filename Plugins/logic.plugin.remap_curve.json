@@ -1,0 +1,87 @@
+{
+  "id": "logic.plugin.remap_curve",
+  "category": "logic",
+  "label": "Remap Curve",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Map 0\u20131 (or any range) through ease-in / ease-out / smoothstep / gamma. Makes bars and glows feel less linear.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "curve",
+    "ease",
+    "animation"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 0.5,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius"
+      ],
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "group": "Input"
+    },
+    {
+      "key": "in_min",
+      "label": "In min",
+      "kind": "float",
+      "default": 0.0,
+      "group": "Range"
+    },
+    {
+      "key": "in_max",
+      "label": "In max",
+      "kind": "float",
+      "default": 100.0,
+      "group": "Range"
+    },
+    {
+      "key": "out_min",
+      "label": "Out min",
+      "kind": "float",
+      "default": 0.0,
+      "group": "Range"
+    },
+    {
+      "key": "out_max",
+      "label": "Out max",
+      "kind": "float",
+      "default": 1.0,
+      "group": "Range"
+    },
+    {
+      "key": "curve",
+      "label": "Curve",
+      "kind": "enum",
+      "default": "smoothstep",
+      "choices": [
+        "linear",
+        "ease_in",
+        "ease_out",
+        "smoothstep",
+        "gamma"
+      ],
+      "group": "Curve"
+    },
+    {
+      "key": "gamma",
+      "label": "Gamma (curve=gamma)",
+      "kind": "float",
+      "default": 2.2,
+      "minimum": 0.1,
+      "maximum": 8.0,
+      "step": 0.1,
+      "group": "Curve"
+    }
+  ],
+  "lua_expr": "(function()\n local v = tonumber({value}) or 0\n local imin, imax = {in_min}, {in_max}\n local omin, omax = {out_min}, {out_max}\n local span = imax - imin; if span == 0 then span = 1 end\n local t = (v - imin) / span; if t < 0 then t = 0 elseif t > 1 then t = 1 end\n local c = {curve}\n if c == 'ease_in' then t = t * t\n elseif c == 'ease_out' then t = 1 - (1 - t) * (1 - t)\n elseif c == 'smoothstep' then t = t * t * (3 - 2 * t)\n elseif c == 'gamma' then t = t ^ ({gamma})\n end\n return omin + (omax - omin) * t\nend)()"
+}

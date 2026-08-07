@@ -1,0 +1,115 @@
+{
+  "id": "visual.plugin.bubble_meter",
+  "category": "visual",
+  "label": "Bubble Meter",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Vertical tube with rising bubbles; fill height follows Value. Decorative capacity / tank gauge.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "bubble",
+    "tank",
+    "gauge",
+    "animation"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 30,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "width",
+      "label": "Width",
+      "kind": "float",
+      "default": 36,
+      "minimum": 10,
+      "maximum": 200,
+      "group": "Shape"
+    },
+    {
+      "key": "height",
+      "label": "Height",
+      "kind": "float",
+      "default": 110,
+      "minimum": 30,
+      "maximum": 800,
+      "group": "Shape"
+    },
+    {
+      "key": "value",
+      "label": "Value",
+      "kind": "float",
+      "default": 60,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Data"
+    },
+    {
+      "key": "min_value",
+      "label": "Min",
+      "kind": "float",
+      "default": 0,
+      "group": "Data"
+    },
+    {
+      "key": "max_value",
+      "label": "Max",
+      "kind": "float",
+      "default": 100,
+      "group": "Data"
+    },
+    {
+      "key": "color",
+      "label": "Liquid",
+      "kind": "color",
+      "default": "#4fd1c5",
+      "group": "Style"
+    },
+    {
+      "key": "track_color",
+      "label": "Tube",
+      "kind": "color",
+      "default": "#33313a",
+      "group": "Style"
+    },
+    {
+      "key": "bubbles",
+      "label": "Bubble count",
+      "kind": "int",
+      "default": 6,
+      "minimum": 0,
+      "maximum": 20,
+      "group": "Animation"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 1.0,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local x, y, w, h = {x}, {y}, {width}, {height}\n local min_v, max_v = {min_value}, {max_value}\n local span = max_v - min_v; if span == 0 then span = 1 end\n local pct = ((tonumber({value}) or min_v) - min_v) / span\n if pct < 0 then pct = 0 elseif pct > 1 then pct = 1 end\n local tr, tg, tb = {track_color}\n local lr, lg, lb = {color}\n -- tube\n cairo_set_source_rgba(cr, tr, tg, tb, {opacity} * 0.8)\n rounded_rect(cr, x, y, w, h, w/2)\n cairo_fill(cr)\n -- liquid\n local fill_h = h * pct\n cairo_save(cr)\n rounded_rect(cr, x, y, w, h, w/2)\n cairo_clip(cr)\n cairo_set_source_rgba(cr, lr, lg, lb, {opacity} * 0.85)\n cairo_rectangle(cr, x, y + h - fill_h, w, fill_h)\n cairo_fill(cr)\n -- bubbles\n local nb = math.floor({bubbles} + 0.5)\n local t = wall_clock()\n for i = 1, nb do\n  local seed = i * 17.13\n  local bx = x + w * (0.2 + 0.6 * ((math.sin(seed) * 0.5 + 0.5)))\n  local speed = 12 + (i % 5) * 4\n  local by = y + h - ((t * speed + seed * 10) % (fill_h + 10))\n  if by > y + h - fill_h and by < y + h then\n   local br = 1.5 + (i % 3)\n   cairo_set_source_rgba(cr, 1, 1, 1, {opacity} * 0.35)\n   cairo_arc(cr, bx, by, br, 0, 2 * math.pi)\n   cairo_fill(cr)\n  end\n end\n cairo_restore(cr)\n"
+}

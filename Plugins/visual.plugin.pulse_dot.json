@@ -1,0 +1,80 @@
+{
+  "id": "visual.plugin.pulse_dot",
+  "category": "visual",
+  "label": "Pulse Dot",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "A dot that pulses (grows/fades) continuously while Active is truthy, and sits dim/static otherwise -- wire a Threshold Gate, Playback Status via a comparison, or any 0/1-ish signal into Active for a 'something is happening' indicator.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "shape",
+    "led",
+    "animation",
+    "status"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 40,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 40,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "radius",
+      "label": "Radius",
+      "kind": "float",
+      "default": 6,
+      "minimum": 1,
+      "maximum": 200,
+      "group": "Shape"
+    },
+    {
+      "key": "active",
+      "label": "Active",
+      "kind": "float",
+      "default": 1,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "boolean"
+      ],
+      "group": "Input",
+      "help": "Truthy (>= 0.5) pulses; otherwise the dot sits dim and static."
+    },
+    {
+      "key": "speed",
+      "label": "Pulse speed",
+      "kind": "float",
+      "default": 1.5,
+      "minimum": 0.05,
+      "maximum": 20,
+      "step": 0.05,
+      "group": "Animation"
+    },
+    {
+      "key": "color",
+      "label": "Colour",
+      "kind": "color",
+      "default": "#4fd1c5",
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": " local r, g, b = {color}\n local active = ({active}) >= 0.5\n local t = wall_clock() * {speed}\n local phase = active and (0.5 + 0.5 * math.sin(t * 2 * math.pi)) or 0.15\n cairo_set_source_rgba(cr, r, g, b, 0.35 + 0.65 * phase)\n cairo_arc(cr, {x}, {y}, {radius} * (0.75 + 0.25 * phase), 0, 2 * math.pi)\n cairo_fill(cr)\n"
+}

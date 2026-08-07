@@ -1,0 +1,112 @@
+{
+  "id": "visual.plugin.spark_burst",
+  "category": "visual",
+  "label": "Spark Burst",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Radial sparks / star-burst lines. Intensity and count scale with Trigger \u2014 celebration or alert chrome.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "spark",
+    "burst",
+    "animation",
+    "alert"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "cx",
+      "label": "Center X",
+      "kind": "float",
+      "default": 100,
+      "group": "Position",
+      "minimum": 1,
+      "maximum": 4000
+    },
+    {
+      "key": "cy",
+      "label": "Center Y",
+      "kind": "float",
+      "default": 100,
+      "group": "Position",
+      "minimum": 1,
+      "maximum": 4000
+    },
+    {
+      "key": "inner",
+      "label": "Inner radius",
+      "kind": "float",
+      "default": 8,
+      "minimum": 0,
+      "maximum": 400,
+      "group": "Shape"
+    },
+    {
+      "key": "outer",
+      "label": "Outer radius",
+      "kind": "float",
+      "default": 50,
+      "minimum": 8,
+      "maximum": 1000,
+      "group": "Shape"
+    },
+    {
+      "key": "rays",
+      "label": "Rays",
+      "kind": "int",
+      "default": 12,
+      "minimum": 3,
+      "maximum": 48,
+      "group": "Shape"
+    },
+    {
+      "key": "trigger",
+      "label": "Trigger",
+      "kind": "float",
+      "default": 70,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Drive"
+    },
+    {
+      "key": "spin",
+      "label": "Spin (deg/s)",
+      "kind": "float",
+      "default": 25,
+      "minimum": -360,
+      "maximum": 360,
+      "group": "Animation"
+    },
+    {
+      "key": "color",
+      "label": "Colour",
+      "kind": "color",
+      "default": "#e8b84f",
+      "group": "Style"
+    },
+    {
+      "key": "line_width",
+      "label": "Line width",
+      "kind": "float",
+      "default": 1.5,
+      "minimum": 0.5,
+      "maximum": 10,
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 0.9,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local cx, cy = {cx}, {cy}\n local n = math.floor({rays} + 0.5)\n local energy = math.min(tonumber({trigger}) or 0, 100) / 100\n local rot = math.rad(wall_clock() * {spin})\n local r, g, b = {color}\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_line_width(cr, {line_width})\n for i = 0, n - 1 do\n  local a = rot + i * (2 * math.pi / n)\n  local len = {inner} + ({outer} - {inner}) * (0.4 + 0.6 * energy)\n  -- alternate short/long\n  if i % 2 == 1 then len = len * 0.65 end\n  local flicker = 0.7 + 0.3 * math.sin(wall_clock() * 8 + i)\n  cairo_set_source_rgba(cr, r, g, b, {opacity} * energy * flicker)\n  cairo_move_to(cr, cx + math.cos(a) * {inner}, cy + math.sin(a) * {inner})\n  cairo_line_to(cr, cx + math.cos(a) * len, cy + math.sin(a) * len)\n  cairo_stroke(cr)\n end\n"
+}

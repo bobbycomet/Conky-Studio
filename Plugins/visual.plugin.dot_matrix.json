@@ -1,0 +1,110 @@
+{
+  "id": "visual.plugin.dot_matrix",
+  "category": "visual",
+  "label": "Dot Matrix Field",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Grid of dots whose brightness follows a radial falloff from centre, modulated by Trigger. Soft ambient / equalizer backdrop.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "matrix",
+    "dots",
+    "grid",
+    "animation"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "cols",
+      "label": "Columns",
+      "kind": "int",
+      "default": 12,
+      "minimum": 2,
+      "maximum": 40,
+      "group": "Shape"
+    },
+    {
+      "key": "rows",
+      "label": "Rows",
+      "kind": "int",
+      "default": 8,
+      "minimum": 2,
+      "maximum": 40,
+      "group": "Shape"
+    },
+    {
+      "key": "spacing",
+      "label": "Spacing",
+      "kind": "float",
+      "default": 12,
+      "minimum": 4,
+      "maximum": 80,
+      "group": "Shape"
+    },
+    {
+      "key": "dot_radius",
+      "label": "Dot radius",
+      "kind": "float",
+      "default": 2.2,
+      "minimum": 0.5,
+      "maximum": 20,
+      "group": "Shape"
+    },
+    {
+      "key": "trigger",
+      "label": "Trigger",
+      "kind": "float",
+      "default": 50,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Drive"
+    },
+    {
+      "key": "color",
+      "label": "Colour",
+      "kind": "color",
+      "default": "#4fd1c5",
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 0.9,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    },
+    {
+      "key": "animate",
+      "label": "Idle shimmer",
+      "kind": "bool",
+      "default": true,
+      "group": "Animation"
+    }
+  ],
+  "lua_draw_body": "\n local cols, rows = math.floor({cols}+0.5), math.floor({rows}+0.5)\n local sp, dr = {spacing}, {dot_radius}\n local energy = math.min(tonumber({trigger}) or 0, 100) / 100\n local r, g, b = {color}\n local t = wall_clock()\n local cx = (cols - 1) / 2\n local cy = (rows - 1) / 2\n local maxd = math.sqrt(cx*cx + cy*cy); if maxd < 1 then maxd = 1 end\n for j = 0, rows - 1 do\n  for i = 0, cols - 1 do\n   local dx, dy = i - cx, j - cy\n   local d = math.sqrt(dx*dx + dy*dy) / maxd\n   local bright = (1 - d) * (0.25 + 0.75 * energy)\n   if {animate} then\n    bright = bright * (0.7 + 0.3 * math.sin(t * 2.1 + i * 0.7 + j * 0.5))\n   end\n   if bright > 0.02 then\n    cairo_set_source_rgba(cr, r, g, b, {opacity} * bright)\n    cairo_arc(cr, {x} + i * sp, {y} + j * sp, dr, 0, 2 * math.pi)\n    cairo_fill(cr)\n   end\n  end\n end\n"
+}

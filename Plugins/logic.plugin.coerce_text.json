@@ -1,0 +1,45 @@
+{
+  "id": "logic.plugin.coerce_text",
+  "category": "logic",
+  "label": "Coerce Text",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Turn any value into a string. Lets numeric sources feed Text Label / Badge / String Join cleanly when the socket kinds would otherwise refuse the wire.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "text",
+  "tags": [
+    "bridge",
+    "adapter",
+    "text"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "input",
+      "label": "Input",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius",
+        "text",
+        "category",
+        "boolean"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "decimals",
+      "label": "Decimals (if numeric)",
+      "kind": "int",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 6,
+      "group": "Format"
+    }
+  ],
+  "lua_expr": "(function() local v = {input}; if type(v) == 'number' then return string.format('%.' .. math.floor({decimals}) .. 'f', v) end; return tostring(v or '') end)()"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "logic.plugin.string_length",
+  "category": "logic",
+  "label": "String Length",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Character length of the input string. Useful for dynamic layout or 'is text empty?' checks.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "text",
+    "measure"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "input",
+      "label": "Input",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "text",
+        "category",
+        "number"
+      ],
+      "group": "Input"
+    }
+  ],
+  "lua_expr": "(#tostring({input} or ''))"
+}

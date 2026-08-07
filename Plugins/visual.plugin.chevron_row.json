@@ -1,0 +1,109 @@
+{
+  "id": "visual.plugin.chevron_row",
+  "category": "visual",
+  "label": "Chevron Row",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Row of chevrons that chase / light up. Good for directional flow or progress indication.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "chevron",
+    "progress",
+    "animation"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Y",
+      "kind": "float",
+      "default": 40,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "count",
+      "label": "Chevrons",
+      "kind": "int",
+      "default": 6,
+      "minimum": 2,
+      "maximum": 24,
+      "group": "Shape"
+    },
+    {
+      "key": "size",
+      "label": "Size",
+      "kind": "float",
+      "default": 14,
+      "minimum": 4,
+      "maximum": 80,
+      "group": "Shape"
+    },
+    {
+      "key": "gap",
+      "label": "Gap",
+      "kind": "float",
+      "default": 6,
+      "minimum": 0,
+      "maximum": 40,
+      "group": "Shape"
+    },
+    {
+      "key": "value",
+      "label": "Value (0-100)",
+      "kind": "float",
+      "default": 60,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Data"
+    },
+    {
+      "key": "animate",
+      "label": "Chase animation",
+      "kind": "bool",
+      "default": true,
+      "group": "Animation"
+    },
+    {
+      "key": "speed",
+      "label": "Chase speed",
+      "kind": "float",
+      "default": 3.0,
+      "minimum": 0.2,
+      "maximum": 20,
+      "group": "Animation"
+    },
+    {
+      "key": "color",
+      "label": "Colour",
+      "kind": "color",
+      "default": "#4fd1c5",
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 0.95,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local n = math.floor({count} + 0.5)\n local sz, gap = {size}, {gap}\n local val = math.min(tonumber({value}) or 0, 100) / 100\n local lit = val * n\n local r, g, b = {color}\n local phase = {animate} and (wall_clock() * {speed}) or 0\n for i = 0, n - 1 do\n  local ox = {x} + i * (sz * 0.7 + gap)\n  local oy = {y}\n  local bright = 0.2\n  if i < lit then bright = 0.55 + 0.45 * math.min(1, lit - i) end\n  if {animate} then\n   local wave = 0.5 + 0.5 * math.sin(phase - i * 0.9)\n   bright = bright * (0.55 + 0.45 * wave)\n  end\n  cairo_set_source_rgba(cr, r, g, b, {opacity} * bright)\n  cairo_set_line_width(cr, 2.5)\n  cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n  cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\n  cairo_move_to(cr, ox, oy - sz/2)\n  cairo_line_to(cr, ox + sz * 0.55, oy)\n  cairo_line_to(cr, ox, oy + sz/2)\n  cairo_stroke(cr)\n end\n"
+}

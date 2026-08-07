@@ -1,0 +1,125 @@
+{
+  "id": "visual.plugin.altititude_indicator",
+  "category": "visual",
+  "label": "Altititude Indicator",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Aircraft artificial-horizon style gauge. Pitch (vertical shift) and Bank (roll rotation) inputs. Decorative / aviation HUD element \u2014 not a real AHRS.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "plane",
+    "aviation",
+    "horizon",
+    "altititude",
+    "gauge"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "cx",
+      "label": "Center X",
+      "kind": "float",
+      "default": 120,
+      "group": "Position",
+      "minimum": 1,
+      "maximum": 4000
+    },
+    {
+      "key": "cy",
+      "label": "Center Y",
+      "kind": "float",
+      "default": 120,
+      "group": "Position",
+      "minimum": 1,
+      "maximum": 4000
+    },
+    {
+      "key": "radius",
+      "label": "Radius",
+      "kind": "float",
+      "default": 70,
+      "minimum": 24,
+      "maximum": 600,
+      "group": "Shape"
+    },
+    {
+      "key": "pitch",
+      "label": "Pitch",
+      "kind": "float",
+      "default": 0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "minimum": -90,
+      "maximum": 90,
+      "group": "Data",
+      "help": "Degrees nose-up positive. Mapped into vertical sky/ground shift."
+    },
+    {
+      "key": "bank",
+      "label": "Bank",
+      "kind": "float",
+      "default": 0,
+      "bindable": true,
+      "accepts": [
+        "number"
+      ],
+      "minimum": -180,
+      "maximum": 180,
+      "group": "Data",
+      "help": "Roll degrees; positive = right wing down."
+    },
+    {
+      "key": "pitch_scale",
+      "label": "Pitch sensitivity",
+      "kind": "float",
+      "default": 1.2,
+      "minimum": 0.2,
+      "maximum": 4,
+      "step": 0.1,
+      "group": "Data"
+    },
+    {
+      "key": "sky_color",
+      "label": "Sky",
+      "kind": "color",
+      "default": "#2a6fad",
+      "group": "Style"
+    },
+    {
+      "key": "ground_color",
+      "label": "Ground",
+      "kind": "color",
+      "default": "#8a5a2b",
+      "group": "Style"
+    },
+    {
+      "key": "line_color",
+      "label": "Horizon / marks",
+      "kind": "color",
+      "default": "#e8eaed",
+      "group": "Style"
+    },
+    {
+      "key": "bezel_color",
+      "label": "Bezel",
+      "kind": "color",
+      "default": "#1a222c",
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 1.0,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local pitch = tonumber({pitch}) or 0\n local bank = tonumber({bank}) or 0\n local sr, sg, sb = {sky_color}\n local gr, gg, gb = {ground_color}\n local lr, lg, lb = {line_color}\n local br, bg, bb = {bezel_color}\n -- clip to circle\n cairo_save(cr)\n cairo_new_sub_path(cr)\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_clip(cr)\n cairo_translate(cr, cx, cy)\n cairo_rotate(cr, math.rad(bank))\n local py = pitch * {pitch_scale}\n -- sky\n cairo_set_source_rgba(cr, sr, sg, sb, {opacity})\n cairo_rectangle(cr, -R * 1.5, -R * 1.5 + py, R * 3, R * 1.5)\n cairo_fill(cr)\n -- ground\n cairo_set_source_rgba(cr, gr, gg, gb, {opacity})\n cairo_rectangle(cr, -R * 1.5, py, R * 3, R * 1.5)\n cairo_fill(cr)\n -- horizon line\n cairo_set_source_rgba(cr, lr, lg, lb, {opacity})\n cairo_set_line_width(cr, 2)\n cairo_move_to(cr, -R * 1.2, py)\n cairo_line_to(cr, R * 1.2, py)\n cairo_stroke(cr)\n -- pitch ladder\n cairo_set_line_width(cr, 1.2)\n for step = -40, 40, 10 do\n  if step ~= 0 then\n   local yy = py - step * {pitch_scale}\n   local half = (math.abs(step) % 20 == 0) and 18 or 10\n   cairo_move_to(cr, -half, yy); cairo_line_to(cr, half, yy); cairo_stroke(cr)\n  end\n end\n cairo_restore(cr)\n -- fixed aircraft symbol\n cairo_set_source_rgba(cr, lr, lg, lb, {opacity})\n cairo_set_line_width(cr, 2.5)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_move_to(cr, cx - 22, cy); cairo_line_to(cr, cx - 8, cy); cairo_stroke(cr)\n cairo_move_to(cr, cx + 8, cy); cairo_line_to(cr, cx + 22, cy); cairo_stroke(cr)\n cairo_arc(cr, cx, cy, 4, 0, 2 * math.pi); cairo_stroke(cr)\n -- bezel ring\n cairo_set_line_width(cr, 3)\n cairo_set_source_rgba(cr, br, bg, bb, {opacity})\n cairo_new_sub_path(cr)\n cairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\n cairo_stroke(cr)\n -- bank marks on bezel\n cairo_set_line_width(cr, 2)\n cairo_set_source_rgba(cr, lr, lg, lb, {opacity} * 0.85)\n for _, deg in ipairs({-60, -45, -30, -20, -10, 0, 10, 20, 30, 45, 60}) do\n  local a = math.rad(-90 + deg)\n  local len = (deg == 0 or math.abs(deg) == 30 or math.abs(deg) == 60) and 10 or 6\n  cairo_move_to(cr, cx + math.cos(a) * (R - 2), cy + math.sin(a) * (R - 2))\n  cairo_line_to(cr, cx + math.cos(a) * (R - 2 - len), cy + math.sin(a) * (R - 2 - len))\n  cairo_stroke(cr)\n end\n"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "logic.plugin.data_rate_format",
+  "category": "logic",
+  "label": "Data Rate Format",
+  "author": "conky-studio",
+  "version": "1.0.0",
+  "description": "Auto-scales a raw KB/s number into a human string (e.g. 1400 -> '1.4 MB/s'). Companion to Network Download/Upload, which output a raw number in KB/s.",
+  "color": "#5eb0c9",
+  "subcategory": "Plugins",
+  "output_kind": "text",
+  "tags": [
+    "format",
+    "text",
+    "units",
+    "network"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "value",
+      "label": "Value (KB/s)",
+      "kind": "float",
+      "default": 0,
+      "minimum": -1000000000.0,
+      "maximum": 1000000000.0,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "binary_prefixes",
+      "label": "Use KiB/MiB/GiB (x1024)",
+      "kind": "bool",
+      "default": true,
+      "group": "Format",
+      "help": "Off uses decimal KB/MB/GB (x1000) instead."
+    },
+    {
+      "key": "decimals",
+      "label": "Decimals",
+      "kind": "int",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 3,
+      "group": "Format"
+    },
+    {
+      "key": "suffix",
+      "label": "Suffix",
+      "kind": "string",
+      "default": "/s",
+      "group": "Format"
+    }
+  ],
+  "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local binary = {binary_prefixes}\n local base = binary and 1024 or 1000\n local u1, u2, u3, u4\n if binary then u1, u2, u3, u4 = 'KiB', 'MiB', 'GiB', 'TiB'\n else u1, u2, u3, u4 = 'KB', 'MB', 'GB', 'TB' end\n local label = u1\n local av = math.abs(v)\n if av >= base then v = v / base; av = av / base; label = u2\n if av >= base then v = v / base; av = av / base; label = u3\n if av >= base then v = v / base; label = u4 end\n end\n end\n local d = math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local s = string.format('%.' .. d .. 'f', v)\n return s .. ' ' .. label .. '{suffix}'\nend)()"
+}

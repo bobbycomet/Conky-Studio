@@ -1,0 +1,103 @@
+{
+  "id": "visual.plugin.heartbeat",
+  "category": "visual",
+  "label": "Heartbeat Line",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "ECG-style heartbeat polyline that scrolls. Spike rate / height can follow Trigger.",
+  "color": "#8a5fd6",
+  "subcategory": "Plugins",
+  "tags": [
+    "ecg",
+    "heartbeat",
+    "animation",
+    "line"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "x",
+      "label": "X",
+      "kind": "float",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "y",
+      "label": "Baseline Y",
+      "kind": "float",
+      "default": 60,
+      "minimum": 1,
+      "maximum": 4000,
+      "group": "Position"
+    },
+    {
+      "key": "width",
+      "label": "Width",
+      "kind": "float",
+      "default": 200,
+      "minimum": 40,
+      "maximum": 4000,
+      "group": "Shape"
+    },
+    {
+      "key": "height",
+      "label": "Spike height",
+      "kind": "float",
+      "default": 28,
+      "minimum": 4,
+      "maximum": 400,
+      "group": "Shape"
+    },
+    {
+      "key": "bpm",
+      "label": "Base BPM",
+      "kind": "float",
+      "default": 72,
+      "minimum": 20,
+      "maximum": 200,
+      "group": "Animation"
+    },
+    {
+      "key": "trigger",
+      "label": "Trigger (scales BPM)",
+      "kind": "float",
+      "default": 50,
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent"
+      ],
+      "group": "Drive"
+    },
+    {
+      "key": "color",
+      "label": "Colour",
+      "kind": "color",
+      "default": "#ff6b6b",
+      "group": "Style"
+    },
+    {
+      "key": "line_width",
+      "label": "Line width",
+      "kind": "float",
+      "default": 1.8,
+      "minimum": 0.5,
+      "maximum": 10,
+      "group": "Style"
+    },
+    {
+      "key": "opacity",
+      "label": "Opacity",
+      "kind": "float",
+      "default": 0.95,
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05,
+      "group": "Style"
+    }
+  ],
+  "lua_draw_body": "\n local x0, y0, W, H = {x}, {y}, {width}, {height}\n local trig = math.min(tonumber({trigger}) or 50, 100) / 100\n local bpm = {bpm} * (0.6 + 0.8 * trig)\n local period = 60 / math.max(bpm, 1)\n local t = wall_clock()\n local r, g, b = {color}\n cairo_set_source_rgba(cr, r, g, b, {opacity})\n cairo_set_line_width(cr, {line_width})\n cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\n local steps = math.max(40, math.floor(W / 2))\n cairo_new_path(cr)\n for i = 0, steps do\n  local u = i / steps\n  local px = x0 + u * W\n  -- phase within beat, scrolled\n  local phase = ((u * 1.6) + t / period) % 1\n  local y = y0\n  if phase < 0.08 then\n   y = y0\n  elseif phase < 0.12 then\n   y = y0 - H * ((phase - 0.08) / 0.04)\n  elseif phase < 0.16 then\n   y = y0 - H + H * 1.6 * ((phase - 0.12) / 0.04)\n  elseif phase < 0.20 then\n   y = y0 + H * 0.6 - H * 0.6 * ((phase - 0.16) / 0.04)\n  elseif phase < 0.28 then\n   y = y0 - H * 0.25 * math.sin((phase - 0.20) / 0.08 * math.pi)\n  else\n   y = y0\n  end\n  if i == 0 then cairo_move_to(cr, px, y) else cairo_line_to(cr, px, y) end\n end\n cairo_stroke(cr)\n"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "logic.plugin.substring",
+  "category": "logic",
+  "label": "Substring",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Extract a slice of text (1-based start, length). Truncate long process names or SSID labels.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "text",
+  "tags": [
+    "text",
+    "slice"
+  ],
+  "simple_mode": false,
+  "properties": [
+    {
+      "key": "input",
+      "label": "Input",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "text",
+        "category",
+        "number"
+      ],
+      "group": "Input"
+    },
+    {
+      "key": "start",
+      "label": "Start (1-based)",
+      "kind": "int",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 10000,
+      "group": "Slice"
+    },
+    {
+      "key": "length",
+      "label": "Length",
+      "kind": "int",
+      "default": 12,
+      "minimum": 0,
+      "maximum": 10000,
+      "group": "Slice"
+    },
+    {
+      "key": "ellipsis",
+      "label": "Add ... if truncated",
+      "kind": "bool",
+      "default": true,
+      "group": "Slice"
+    }
+  ],
+  "lua_expr": "(function() local s = tostring({input} or ''); local a = math.floor({start}); local n = math.floor({length}); if a < 1 then a = 1 end; local out = s:sub(a, a + n - 1); if {ellipsis} and #s > (a + n - 1) and n > 0 then out = out .. '...' end; return out end)()"
+}

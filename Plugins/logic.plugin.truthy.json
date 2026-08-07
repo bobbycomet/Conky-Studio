@@ -1,0 +1,36 @@
+{
+  "id": "logic.plugin.truthy",
+  "category": "logic",
+  "label": "Truthy Gate",
+  "author": "Conky-Studio",
+  "version": "1.0.0",
+  "description": "Outputs 1 if Input is non-zero / non-empty string, else 0. Universal 'is there a value?' bridge for LEDs and triggers.",
+  "color": "#5f8fd6",
+  "subcategory": "Plugins",
+  "output_kind": "number",
+  "tags": [
+    "bridge",
+    "boolean",
+    "gate"
+  ],
+  "simple_mode": true,
+  "properties": [
+    {
+      "key": "input",
+      "label": "Input",
+      "kind": "string",
+      "default": "",
+      "bindable": true,
+      "accepts": [
+        "number",
+        "percent",
+        "celsius",
+        "text",
+        "category",
+        "boolean"
+      ],
+      "group": "Input"
+    }
+  ],
+  "lua_expr": "(function() local v = {input}; if type(v) == 'number' then return (v ~= 0) and 1 or 0 end; local s = tostring(v or ''); return (s ~= '' and s ~= '0' and s ~= 'false' and s ~= 'nil') and 1 or 0 end)()"
+}
