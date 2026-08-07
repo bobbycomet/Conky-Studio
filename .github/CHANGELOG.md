@@ -1,5 +1,9 @@
 # Changelog
 
+## Version number
+
+Forgot to change the version number, so you would run into update messages. (Fixed)
+
 ## Cleanup
 
 Removed the 7 duplicate plugins
