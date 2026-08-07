@@ -3,223 +3,7 @@
   "updated_at": "2026-08-02",
   "plugins": [
     {
-      "id": "logic.plugin.threshold",
-      "category": "logic",
-      "label": "Threshold",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Compare a value to a threshold. Outputs 0/1, inverted 0/1, or passes the value when true (gate). Richer than the built-in Threshold Gate.",
-      "color": "#d4a05a",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "compare",
-        "gate",
-        "trigger"
-      ],
-      "simple_mode": true,
-      "properties": [
-        {
-          "key": "value",
-          "label": "Value",
-          "kind": "float",
-          "default": 50,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Input"
-        },
-        {
-          "key": "threshold",
-          "label": "Threshold",
-          "kind": "float",
-          "default": 80,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Input"
-        },
-        {
-          "key": "mode",
-          "label": "Mode",
-          "kind": "enum",
-          "default": "above",
-          "choices": [
-            "above",
-            "below",
-            "equal"
-          ],
-          "choice_labels": [
-            "Above (\u2265)",
-            "Below (\u2264)",
-            "Equal (\u00b1\u03b5)"
-          ],
-          "group": "Compare"
-        },
-        {
-          "key": "output_mode",
-          "label": "Output",
-          "kind": "enum",
-          "default": "binary",
-          "choices": [
-            "binary",
-            "gate",
-            "invert_binary"
-          ],
-          "choice_labels": [
-            "0 or 1",
-            "Pass value when true, else 0",
-            "1 or 0 (inverted)"
-          ],
-          "group": "Output",
-          "help": "binary \u2192 1 when condition holds. gate \u2192 original value when true, else 0. invert_binary flips the 0/1."
-        },
-        {
-          "key": "epsilon",
-          "label": "Equal \u03b5",
-          "kind": "float",
-          "default": 0.01,
-          "minimum": 0,
-          "maximum": 1000000.0,
-          "step": 0.01,
-          "group": "Compare",
-          "help": "Tolerance used only when Mode is Equal"
-        }
-      ],
-      "lua_expr": "(function()\n local v, th, eps = {value}, {threshold}, {epsilon}\n local mode, outm = '{mode}', '{output_mode}'\n local ok = false\n if mode == 'above' then ok = (v >= th)\n elseif mode == 'below' then ok = (v <= th)\n else ok = (math.abs(v - th) <= eps)\n end\n if outm == 'gate' then return ok and v or 0 end\n if outm == 'invert_binary' then return ok and 0 or 1 end\n return ok and 1 or 0\nend)()"
-    },
-    {
-      "id": "logic.plugin.deadzone",
-      "category": "logic",
-      "label": "Deadzone",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Zero-out values whose absolute magnitude is below a threshold. Optional soft ramp. Different model from the built-in centre+radius deadzone.",
-      "color": "#8a8fa8",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "filter",
-        "noise",
-        "math"
-      ],
-      "simple_mode": false,
-      "properties": [
-        {
-          "key": "value",
-          "label": "Value",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Input"
-        },
-        {
-          "key": "zone",
-          "label": "Deadzone",
-          "kind": "float",
-          "default": 1,
-          "minimum": 0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent"
-          ],
-          "group": "Filter",
-          "help": "Values with |value| < deadzone become 0 (or are scaled in soft mode)"
-        },
-        {
-          "key": "soft",
-          "label": "Soft edge",
-          "kind": "bool",
-          "default": false,
-          "group": "Filter",
-          "help": "If on, rescale so the deadzone is removed and the rest maps smoothly outward"
-        }
-      ],
-      "lua_expr": "(function()\n local v, z = {value}, {zone}\n if z < 0 then z = 0 end\n local a = math.abs(v)\n if a <= z then return 0 end\n if not {soft} then return v end\n local sign = (v >= 0) and 1 or -1\n return sign * (a - z)\nend)()"
-    },
-    {
-      "id": "logic.plugin.smooth",
-      "category": "logic",
-      "label": "Smooth (EMA)",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Exponential moving average \u2014 tames jittery sensors. Unique Slot per instance so parallel smoothers do not share state.",
-      "color": "#5fb89a",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "filter",
-        "ema",
-        "smooth"
-      ],
-      "simple_mode": true,
-      "lua_helpers": "local _cs_plugin_smooth = _cs_plugin_smooth or {}\n",
-      "properties": [
-        {
-          "key": "value",
-          "label": "Value",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Input"
-        },
-        {
-          "key": "alpha",
-          "label": "Alpha",
-          "kind": "float",
-          "default": 0.2,
-          "minimum": 0.01,
-          "maximum": 1,
-          "step": 0.01,
-          "bindable": true,
-          "accepts": [
-            "number"
-          ],
-          "group": "Filter",
-          "help": "1 = no smoothing. Smaller = heavier lag. 0.15-0.3 is a good start for CPU/net."
-        },
-        {
-          "key": "slot",
-          "label": "Slot",
-          "kind": "int",
-          "default": 1,
-          "minimum": 1,
-          "maximum": 9999,
-          "step": 1,
-          "group": "State",
-          "help": "Unique integer per Smooth node (1, 2, 3...). Shared slots share memory."
-        }
-      ],
-      "lua_expr": "(function()\n local k = {slot}\n local v, a = {value}, {alpha}\n if a < 0.01 then a = 0.01 elseif a > 1 then a = 1 end\n local s = _cs_plugin_smooth\n if s[k] == nil then s[k] = v end\n s[k] = s[k] + (v - s[k]) * a\n return s[k]\nend)()"
-    },
-    {
-      "id": "logic.temp_convert",
+      "id": "logic.plugin.temp_convert",
       "category": "logic",
       "label": "Temp Convert",
       "author": "conky-studio",
@@ -290,7 +74,7 @@
       "lua_expr": "(function()\n local v = {value}\n local dir = '{direction}'\n local out\n if dir == 'c_to_f' then\n out = v * 9 / 5 + 32\n else\n out = (v - 32) * 5 / 9\n end\n local d = '{decimals}'\n if d == '0' then return math.floor(out + 0.5)\n elseif d == '1' then return math.floor(out * 10 + 0.5) / 10\n elseif d == '2' then return math.floor(out * 100 + 0.5) / 100\n end\n return out\nend)()"
     },
     {
-      "id": "logic.threshold_chain_10",
+      "id": "logic.plugin.threshold_chain_10",
       "category": "logic",
       "label": "Threshold Chain (10-Stage)",
       "author": "conky-studio",
@@ -513,189 +297,7 @@
       "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local count = math.floor({steps_count} + 0.5)\n if count < 1 then count = 1 elseif count > 10 then count = 10 end\n local t = { {t1}, {t2}, {t3}, {t4}, {t5}, {t6}, {t7}, {t8}, {t9}, {t10} }\n local mode = '{mode}'\n if mode == 'exact_band' then\n for i = 1, count do\n local lo = t[i]\n local hi = (i < count) and t[i + 1] or nil\n if type(lo) ~= 'number' then lo = tonumber(lo) or 0 end\n if hi ~= nil and type(hi) ~= 'number' then hi = tonumber(hi) end\n if v >= lo and (hi == nil or v < hi) then return i end\n end\n local last = t[count]\n if type(last) ~= 'number' then last = tonumber(last) or 0 end\n if v >= last then return count end\n return {none_value}\n end\n if mode == 'highest' then\n local best = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then best = i end\n end\n if best == 0 then return {none_value} end\n return best\n end\n local active = 0\n for i = 1, count do\n local th = t[i]\n if type(th) ~= 'number' then th = tonumber(th) or 0 end\n if v >= th then active = i else break end\n end\n if active == 0 then return {none_value} end\n return active\nend)()"
     },
     {
-      "id": "logic.plugin.round",
-      "category": "logic",
-      "label": "Round",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Round to nearest, floor, or ceil with optional decimal places. Richer than the built-in Round (nearest only).",
-      "color": "#7a9ed6",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "math",
-        "format"
-      ],
-      "simple_mode": true,
-      "properties": [
-        {
-          "key": "value",
-          "label": "Value",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Input"
-        },
-        {
-          "key": "mode",
-          "label": "Mode",
-          "kind": "enum",
-          "default": "nearest",
-          "choices": [
-            "nearest",
-            "floor",
-            "ceil"
-          ],
-          "choice_labels": [
-            "Nearest",
-            "Floor",
-            "Ceil"
-          ],
-          "group": "Rounding"
-        },
-        {
-          "key": "decimals",
-          "label": "Decimal places",
-          "kind": "int",
-          "default": 0,
-          "minimum": 0,
-          "maximum": 6,
-          "group": "Rounding"
-        }
-      ],
-      "lua_expr": "(function()\n local v, d = {value}, math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local m = 10 ^ d\n local mode = '{mode}'\n if mode == 'floor' then return math.floor(v * m) / m\n elseif mode == 'ceil' then return math.ceil(v * m) / m\n end\n return math.floor(v * m + 0.5) / m\nend)()"
-    },
-    {
-      "id": "logic.plugin.boolean_and",
-      "category": "logic",
-      "label": "AND (0/1)",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Logical AND with configurable truth threshold. Output 1 or 0.",
-      "color": "#8a8fa8",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "logic",
-        "boolean",
-        "gate"
-      ],
-      "simple_mode": false,
-      "properties": [
-        {
-          "key": "a",
-          "label": "A",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius",
-            "boolean"
-          ],
-          "group": "Inputs"
-        },
-        {
-          "key": "b",
-          "label": "B",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius",
-            "boolean"
-          ],
-          "group": "Inputs"
-        },
-        {
-          "key": "threshold",
-          "label": "Truthy if \u2265",
-          "kind": "float",
-          "default": 0.5,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "group": "Compare"
-        }
-      ],
-      "lua_expr": "((({a}) >= ({threshold}) and ({b}) >= ({threshold})) and 1 or 0)"
-    },
-    {
-      "id": "logic.plugin.boolean_or",
-      "category": "logic",
-      "label": "OR (0/1)",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "Logical OR with configurable truth threshold. Output 1 or 0.",
-      "color": "#8a8fa8",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "logic",
-        "boolean",
-        "gate"
-      ],
-      "simple_mode": false,
-      "properties": [
-        {
-          "key": "a",
-          "label": "A",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius",
-            "boolean"
-          ],
-          "group": "Inputs"
-        },
-        {
-          "key": "b",
-          "label": "B",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius",
-            "boolean"
-          ],
-          "group": "Inputs"
-        },
-        {
-          "key": "threshold",
-          "label": "Truthy if \u2265",
-          "kind": "float",
-          "default": 0.5,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "group": "Compare"
-        }
-      ],
-      "lua_expr": "((({a}) >= ({threshold}) or ({b}) >= ({threshold})) and 1 or 0)"
-    },
-    {
-      "id": "logic.boolean_not",
+      "id": "logic.plugin.boolean_not",
       "category": "logic",
       "label": "NOT (0/1)",
       "author": "conky-studio",
@@ -738,82 +340,7 @@
       "lua_expr": "((({value}) >= ({threshold})) and 0 or 1)"
     },
     {
-      "id": "logic.plugin.pick",
-      "category": "logic",
-      "label": "Pick (A/B)",
-      "author": "conky-studio",
-      "version": "1.0.0",
-      "description": "If selector \u2265 threshold output A, else B. Explicit threshold (richer than fixed 0.5 built-in).",
-      "color": "#d4825a",
-      "subcategory": "Plugins",
-      "output_kind": "number",
-      "tags": [
-        "logic",
-        "mux",
-        "select"
-      ],
-      "simple_mode": true,
-      "properties": [
-        {
-          "key": "selector",
-          "label": "Selector",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius",
-            "boolean"
-          ],
-          "group": "Control"
-        },
-        {
-          "key": "threshold",
-          "label": "Threshold",
-          "kind": "float",
-          "default": 0.5,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "group": "Control"
-        },
-        {
-          "key": "a",
-          "label": "A (when true)",
-          "kind": "float",
-          "default": 1,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values"
-        },
-        {
-          "key": "b",
-          "label": "B (when false)",
-          "kind": "float",
-          "default": 0,
-          "minimum": -1000000000.0,
-          "maximum": 1000000000.0,
-          "bindable": true,
-          "accepts": [
-            "number",
-            "percent",
-            "celsius"
-          ],
-          "group": "Values"
-        }
-      ],
-      "lua_expr": "((({selector}) >= ({threshold})) and ({a}) or ({b}))"
-    },
-    {
-      "id": "logic.percent_of",
+      "id": "logic.plugin.percent_of",
       "category": "logic",
       "label": "Percent of",
       "author": "conky-studio",
@@ -863,7 +390,7 @@
       "lua_expr": "((({total}) ~= 0) and (({value}) / ({total}) * 100) or 0)"
     },
     {
-      "id": "logic.unit_format",
+      "id": "logic.plugin.unit_format",
       "category": "logic",
       "label": "Unit Format",
       "author": "conky-studio",
@@ -922,7 +449,7 @@
       "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local d = math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local s = string.format('%.' .. d .. 'f', v)\n return '{prefix}' .. s .. '{suffix}'\nend)()"
     },
     {
-      "id": "logic.rate_limit",
+      "id": "logic.plugin.rate_limit",
       "category": "logic",
       "label": "Rate Limit",
       "author": "conky-studio",
@@ -977,7 +504,7 @@
       "lua_expr": "(function()\n local k = {slot}\n local v, step = {value}, {max_step}\n if step < 0 then step = 0 end\n local s = _cs_plugin_ratelimit\n if s[k] == nil then s[k] = v end\n local d = v - s[k]\n if d > step then d = step elseif d < -step then d = -step end\n s[k] = s[k] + d\n return s[k]\nend)()"
     },
     {
-      "id": "logic.hold_peak",
+      "id": "logic.plugin.hold_peak",
       "category": "logic",
       "label": "Hold Peak",
       "author": "conky-studio",
@@ -1032,7 +559,7 @@
       "lua_expr": "(function()\n local k = {slot}\n local v, dec = {value}, {decay}\n if dec < 0 then dec = 0 end\n local s = _cs_plugin_peak\n if s[k] == nil then s[k] = v end\n if v > s[k] then s[k] = v else s[k] = s[k] - dec end\n if s[k] < v then s[k] = v end\n return s[k]\nend)()"
     },
     {
-      "id": "logic.modulo",
+      "id": "logic.plugin.modulo",
       "category": "logic",
       "label": "Modulo",
       "author": "conky-studio",
@@ -1143,7 +670,7 @@
       "lua_draw_body": " local r, g, b = {color}\n cairo_set_source_rgba(cr, r, g, b, {opacity})\n cairo_arc(cr, {x}, {y}, {radius}, 0, 2 * math.pi)\n cairo_fill(cr)\n"
     },
     {
-      "id": "logic.data_rate_format",
+      "id": "logic.plugin.data_rate_format",
       "category": "logic",
       "label": "Data Rate Format",
       "author": "conky-studio",
@@ -1202,7 +729,7 @@
       "lua_expr": "(function()\n local v = {value}\n if type(v) ~= 'number' then v = tonumber(v) or 0 end\n local binary = {binary_prefixes}\n local base = binary and 1024 or 1000\n local u1, u2, u3, u4\n if binary then u1, u2, u3, u4 = 'KiB', 'MiB', 'GiB', 'TiB'\n else u1, u2, u3, u4 = 'KB', 'MB', 'GB', 'TB' end\n local label = u1\n local av = math.abs(v)\n if av >= base then v = v / base; av = av / base; label = u2\n if av >= base then v = v / base; av = av / base; label = u3\n if av >= base then v = v / base; label = u4 end\n end\n end\n local d = math.floor({decimals} + 0.5)\n if d < 0 then d = 0 end\n local s = string.format('%.' .. d .. 'f', v)\n return s .. ' ' .. label .. '{suffix}'\nend)()"
     },
     {
-      "id": "logic.text_case",
+      "id": "logic.plugin.text_case",
       "category": "logic",
       "label": "Text Case",
       "author": "conky-studio",
@@ -1250,7 +777,7 @@
       "lua_expr": "(function()\n local v = tostring({value})\n local mode = '{mode}'\n if mode == 'upper' then return v:upper() end\n if mode == 'lower' then return v:lower() end\n local out = {}\n for word in v:gmatch('%S+') do\n local first = word:sub(1,1):upper()\n local rest = word:sub(2):lower()\n table.insert(out, first .. rest)\n end\n return table.concat(out, ' ')\nend)()"
     },
     {
-      "id": "logic.hold_min",
+      "id": "logic.plugin.hold_min",
       "category": "logic",
       "label": "Hold Min",
       "author": "conky-studio",
@@ -1597,7 +1124,7 @@
       "lua_draw_body": " local r, g, b = {color}\n local active = ({active}) >= 0.5\n local t = wall_clock() * {speed}\n local phase = active and (0.5 + 0.5 * math.sin(t * 2 * math.pi)) or 0.15\n cairo_set_source_rgba(cr, r, g, b, 0.35 + 0.65 * phase)\n cairo_arc(cr, {x}, {y}, {radius} * (0.75 + 0.25 * phase), 0, 2 * math.pi)\n cairo_fill(cr)\n"
     },
     {
-      "id": "logic.coerce_number",
+      "id": "logic.plugin.coerce_number",
       "category": "logic",
       "label": "Coerce Number",
       "author": "Conky-Studio",
@@ -1643,7 +1170,7 @@
       "lua_expr": "(function() local s = tostring({input} or ''); local n = tonumber(s); if n ~= nil then return n end; local n2 = tonumber(s:match('([%-%d%.]+)')) ; return n2 ~= nil and n2 or ({default}) end)()"
     },
     {
-      "id": "logic.coerce_text",
+      "id": "logic.plugin.coerce_text",
       "category": "logic",
       "label": "Coerce Text",
       "author": "Conky-Studio",
@@ -1688,7 +1215,7 @@
       "lua_expr": "(function() local v = {input}; if type(v) == 'number' then return string.format('%.' .. math.floor({decimals}) .. 'f', v) end; return tostring(v or '') end)()"
     },
     {
-      "id": "logic.truthy",
+      "id": "logic.plugin.truthy",
       "category": "logic",
       "label": "Truthy Gate",
       "author": "Conky-Studio",
@@ -1724,7 +1251,7 @@
       "lua_expr": "(function() local v = {input}; if type(v) == 'number' then return (v ~= 0) and 1 or 0 end; local s = tostring(v or ''); return (s ~= '' and s ~= '0' and s ~= 'false' and s ~= 'nil') and 1 or 0 end)()"
     },
     {
-      "id": "logic.string_length",
+      "id": "logic.plugin.string_length",
       "category": "logic",
       "label": "String Length",
       "author": "Conky-Studio",
@@ -1756,7 +1283,7 @@
       "lua_expr": "(#tostring({input} or ''))"
     },
     {
-      "id": "logic.substring",
+      "id": "logic.plugin.substring",
       "category": "logic",
       "label": "Substring",
       "author": "Conky-Studio",
@@ -1813,7 +1340,7 @@
       "lua_expr": "(function() local s = tostring({input} or ''); local a = math.floor({start}); local n = math.floor({length}); if a < 1 then a = 1 end; local out = s:sub(a, a + n - 1); if {ellipsis} and #s > (a + n - 1) and n > 0 then out = out .. '...' end; return out end)()"
     },
     {
-      "id": "logic.remap_curve",
+      "id": "logic.plugin.remap_curve",
       "category": "logic",
       "label": "Remap Curve",
       "author": "Conky-Studio",
@@ -1900,7 +1427,7 @@
       "lua_expr": "(function()\n local v = tonumber({value}) or 0\n local imin, imax = {in_min}, {in_max}\n local omin, omax = {out_min}, {out_max}\n local span = imax - imin; if span == 0 then span = 1 end\n local t = (v - imin) / span; if t < 0 then t = 0 elseif t > 1 then t = 1 end\n local c = {curve}\n if c == 'ease_in' then t = t * t\n elseif c == 'ease_out' then t = 1 - (1 - t) * (1 - t)\n elseif c == 'smoothstep' then t = t * t * (3 - 2 * t)\n elseif c == 'gamma' then t = t ^ ({gamma})\n end\n return omin + (omax - omin) * t\nend)()"
     },
     {
-      "id": "logic.counter",
+      "id": "logic.plugin.counter",
       "category": "logic",
       "label": "Frame Counter",
       "author": "Conky-Studio",
