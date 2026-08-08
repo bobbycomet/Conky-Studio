@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.7.5 — New Detection Feature (Latest)
+
+**Added**
+- Hardware & Session now detects your Linux distro (via `/etc/os-release`, including derivatives like Mint, Pop!_OS, Manjaro, Rocky, etc., through their `ID_LIKE` parent) and checks for two optional CLI tools: `lm-sensors` and `playerctl`.
+- If either is missing, the report now shows a clear warning explaining what they're used for (hardware sensors for CPU/GPU/RAM/fan sources, and audio/now-playing sources) and gives the exact install command for your detected distro, so you're not left guessing the right package manager or package name.
+- New `=== Optional tools ===` section in the Hardware & Session report showing your detected distro and the install status of both tools.
+
+**Notes**
+- This is purely informational; nothing is installed automatically, and the warning explicitly says to ignore it if you're not using CPU/GPU/RAM/fan or now-playing sources.
+- Falls back with a generic "check your package manager" message if the distro can't be confidently identified.
+
 ## Version number
 
 Forgot to change the version number, so you would run into update messages. (Fixed)
@@ -8,7 +19,7 @@ Forgot to change the version number, so you would run into update messages. (Fix
 
 Removed the 7 duplicate plugins
 
-## 1.0.7.4 — Collision fix (Latest)
+## 1.0.7.4 — Collision fix 
 
 ### The cause
 
