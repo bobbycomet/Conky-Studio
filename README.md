@@ -306,7 +306,7 @@ Conky is licensed under the GPL-3.0 License.
 
 ## Continue exploring
 
-The sections below cover on the wiki:
+The sections below cover the wiki:
 
 * Sharing projects
 * Compatibility
@@ -334,3 +334,4 @@ The 1.1.0 release focuses on expanding the Conky Studio ecosystem and scaling th
 * **Position Stage** — While doing more tests, I realized that the X, Y sliders and value editing are great but tedious. So, that is where the Position Stage dock comes in. It will let you arrange visual nodes in screen space using drag-and-drop, while keeping the node graph focused purely on data flow. This does not compete with the nodes and moving them via x, y, or the sliders; this is just a more visual way than clicking the sliders to edit position every time.
 * **Extend the Lua API** — the ability to make new nodes, no breaking changes, just pure additive
 * **Extend Cairo capabilities** — More visuals, atmospheric effects, animations, particles, and more.
+* **Theme Wizard** will become an instructional tool. Certain aspects were split to cause errors to occur purposefully. This is more of an educational start to learn what to do, what not to do, and where you may have issues. Think of it more as a lab. It is not required, but recommended for new users.
