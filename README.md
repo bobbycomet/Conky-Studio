@@ -142,6 +142,10 @@ Combine with the [![Griffin Updater](https://img.shields.io/badge/Griffin_Update
 
 ### Installation & Running
 
+For the full guide and dependencies 
+
+[![Installation](https://img.shields.io/badge/Installation-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Getting-Started)
+
 Before running the AppImage, you need to make it executable. You can do this via the Terminal or standard File Manager GUI:
 
 #### Option 1: Terminal (Recommended)
