@@ -223,6 +223,8 @@ See [![Theme Compatibility](https://img.shields.io/badge/Theme_Compatibility-1f6
 
 *Check* [![Compatibility](https://img.shields.io/badge/Compatibility-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) *for more info*
 
+Must have GLIBC 2.38 to run the AppImage until a build with GLIBC 2.31 is created for broader compatibility.
+
 ### Likely to work (Wayland desktop overlays)
 
 | Compositor/DE | Notes |
