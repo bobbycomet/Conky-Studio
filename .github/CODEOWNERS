@@ -6,3 +6,17 @@
 
 # Protect the official plugins directory and all files within it
 /plugins/ @bobbycomet
+
+/.github/ @bobbycomet
+
+/conkystudio/ @bobbycomet
+
+/packaging/ @bobbycomet
+
+/CODE_OF_CONDUCT.md/ @bobbycomet
+
+/COMMUNITY_STORE.md/ @bobbycomet
+
+/requirements.txt @bobbycomet
+
+/store.json @bobbycomet
