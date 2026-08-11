@@ -1,5 +1,15 @@
 # Changelog
 
+## Added 3 new plugin nodes
+
+New plugin nodes: 
+
+- Neon geometry has a morph and glow feature. Use case examples: A simple cool effect, make neon highlights around shapes, use a combination of shapes and sizes to make a neon sign-like widget. Combine with the glow pulse, speed up the pulse value, and you have a flickering neon effect.
+
+- Holographic DNA strand: Purely decorative 
+
+- Spinning holographic globe: Purely decorative. The continents are not actual land masses; they show relative locations as if you are targeting something or searching for something by using simple dots as location markers. 
+
 ## 1.0.7.5 — New Detection Feature (Latest)
 
 **Added**
