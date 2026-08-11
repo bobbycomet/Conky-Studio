@@ -5064,6 +5064,412 @@
         }
       ],
       "lua_draw_body": "\n local cx, cy, R = {cx}, {cy}, {radius}\n local min_v, max_v = {min_value}, {max_value}\n local span = max_v - min_v\n if span == 0 then span = 1 end\n local val = tonumber({value}) or min_v\n local pct = (val - min_v) / span\n if pct < 0 then pct = 0 elseif pct > 1 then pct = 1 end\n local a0 = {start_angle}\n local a1 = {end_angle}\n local sweep = (a1 - a0) % 360\n if sweep <= 0 then sweep = 360 end\n local tr, tg, tb = {track_color}\n local tkr, tkg, tkb = {tick_color}\n local rr, rg, rb = {redline_color}\n local nr, ng, nb = {needle_color}\n local hr, hg, hb = {hub_color}\n cairo_set_line_width(cr, 10)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)\n cairo_set_source_rgba(cr, tr, tg, tb, {opacity})\n cairo_new_sub_path(cr)\n cairo_arc(cr, cx, cy, R, math.rad(a0), math.rad(a0 + sweep))\n cairo_stroke(cr)\n local rl = {redline_start}\n local rl_pct = (rl - min_v) / span\n if rl_pct < 0 then rl_pct = 0 elseif rl_pct > 1 then rl_pct = 1 end\n if rl_pct < 0.999 then\n  cairo_set_source_rgba(cr, rr, rg, rb, {opacity} * 0.85)\n  cairo_set_line_width(cr, 10)\n  cairo_new_sub_path(cr)\n  cairo_arc(cr, cx, cy, R, math.rad(a0 + sweep * rl_pct), math.rad(a0 + sweep))\n  cairo_stroke(cr)\n end\n local majors = math.floor({major_ticks} + 0.5)\n if majors < 1 then majors = 1 end\n local minors = math.floor({minor_per_major} + 0.5)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)\n for i = 0, majors do\n  local t = i / majors\n  local ang = math.rad(a0 + sweep * t)\n  cairo_set_line_width(cr, 2.5)\n  cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n  local x1 = cx + math.cos(ang) * (R - 4)\n  local y1 = cy + math.sin(ang) * (R - 4)\n  local x2 = cx + math.cos(ang) * (R - 18)\n  local y2 = cy + math.sin(ang) * (R - 18)\n  cairo_move_to(cr, x1, y1)\n  cairo_line_to(cr, x2, y2)\n  cairo_stroke(cr)\n  if {show_labels} then\n   local label_v = min_v + span * t\n   local label = string.format('%.0f', label_v)\n   local lx = cx + math.cos(ang) * (R - 30)\n   local ly = cy + math.sin(ang) * (R - 30)\n   cairo_select_font_face(cr, 'Sans', CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL)\n   cairo_set_font_size(cr, {label_size})\n   local ext = cairo_text_extents_t:create()\n   tolua.takeownership(ext)\n   cairo_text_extents(cr, label, ext)\n   cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n   cairo_move_to(cr, lx - ext.width / 2 - ext.x_bearing, ly - ext.y_bearing / 2)\n   cairo_show_text(cr, label)\n  end\n  if i < majors and minors > 0 then\n   cairo_set_line_width(cr, 1.2)\n   cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity} * 0.55)\n   for j = 1, minors do\n    local tm = (i + j / (minors + 1)) / majors\n    local am = math.rad(a0 + sweep * tm)\n    local mx1 = cx + math.cos(am) * (R - 4)\n    local my1 = cy + math.sin(am) * (R - 4)\n    local mx2 = cx + math.cos(am) * (R - 11)\n    local my2 = cy + math.sin(am) * (R - 11)\n    cairo_move_to(cr, mx1, my1)\n    cairo_line_to(cr, mx2, my2)\n    cairo_stroke(cr)\n   end\n  end\n end\n local na = math.rad(a0 + sweep * pct)\n local nlen = R - 22\n cairo_set_line_width(cr, 3)\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_source_rgba(cr, nr, ng, nb, {opacity})\n cairo_move_to(cr, cx - math.cos(na) * 12, cy - math.sin(na) * 12)\n cairo_line_to(cr, cx + math.cos(na) * nlen, cy + math.sin(na) * nlen)\n cairo_stroke(cr)\n cairo_set_source_rgba(cr, hr, hg, hb, {opacity})\n cairo_arc(cr, cx, cy, 8, 0, 2 * math.pi)\n cairo_fill(cr)\n cairo_set_source_rgba(cr, nr, ng, nb, {opacity} * 0.9)\n cairo_arc(cr, cx, cy, 3.5, 0, 2 * math.pi)\n cairo_fill(cr)\n if {show_value} then\n  local label = string.format('%.0f', val)\n  cairo_select_font_face(cr, 'Sans', CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD)\n  cairo_set_font_size(cr, {value_size})\n  local ext = cairo_text_extents_t:create()\n  tolua.takeownership(ext)\n  cairo_text_extents(cr, label, ext)\n  cairo_set_source_rgba(cr, tkr, tkg, tkb, {opacity})\n  cairo_move_to(cr, cx - ext.width / 2 - ext.x_bearing, cy + R * 0.42 - ext.y_bearing)\n  cairo_show_text(cr, label)\n end\n"
+    },
+    {
+      "id": "visual.plugin.dna_strand",
+      "category": "visual",
+      "label": "Holographic DNA",
+      "author": "community",
+      "version": "1.0.0",
+      "description": "Vertical double-helix DNA strand with holographic glow, rotating rungs, and soft neon trails. Fully procedural Cairo drawing.",
+      "color": "#8a5fd6",
+      "subcategory": "Effects",
+      "simple_mode": true,
+      "tags": [
+        "dna",
+        "helix",
+        "holographic",
+        "biology",
+        "animation",
+        "neon"
+      ],
+      "license": "MIT",
+      "properties": [
+        {
+          "key": "cx",
+          "label": "Center X",
+          "kind": "float",
+          "default": 80,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "y",
+          "label": "Top Y",
+          "kind": "float",
+          "default": 20,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "height",
+          "label": "Height",
+          "kind": "float",
+          "default": 280,
+          "minimum": 40,
+          "maximum": 2000,
+          "step": 1,
+          "group": "Shape"
+        },
+        {
+          "key": "amplitude",
+          "label": "Helix width",
+          "kind": "float",
+          "default": 36,
+          "minimum": 8,
+          "maximum": 200,
+          "step": 1,
+          "group": "Shape"
+        },
+        {
+          "key": "turns",
+          "label": "Turns",
+          "kind": "float",
+          "default": 3.5,
+          "minimum": 0.5,
+          "maximum": 12,
+          "step": 0.1,
+          "group": "Shape"
+        },
+        {
+          "key": "rung_count",
+          "label": "Base pairs",
+          "kind": "int",
+          "default": 18,
+          "minimum": 4,
+          "maximum": 48,
+          "group": "Shape"
+        },
+        {
+          "key": "spin_speed",
+          "label": "Spin speed (rad/sec)",
+          "kind": "float",
+          "default": 0.9,
+          "minimum": -6,
+          "maximum": 6,
+          "step": 0.05,
+          "group": "Drive"
+        },
+        {
+          "key": "color_a",
+          "label": "Strand A colour",
+          "kind": "color",
+          "default": "#26fdf1",
+          "group": "Style"
+        },
+        {
+          "key": "color_b",
+          "label": "Strand B colour",
+          "kind": "color",
+          "default": "#7aa6ff",
+          "group": "Style"
+        },
+        {
+          "key": "rung_color",
+          "label": "Rung colour",
+          "kind": "color",
+          "default": "#e8eaed",
+          "group": "Style"
+        },
+        {
+          "key": "glow",
+          "label": "Holographic glow",
+          "kind": "bool",
+          "default": true,
+          "group": "Style"
+        },
+        {
+          "key": "line_width",
+          "label": "Strand thickness",
+          "kind": "float",
+          "default": 2.4,
+          "minimum": 0.5,
+          "maximum": 12,
+          "step": 0.1,
+          "group": "Style"
+        },
+        {
+          "key": "opacity",
+          "label": "Opacity",
+          "kind": "float",
+          "default": 0.95,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Style"
+        }
+      ],
+      "lua_draw_body": "local cx = {cx}\nlocal y0 = {y}\nlocal H = {height}\nlocal amp = {amplitude}\nlocal turns = {turns}\nlocal n_rung = math.max(2, math.floor({rung_count}))\nlocal spin = {spin_speed} * wall_clock()\nlocal ar, ag, ab = {color_a}\nlocal br, bg, bb = {color_b}\nlocal rr, rg, rb = {rung_color}\nlocal glow = {glow}\nlocal lw = {line_width}\nlocal opacity = {opacity}\nlocal steps = math.max(40, math.floor(H / 3))\n\nlocal function helix_xy(t, phase)\n local ang = t * turns * 2 * math.pi + spin + phase\n local x = cx + math.cos(ang) * amp\n local y = y0 + t * H\n local z = math.sin(ang)\n return x, y, z\nend\n\n-- soft vertical aura\nif glow then\n for g = 3, 1, -1 do\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * (0.04 / g))\n cairo_set_line_width(cr, amp * 0.35 * g)\n cairo_move_to(cr, cx, y0)\n cairo_line_to(cr, cx, y0 + H)\n cairo_stroke(cr)\n end\nend\n\n-- rungs (base pairs) — draw first so strands sit on top\nfor i = 0, n_rung - 1 do\n local t = (i + 0.5) / n_rung\n local x1, y1, z1 = helix_xy(t, 0)\n local x2, y2, z2 = helix_xy(t, math.pi)\n local depth = (z1 + z2) * 0.5\n local a = opacity * (0.35 + 0.55 * (0.5 + 0.5 * depth))\n if glow then\n cairo_set_source_rgba(cr, rr, rg, rb, a * 0.35)\n cairo_set_line_width(cr, lw * 2.2)\n cairo_move_to(cr, x1, y1)\n cairo_line_to(cr, x2, y2)\n cairo_stroke(cr)\n end\n cairo_set_source_rgba(cr, rr, rg, rb, a)\n cairo_set_line_width(cr, lw * 0.85)\n cairo_move_to(cr, x1, y1)\n cairo_line_to(cr, x2, y2)\n cairo_stroke(cr)\n -- nucleotide dots\n cairo_set_source_rgba(cr, ar, ag, ab, a)\n cairo_arc(cr, x1, y1, lw * 1.1, 0, 2 * math.pi)\n cairo_fill(cr)\n cairo_set_source_rgba(cr, br, bg, bb, a)\n cairo_arc(cr, x2, y2, lw * 1.1, 0, 2 * math.pi)\n cairo_fill(cr)\nend\n\n-- strand polylines (back-to-front by sampling depth)\nlocal function draw_strand(phase, cr_, cg_, cb_)\n -- collect points\n local pts = {}\n for i = 0, steps do\n local t = i / steps\n local x, y, z = helix_xy(t, phase)\n pts[#pts + 1] = {x, y, z}\n end\n -- glow pass\n if glow then\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\n for g = 2, 1, -1 do\n cairo_set_source_rgba(cr, cr_, cg_, cb_, opacity * (0.12 / g))\n cairo_set_line_width(cr, lw * (2.8 + g))\n cairo_new_path(cr)\n for i, p in ipairs(pts) do\n if i == 1 then cairo_move_to(cr, p[1], p[2]) else cairo_line_to(cr, p[1], p[2]) end\n end\n cairo_stroke(cr)\n end\n end\n -- main strand with depth-modulated alpha segments\n cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\n cairo_set_line_width(cr, lw)\n for i = 1, #pts - 1 do\n local a = opacity * (0.45 + 0.55 * (0.5 + 0.5 * pts[i][3]))\n cairo_set_source_rgba(cr, cr_, cg_, cb_, a)\n cairo_move_to(cr, pts[i][1], pts[i][2])\n cairo_line_to(cr, pts[i + 1][1], pts[i + 1][2])\n cairo_stroke(cr)\n end\nend\n\ndraw_strand(0, ar, ag, ab)\ndraw_strand(math.pi, br, bg, bb)\n"
+    },
+    {
+      "id": "visual.plugin.spinning_globe",
+      "category": "visual",
+      "label": "Spinning Globe",
+      "author": "community",
+      "version": "1.1.0",
+      "description": "Animated holographic Earth globe with latitude/longitude grid and simplified continents. Axial tilt and spin speed controls. Fully procedural and self-contained (no lua_helpers).",
+      "color": "#8a5fd6",
+      "subcategory": "Effects",
+      "simple_mode": true,
+      "tags": [
+        "globe",
+        "earth",
+        "spin",
+        "holographic",
+        "map",
+        "animation"
+      ],
+      "license": "MIT",
+      "properties": [
+        {
+          "key": "cx",
+          "label": "Center X",
+          "kind": "float",
+          "default": 140,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "cy",
+          "label": "Center Y",
+          "kind": "float",
+          "default": 140,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "radius",
+          "label": "Radius",
+          "kind": "float",
+          "default": 90,
+          "minimum": 20,
+          "maximum": 800,
+          "step": 1,
+          "group": "Shape"
+        },
+        {
+          "key": "tilt_deg",
+          "label": "Axial tilt (\u00b0)",
+          "kind": "float",
+          "default": 23.5,
+          "minimum": -45,
+          "maximum": 45,
+          "step": 0.5,
+          "group": "Drive",
+          "help": "Earth-like tilt is ~23.5\u00b0. 0 = upright poles."
+        },
+        {
+          "key": "spin_speed",
+          "label": "Spin speed (deg/sec)",
+          "kind": "float",
+          "default": 18,
+          "minimum": -180,
+          "maximum": 180,
+          "step": 1,
+          "group": "Drive",
+          "help": "Positive = west-to-east (realistic). Negative reverses."
+        },
+        {
+          "key": "show_grid",
+          "label": "Show lat/lon grid",
+          "kind": "bool",
+          "default": true,
+          "group": "Style"
+        },
+        {
+          "key": "show_continents",
+          "label": "Show continents",
+          "kind": "bool",
+          "default": true,
+          "group": "Style"
+        },
+        {
+          "key": "color",
+          "label": "Accent colour",
+          "kind": "color",
+          "default": "#26fdf1",
+          "group": "Style"
+        },
+        {
+          "key": "opacity",
+          "label": "Opacity",
+          "kind": "float",
+          "default": 1.0,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Style"
+        }
+      ],
+      "lua_draw_body": "local cx, cy, R = {cx}, {cy}, {radius}\nlocal opacity = {opacity}\nlocal tilt = math.rad({tilt_deg})\nlocal spin = math.rad({spin_speed}) * wall_clock()\nlocal ar, ag, ab = {color}\nlocal show_grid = {show_grid}\nlocal show_land = {show_continents}\n\nlocal function rot_x(x, y, z, a)\n local c, s = math.cos(a), math.sin(a)\n return x, y * c - z * s, y * s + z * c\nend\n\nlocal land = {\n {-100, 40, 1.4}, {-80, 25, 0.9}, {-70, -20, 1.2}, {-55, -10, 0.8},\n {-45, -25, 0.7}, {10, 50, 1.1}, {15, 10, 1.3}, {25, -5, 0.9},\n {35, 30, 0.7}, {70, 50, 1.5}, {100, 40, 1.2}, {120, 30, 0.8},\n {135, -25, 1.0}, {25, -30, 0.9}, {-15, 20, 0.6}, {40, -5, 0.5},\n {-60, 50, 0.6}, {90, 15, 0.7}, {150, -40, 0.5}, {-120, 50, 0.8},\n {-90, 60, 0.5}, {5, 60, 0.4}, {110, 0, 0.6}, {-40, -5, 0.5}\n}\n\nfor i = 3, 1, -1 do\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * (0.06 / i))\n cairo_set_line_width(cr, i * 2.2)\n cairo_arc(cr, cx, cy, R + i * 1.5, 0, 2 * math.pi)\n cairo_stroke(cr)\nend\ncairo_set_source_rgba(cr, ar * 0.15, ag * 0.25, ab * 0.35, opacity * 0.25)\ncairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\ncairo_fill(cr)\n\nlocal function project(lon_d, lat_d)\n local lon = math.rad(lon_d) + spin\n local lat = math.rad(lat_d)\n local x = math.cos(lat) * math.sin(lon)\n local y = math.sin(lat)\n local z = math.cos(lat) * math.cos(lon)\n x, y, z = rot_x(x, y, z, tilt)\n if z < -0.02 then return nil end\n return cx + x * R, cy - y * R, z\nend\n\nif show_land then\n for i = 1, #land do\n local p = land[i]\n local sx, sy, z = project(p[1], p[2])\n if sx then\n local pr = R * 0.055 * p[3] * (0.55 + 0.45 * z)\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * (0.35 + 0.5 * z))\n cairo_arc(cr, sx, sy, pr, 0, 2 * math.pi)\n cairo_fill(cr)\n end\n end\nend\n\nif show_grid then\n cairo_set_line_width(cr, 1.1)\n for m = 0, 11 do\n local lon0 = m * 30\n cairo_new_path(cr)\n local started = false\n for lat = -85, 85, 4 do\n local sx, sy = project(lon0, lat)\n if sx then\n if not started then cairo_move_to(cr, sx, sy); started = true\n else cairo_line_to(cr, sx, sy) end\n else\n started = false\n end\n end\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * 0.45)\n cairo_stroke(cr)\n end\n for lat = -60, 60, 30 do\n cairo_new_path(cr)\n local started = false\n for lon = 0, 360, 4 do\n local sx, sy = project(lon, lat)\n if sx then\n if not started then cairo_move_to(cr, sx, sy); started = true\n else cairo_line_to(cr, sx, sy) end\n else\n started = false\n end\n end\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * 0.4)\n cairo_stroke(cr)\n end\nend\n\ncairo_set_line_width(cr, 1.6)\ncairo_set_source_rgba(cr, ar, ag, ab, opacity * 0.85)\ncairo_arc(cr, cx, cy, R, 0, 2 * math.pi)\ncairo_stroke(cr)\n\ndo\n local t = wall_clock()\n local band = (math.sin(t * 2.2) * 0.5 + 0.5) * R * 1.6 - R * 0.3\n cairo_save(cr)\n cairo_arc(cr, cx, cy, R - 1, 0, 2 * math.pi)\n cairo_clip(cr)\n cairo_set_source_rgba(cr, ar, ag, ab, opacity * 0.12)\n cairo_rectangle(cr, cx - R, cy - R + band, R * 2, 6)\n cairo_fill(cr)\n cairo_restore(cr)\nend\n"
+    },
+    {
+      "id": "visual.plugin.neon_geometry",
+      "category": "visual",
+      "label": "Neon Geometry",
+      "author": "community",
+      "version": "1.1.0",
+      "description": "Neon-outlined shape that morphs between circle, square, triangle, star, hexagon, diamond, and octagon. Morph slider (0\u20131) blends vertices; optional auto-morph. Fully self-contained (no lua_helpers).",
+      "color": "#8a5fd6",
+      "subcategory": "Effects",
+      "simple_mode": true,
+      "tags": [
+        "neon",
+        "morph",
+        "geometry",
+        "glow",
+        "shape",
+        "animation"
+      ],
+      "license": "MIT",
+      "properties": [
+        {
+          "key": "cx",
+          "label": "Center X",
+          "kind": "float",
+          "default": 120,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "cy",
+          "label": "Center Y",
+          "kind": "float",
+          "default": 120,
+          "minimum": -4000,
+          "maximum": 4000,
+          "group": "Position"
+        },
+        {
+          "key": "radius",
+          "label": "Size",
+          "kind": "float",
+          "default": 70,
+          "minimum": 8,
+          "maximum": 1000,
+          "step": 1,
+          "group": "Shape"
+        },
+        {
+          "key": "morph",
+          "label": "Morph (0\u20131)",
+          "kind": "float",
+          "default": 0.0,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.01,
+          "group": "Morph",
+          "help": "0 = shape A, 1 = shape B."
+        },
+        {
+          "key": "shape_a",
+          "label": "Shape A",
+          "kind": "enum",
+          "default": "circle",
+          "choices": [
+            "circle",
+            "square",
+            "triangle",
+            "star",
+            "hexagon",
+            "diamond",
+            "octagon"
+          ],
+          "group": "Morph"
+        },
+        {
+          "key": "shape_b",
+          "label": "Shape B",
+          "kind": "enum",
+          "default": "star",
+          "choices": [
+            "circle",
+            "square",
+            "triangle",
+            "star",
+            "hexagon",
+            "diamond",
+            "octagon"
+          ],
+          "group": "Morph"
+        },
+        {
+          "key": "auto_morph",
+          "label": "Auto-morph over time",
+          "kind": "bool",
+          "default": false,
+          "group": "Morph"
+        },
+        {
+          "key": "morph_speed",
+          "label": "Auto-morph speed",
+          "kind": "float",
+          "default": 0.35,
+          "minimum": 0.02,
+          "maximum": 3,
+          "step": 0.02,
+          "group": "Morph"
+        },
+        {
+          "key": "rotation_speed",
+          "label": "Rotation (deg/sec)",
+          "kind": "float",
+          "default": 12,
+          "minimum": -360,
+          "maximum": 360,
+          "step": 1,
+          "group": "Drive"
+        },
+        {
+          "key": "line_width",
+          "label": "Neon thickness",
+          "kind": "float",
+          "default": 2.5,
+          "minimum": 0.5,
+          "maximum": 16,
+          "step": 0.1,
+          "group": "Style"
+        },
+        {
+          "key": "glow_layers",
+          "label": "Glow layers",
+          "kind": "int",
+          "default": 4,
+          "minimum": 0,
+          "maximum": 8,
+          "group": "Style"
+        },
+        {
+          "key": "fill",
+          "label": "Soft fill",
+          "kind": "bool",
+          "default": true,
+          "group": "Style"
+        },
+        {
+          "key": "color",
+          "label": "Neon colour",
+          "kind": "color",
+          "default": "#ff2bd6",
+          "group": "Style"
+        },
+        {
+          "key": "opacity",
+          "label": "Opacity",
+          "kind": "float",
+          "default": 1.0,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.05,
+          "group": "Style"
+        }
+      ],
+      "lua_draw_body": "local cx, cy, R = {cx}, {cy}, {radius}\nlocal morph = {morph}\nif {auto_morph} then\n local t = wall_clock() * {morph_speed}\n morph = 0.5 + 0.5 * math.sin(t * 2 * math.pi)\nend\nmorph = clamp(tonumber(morph) or 0, 0, 1)\nlocal m = morph * morph * (3 - 2 * morph)\nlocal rot = math.rad({rotation_speed} * wall_clock())\nlocal nr, ng, nb = {color}\nlocal opacity = {opacity}\nlocal lw = {line_width}\nlocal layers = math.max(0, math.floor({glow_layers}))\nlocal do_fill = {fill}\nlocal N = 64\nlocal name_a = {shape_a}\nlocal name_b = {shape_b}\n\nlocal function shape_pts(name, n, rad)\n local pts = {}\n name = tostring(name or 'circle')\n if name == 'circle' then\n for i = 0, n - 1 do\n local a = -math.pi / 2 + i * (2 * math.pi / n)\n pts[i + 1] = {math.cos(a) * rad, math.sin(a) * rad}\n end\n elseif name == 'square' then\n local corners = {\n {rad * 0.75, rad * 0.75}, {rad * 0.75, -rad * 0.75},\n {-rad * 0.75, -rad * 0.75}, {-rad * 0.75, rad * 0.75}\n }\n for i = 0, n - 1 do\n local t = i / n\n local seg = t * 4\n local si = math.floor(seg) % 4\n local f = seg - math.floor(seg)\n local c0 = corners[si + 1]\n local c1 = corners[(si + 1) % 4 + 1]\n pts[i + 1] = {c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f}\n end\n elseif name == 'diamond' then\n local corners = {{0, rad}, {rad, 0}, {0, -rad}, {-rad, 0}}\n for i = 0, n - 1 do\n local t = i / n\n local seg = t * 4\n local si = math.floor(seg) % 4\n local f = seg - math.floor(seg)\n local c0 = corners[si + 1]\n local c1 = corners[(si + 1) % 4 + 1]\n pts[i + 1] = {c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f}\n end\n elseif name == 'triangle' then\n local corners = {}\n for i = 0, 2 do\n local a = -math.pi / 2 + i * (2 * math.pi / 3)\n corners[i + 1] = {math.cos(a) * rad, math.sin(a) * rad}\n end\n for i = 0, n - 1 do\n local t = i / n\n local seg = t * 3\n local si = math.floor(seg) % 3\n local f = seg - math.floor(seg)\n local c0 = corners[si + 1]\n local c1 = corners[(si + 1) % 3 + 1]\n pts[i + 1] = {c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f}\n end\n elseif name == 'star' then\n local points = 5\n local inner = rad * 0.42\n for i = 0, n - 1 do\n local t = i / n\n local ang = -math.pi / 2 + t * 2 * math.pi\n local sharp = math.abs(math.cos(ang * points))\n local r = inner + (rad - inner) * (sharp ^ 1.6)\n pts[i + 1] = {math.cos(ang) * r, math.sin(ang) * r}\n end\n elseif name == 'hexagon' then\n local corners = {}\n for i = 0, 5 do\n local a = -math.pi / 2 + i * (math.pi / 3)\n corners[i + 1] = {math.cos(a) * rad, math.sin(a) * rad}\n end\n for i = 0, n - 1 do\n local t = i / n\n local seg = t * 6\n local si = math.floor(seg) % 6\n local f = seg - math.floor(seg)\n local c0 = corners[si + 1]\n local c1 = corners[(si + 1) % 6 + 1]\n pts[i + 1] = {c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f}\n end\n elseif name == 'octagon' then\n local corners = {}\n for i = 0, 7 do\n local a = -math.pi / 8 + i * (math.pi / 4)\n corners[i + 1] = {math.cos(a) * rad, math.sin(a) * rad}\n end\n for i = 0, n - 1 do\n local t = i / n\n local seg = t * 8\n local si = math.floor(seg) % 8\n local f = seg - math.floor(seg)\n local c0 = corners[si + 1]\n local c1 = corners[(si + 1) % 8 + 1]\n pts[i + 1] = {c0[1] + (c1[1] - c0[1]) * f, c0[2] + (c1[2] - c0[2]) * f}\n end\n else\n for i = 0, n - 1 do\n local a = -math.pi / 2 + i * (2 * math.pi / n)\n pts[i + 1] = {math.cos(a) * rad, math.sin(a) * rad}\n end\n end\n return pts\nend\n\nlocal a_pts = shape_pts(name_a, N, R)\nlocal b_pts = shape_pts(name_b, N, R)\n\ncairo_save(cr)\ncairo_translate(cr, cx, cy)\ncairo_rotate(cr, rot)\n\ncairo_new_path(cr)\nfor i = 1, N do\n local ax, ay = a_pts[i][1], a_pts[i][2]\n local bx, by = b_pts[i][1], b_pts[i][2]\n local x = ax + (bx - ax) * m\n local y = ay + (by - ay) * m\n if i == 1 then cairo_move_to(cr, x, y) else cairo_line_to(cr, x, y) end\nend\ncairo_close_path(cr)\n\nif do_fill then\n cairo_set_source_rgba(cr, nr, ng, nb, opacity * 0.12)\n cairo_fill_preserve(cr)\nend\n\ncairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND)\ncairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND)\nfor i = layers, 1, -1 do\n local spread = lw + i * (lw * 0.85)\n cairo_set_line_width(cr, spread)\n cairo_set_source_rgba(cr, nr, ng, nb, opacity * (0.14 / i))\n cairo_stroke_preserve(cr)\nend\n\ncairo_set_line_width(cr, lw)\ncairo_set_source_rgba(cr, 1, 1, 1, opacity * 0.9)\ncairo_stroke_preserve(cr)\ncairo_set_line_width(cr, lw * 0.55)\ncairo_set_source_rgba(cr, nr, ng, nb, opacity)\ncairo_stroke(cr)\n\ncairo_restore(cr)\n"
     }
   ]
 }
