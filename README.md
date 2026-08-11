@@ -115,7 +115,8 @@ From there, build complete HUDs with:
 * custom scripts
 * click actions
 * Custom Lua/Cairo rendering
-* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 56-node plugin pack (12 logic, 37 visual) for 149 total nodes.
+* 98 built-in nodes — 43 sources, 20 logic, and 35 visuals. Install the optional 54-node plugin pack (12 logic, 40 visual) for 152 total nodes.
+* Newest nodes are holographic globe, holographic DNA strand, and morphing neon geometry.
 * Check [![Requirements](https://img.shields.io/badge/Requirements-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Requirements) and [![Compatibility](https://img.shields.io/badge/Compatibility-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility) to get started
 
 [![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
