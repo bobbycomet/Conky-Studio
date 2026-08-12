@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.7.5.1 — Save Project Bug Fix (Latest)
+
+**Fixed**
+- **Save Project now suggests your HUD's actual name.** Previously, the Save Project dialog always defaulted to `hud.json` regardless of what you'd named your HUD in the Studio tab's name field. It now suggests `<Your HUD Name>.json` instead, sanitized for filesystem safety (illegal characters stripped, falls back to `hud.json` if the name is empty or unusable).
+
+No other behavior changes; projects that already have a saved path continue to save to that exact file as before; this only affects the filename suggested the first time you save a new project.
+
 ## Added 3 new plugin nodes
 
 New plugin nodes: 
@@ -10,7 +17,7 @@ New plugin nodes:
 
 - Spinning holographic globe: Purely decorative. The continents are not actual land masses; they show relative locations as if you are targeting something or searching for something by using simple dots as location markers. 
 
-## 1.0.7.5 — New Detection Feature (Latest)
+## 1.0.7.5 — New Detection Feature
 
 **Added**
 - Hardware & Session now detects your Linux distro (via `/etc/os-release`, including derivatives like Mint, Pop!_OS, Manjaro, Rocky, etc., through their `ID_LIKE` parent) and checks for two optional CLI tools: `lm-sensors` and `playerctl`.
