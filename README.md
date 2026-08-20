@@ -38,6 +38,8 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 [![KOFI](https://img.shields.io/badge/KO-FI-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://ko-fi.com/bobby60908)
 </div>
 
+### **1.1.0 Release is planned for August 23, 2026.**
+
 ---
 
 ## Why this exists
