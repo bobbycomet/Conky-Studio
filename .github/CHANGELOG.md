@@ -1,6 +1,19 @@
 # Changelog
 
-## Conky Studio 1.1.0 (Latest)
+## v1.1.0.1 (Latest)
+
+### Fixed
+- **Position Stage stuck after graph selection**  
+  Selecting a node on the graph (and opening the Properties panel) could leave the Position Stage unable to move any visual. Using the stage first still worked; the problem appeared once users started adding/selecting nodes. This was a rare bug, but rare does not mean it could not happen.
+
+  Root causes and fixes:
+  - Proxy **labels** were receiving mouse clicks instead of the parent proxy, so drags never started (especially after selection raised z-order). Labels now ignore mouse input.
+  - View **drag mode** could stay on pan-only (`ScrollHandDrag`) after empty-area clicks, blocking all proxy moves. Left-click over an unlocked proxy always restores item-drag mode; pan remains middle-click / Alt+drag (or empty area).
+  - Hit-testing did not walk the parent chain, so clicks on label children missed the proxy. Hits now resolve to the owning `StageProxyItem`.
+  - The window **frame** no longer accepts mouse events, so it cannot intercept clicks meant for proxies.
+  - Graph → Properties **selection sync** now reasserts `ItemIsMovable` on every proxy and resets the view to item-drag mode, so selection alone cannot freeze the stage.
+
+## Conky Studio 1.1.0 
 
 ### Added
 - **Multi-window/multi-monitor** — one Conky process per window; optional scene filters and monitor pin
