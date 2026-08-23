@@ -1,6 +1,33 @@
 # Changelog
 
-## v1.0.7.5.1 — Save Project Bug Fix (Latest)
+## Conky Studio 1.1.0 (Latest)
+
+### Added
+- **Multi-window/multi-monitor** — one Conky process per window; optional scene filters and monitor pin
+- **`.cstudio` packages** — portable projects (graph + assets + fonts)
+- **Position Stage** — drag visuals on a window-sized plane (same x/y · cx/cy as Properties)
+- **Scale %** — uniform scale for visuals (geometry, text, strokes, images)
+- **Theme Vault** + **Node Vault** community stores
+- Theme Wizard tiers (Simple/Full/Showcase) and redesigned presets
+- Guided tours (Learn Studio, Theme Wizard, Full Tour)
+- Plugin Creation tool; Plugins dialog improvements
+- Gradients, blend modes, and additional visual nodes
+
+### Changed
+- Live Preview and Build still share one export path (`conky.conf`, `render.lua`, `start.sh`)
+- Windows dock visibility controlled from Canvas (does not enable/disable multi-window data)
+
+### Fixed
+- Preview restarts: fewer `BadWindow` / `exit 6 races`
+- Position Stage snap no longer sticks after Snap is turned off
+- Missing plugins warn and skip instead of failing the whole build
+- Layers selection no longer steals the Properties tab mid-drag
+
+### Notes
+- Exported themes run without Studio
+- GNOME Wayland still limited for overlays — see Compatibility wiki
+
+## v1.0.7.5.1 — Save Project Bug Fix
 
 **Fixed**
 - **Save Project now suggests your HUD's actual name.** Previously, the Save Project dialog always defaulted to `hud.json` regardless of what you'd named your HUD in the Studio tab's name field. It now suggests `<Your HUD Name>.json` instead, sanitized for filesystem safety (illegal characters stripped, falls back to `hud.json` if the name is empty or unusable).
