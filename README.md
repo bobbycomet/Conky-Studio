@@ -183,8 +183,8 @@ Before running the AppImage, make it executable:
 
 #### Option 1: Terminal (Recommended)
 ```bash
-chmod +x Conky-Studio-*.AppImage
-./Conky-Studio-*.AppImage
+chmod +x Conky-Studio-1.0.3_x84_64.AppImage
+./Conky-Studio-1.0.3_x84_64.AppImage
 ```
 
 #### Option 2: GUI
