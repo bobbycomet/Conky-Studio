@@ -1,6 +1,23 @@
 # Changelog
 
-## v1.1.0.1 (Latest)
+## v1.1.0.3 Bar fix (Latest)
+
+**Issue:** Orientation only affected **solid** bars. **Segmented** and **trapezoid** always drew horizontally, so Vertical in the property panel had no effect for those styles.
+
+### Changed
+- Normalized `orientation` and `style` with `.lower()` so values like `"Vertical"` still match.
+- **Solid (vertical):** Unchanged behavior; track full size; fill grows from the **bottom** upward (`y + h - fh`).
+- **Segmented (vertical):** Segments stack **bottom → top**; lit count fills from the bottom (same percent logic as horizontal).
+- **Trapezoid (vertical):** Full trapezoid track; fill clipped to a bottom-up height band so progress still reads correctly on a tall, narrow bar.
+- **Horizontal** paths for all three styles left as before.
+- Shared `setup_indented` for gradient/source setup inside segmented loops (avoids duplicating the replace logic).
+
+### Unchanged
+- Node spec (`visuals.py`): `orientation` enum `horizontal` | `vertical` already present.
+- Horizontal solid / segmented / trapezoid drawing.
+- Gradient / blend pipeline via `fill_source_lua`.
+
+## v1.1.0.1
 
 ### Fixed
 - **Position Stage stuck after graph selection**  
