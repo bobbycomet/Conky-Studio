@@ -34,15 +34,15 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 
 </div>
 
-### **1.1.0 — Architectural Release**
+### **1.1.x — Architectural Release**
 
-**1.1.0 isn't Conky Studio becoming a different application. It's Conky Studio becoming the application it was designed to be.**
+**1.1.x isn't Conky Studio becoming a different application. It's Conky Studio becoming the application it was designed to be.**
 
-This release completes the original Studio architecture rather than replacing it. The node graph is still the foundation; 1.1.0 builds the surrounding UX needed to make that architecture practical from creation through preview, packaging, export, installation, and reuse.
+This release completes the original Studio architecture rather than replacing it. The node graph is still the foundation; 1.1.x builds the surrounding UX needed to make that architecture practical from creation through preview, packaging, export, installation, reuse, and better Conky version compatibility.
 
 The result is a more complete authoring environment without abandoning the design that has powered Studio from the beginning.
 
-**1.1.0 highlights**
+**1.1.x highlights**
 - Multi-window / multi-monitor projects with shared data and per-window scenes
 - Portable `.cstudio` source packages with bundled project assets
 - Position Stage built directly on Studio's existing X/Y property system
@@ -55,6 +55,7 @@ The result is a more complete authoring environment without abandoning the desig
 - Plugin Creation: promote Custom Nodes into validated, portable plugins
 - A complete theme lifecycle from authoring → preview → build → install → manage
 - Use Studio as the editor, use any manager, even if it is not Studio's
+- Support for Conky 1.19-1.22
 
 ---
 
@@ -183,8 +184,8 @@ Before running the AppImage, make it executable:
 
 #### Option 1: Terminal (Recommended)
 ```bash
-chmod +x Conky-Studio-1.0.3_x84_64.AppImage
-./Conky-Studio-1.0.3_x84_64.AppImage
+chmod +x Conky-Studio-1.1.1_x84_64.AppImage
+./Conky-Studio-1.1.1_x84_64.AppImage
 ```
 
 #### Option 2: GUI
