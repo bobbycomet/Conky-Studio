@@ -34,7 +34,6 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 
 </div>
 
-> Version 1.1.1.1, will be released soon. This fix will focus on regular built-in shapes that seem to have broken after adding the 1.2x Conky support fix. Supported GLIBC will now be 2.35+, a plugin lua helpers, and position stage fixes.
 
 ### **1.1.x — Architectural Release**
 
@@ -57,7 +56,9 @@ The result is a more complete authoring environment without abandoning the desig
 - Plugin Creation: promote Custom Nodes into validated, portable plugins
 - A complete theme lifecycle from authoring → preview → build → install → manage
 - Use Studio as the editor, use any manager, even if it is not Studio's
-- Support for Conky 1.19-1.22
+- Support for Conky 1.19-1.25
+
+Version 1.1.1.1 is now out, with many fixes for compatibility, position stage, geometry nodes, and more.
 
 ---
 
@@ -186,8 +187,8 @@ Before running the AppImage, make it executable:
 
 #### Option 1: Terminal (Recommended)
 ```bash
-chmod +x Conky-Studio-1.1.1_x84_64.AppImage
-./Conky-Studio-1.1.1_x84_64.AppImage
+chmod +x Conky-Studio-1.1.1.1-x84_64.AppImage
+./Conky-Studio-1.1.1.1-x84_64.AppImage
 ```
 
 #### Option 2: GUI
@@ -241,7 +242,7 @@ See [![Theme Compatibility](https://img.shields.io/badge/Theme_Compatibility-1f6
 
 Full details: [![Compatibility](https://img.shields.io/badge/Compatibility-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Compatibility)
 
-**GLIBC 2.38+** is required for the AppImage.
+**GLIBC 2.35+** is required for the AppImage.
 
 | Environment | Notes |
 |-------------|--------|
@@ -256,7 +257,7 @@ Live Preview intentionally uses `normal` window type. Final exported themes foll
 
 ## Runtime Performance
 
-Conky Studio is an authoring tool. The node graph is converted into ordinary Conky files at build time. The exported theme runs independently of Studio. Performance is determined by the generated Lua, update intervals, and normal Conky execution — not by the number of nodes in the editor.
+Conky Studio is an authoring tool. The node graph is converted into ordinary Conky files at build time. The exported theme runs independently of Studio. Performance is determined by the generated Lua, update intervals, and normal Conky execution, not by the number of nodes in the editor.
 
 ---
 
