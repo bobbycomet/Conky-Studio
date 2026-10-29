@@ -1,1 +1,3 @@
 PyQt6>=6.5
+# optional, only for tools/plugin_harness.py if you build from source and create your own plugins:
+# lupa
