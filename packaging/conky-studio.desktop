@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Conky Studio
+GenericName=Conky HUD Editor
+Comment=Visual node-based editor for building Conky + Lua/Cairo HUDs
+Exec=conky-studio %U
+Icon=conky-studio
+Terminal=false
+Categories=Utility;Graphics;
+Keywords=conky;hud;widget;theme;lua;cairo;
+MimeType=x-scheme-handler/ocs;x-scheme-handler/ocss;
