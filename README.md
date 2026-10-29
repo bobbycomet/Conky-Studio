@@ -34,6 +34,8 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 
 </div>
 
+> Version 1.1.1.1, will be released soon. This fix will focus on regular built-in shapes that seem to have broken after adding the 1.2x Conky support fix. Supported GLIBC will now be 2.35+, a plugin lua helpers, and position stage fixes.
+
 ### **1.1.x — Architectural Release**
 
 **1.1.x isn't Conky Studio becoming a different application. It's Conky Studio becoming the application it was designed to be.**
