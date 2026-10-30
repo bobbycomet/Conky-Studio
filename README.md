@@ -31,10 +31,10 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 [![Conky Studio History](https://img.shields.io/badge/Conky_Studio_History-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Conky-Studio-History)
 [![Features](https://img.shields.io/badge/Features-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/Conky-Studio/wiki/Features)
 [![KOFI](https://img.shields.io/badge/KO-FI-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://ko-fi.com/bobby60908)
+[![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-Official_Studio_Updater-D4AF37?style=for-the-badge&labelColor=333333&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater)
 
 </div>
 
-[![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-Official_Studio_Updater-D4AF37?style=for-the-badge&labelColor=333333&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater)
 
 ### **1.1.x — Architectural Release**
 
