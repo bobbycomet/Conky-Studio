@@ -34,7 +34,7 @@ Build desktop HUDs visually with a node-based workflow, then export standard Con
 
 </div>
 
-[![Griffin Updater The official update tool for Studio](https://img.shields.io/badge/Griffin-Updater-The-Official-Updater-for-Studio-1f6feb?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater)
+[![Griffin Updater](https://img.shields.io/badge/Griffin_Updater-Official_Studio_Updater-D4AF37?style=for-the-badge&labelColor=333333&logo=github&logoColor=white)](https://github.com/bobbycomet/GriffinUpdater)
 
 ### **1.1.x — Architectural Release**
 
