@@ -1,5 +1,27 @@
 # Changelog
 
+## Conky Studio 1.1.1.2 is in Development
+
+While version 1.1.1.1 addresses a considerable number of issues, further testing has uncovered additional compatibility problems, particularly on systems with fewer than 8 CPU threads. These issues could cause Conky Studio to crash or prevent certain HUD configurations from rendering correctly.
+
+The following fixes are planned for version 1.1.1.2:
+
+### Fixes & Improvements
+
+- **CPU Core Detection:** Conky treats requests for nonexistent CPU cores as fatal errors. Since the Showcase themes ship with an 8-bar CPU Core Strip, systems with fewer than 8 available CPU threads could cause Conky to crash.
+- **Conky-std Compatibility:** Installing Conky-std without Lua-Cairo support could result in a silently blank HUD. Conky would start without reporting an error, but nothing would render. This also affects other Conky builds without Lua-Cairo support, including conky-cli.
+- **TTY Session Detection:** Improved handling of TTY-based sessions, including configurations using `startx`, which could previously trigger an "Unknown display server" warning.
+- **Wayland Platform Override:** Corrected a crash that could occur when `QT_QPA_PLATFORM` was explicitly set to `wayland`.
+- **Stale WAYLAND_DISPLAY Handling:** Improved handling of outdated `WAYLAND_DISPLAY` environment variables, allowing them to be discarded quietly when an X11 session is available.
+
+### What's Next?
+
+The 1.1.1 release cycle is focused on improving Conky Studio's overall stability, compatibility, and reliability across different hardware configurations and desktop environments.
+
+The goal is to enter the 1.1.2 release with a fully stabilized foundation. Once that milestone is reached, further fixes and additions will primarily focus on the node system, unless additional issues arise that require attention.
+
+**The priority is to make the existing experience reliable before expanding it further.**
+
 ## v1.1.0.3 Bar fix (Latest)
 
 **Issue:** Orientation only affected **solid** bars. **Segmented** and **trapezoid** always drew horizontally, so Vertical in the property panel had no effect for those styles.
