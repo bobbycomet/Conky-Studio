@@ -1,0 +1,3 @@
+PyQt6
+# optional, for tools/plugin_harness.py:
+# lupa
