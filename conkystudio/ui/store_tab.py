@@ -122,37 +122,37 @@ class ThemeVaultPanel(QWidget):
         outer.setContentsMargins(12, 12, 12, 12)
         outer.setSpacing(10)
 
-        heading = QLabel("Theme Vault")
+        heading = QLabel(self.tr("Theme Vault"))
         heading.setProperty("role", "heading")
         outer.addWidget(heading)
 
         blurb = QLabel(
-            "Themes from GitHub, Pling, KDE Store, openDesktop, and more. Install downloads and "
+            self.tr("Themes from GitHub, Pling, KDE Store, openDesktop, and more. Install downloads and "
             "sets up the theme under ~/.config/conky/ for GitHub, Pling, and openDesktop entries; "
-            "other hosts open in your browser instead since there's no generic way to fetch from them."
+            "other hosts open in your browser instead since there's no generic way to fetch from them.")
         )
         blurb.setProperty("role", "caption")
         blurb.setWordWrap(True)
         outer.addWidget(blurb)
 
         bar = QHBoxLayout()
-        bar.addWidget(QLabel("Catalog"))
+        bar.addWidget(QLabel(self.tr("Catalog")))
         self.catalog_box = QComboBox()
-        self.catalog_box.addItem("Official pack", "official")
-        self.catalog_box.addItem("Community pack", "community")
+        self.catalog_box.addItem(self.tr("Official pack"), "official")
+        self.catalog_box.addItem(self.tr("Community pack"), "community")
         self.catalog_box.currentIndexChanged.connect(self._on_catalog_changed)
         bar.addWidget(self.catalog_box)
 
         self.url_edit = QLineEdit(theme_vault.DEFAULT_CATALOGS["official"])
         bar.addWidget(self.url_edit, 1)
 
-        fetch_btn = QPushButton("Browse")
+        fetch_btn = QPushButton(self.tr("Browse"))
         fetch_btn.setObjectName("primary")
         fetch_btn.clicked.connect(self._fetch)
         bar.addWidget(fetch_btn)
 
-        visit_store_btn = QPushButton("Visit Store \u2197")
-        visit_store_btn.setToolTip("Open the Theme Vault website in your browser")
+        visit_store_btn = QPushButton(self.tr("Visit Store \u2197"))
+        visit_store_btn.setToolTip(self.tr("Open the Theme Vault website in your browser"))
         visit_store_btn.clicked.connect(self._open_store_website)
         bar.addWidget(visit_store_btn)
         outer.addLayout(bar)
@@ -171,13 +171,13 @@ class ThemeVaultPanel(QWidget):
         detail_layout.addWidget(self.detail_view, 1)
 
         btn_row = QHBoxLayout()
-        self.install_btn = QPushButton("Install")
+        self.install_btn = QPushButton(self.tr("Install"))
         self.install_btn.setObjectName("primary")
         self.install_btn.setEnabled(False)
         self.install_btn.clicked.connect(self._install)
         btn_row.addWidget(self.install_btn)
 
-        self.get_btn = QPushButton("Get it \u2197")
+        self.get_btn = QPushButton(self.tr("Get it \u2197"))
         self.get_btn.setEnabled(False)
         self.get_btn.clicked.connect(self._open_link)
         btn_row.addWidget(self.get_btn)
@@ -204,7 +204,7 @@ class ThemeVaultPanel(QWidget):
 
     def _fetch(self):
         self.list_widget.clear()
-        self.detail_view.setHtml("<p>Fetching\u2026</p>")
+        self.detail_view.setHtml(self.tr("<p>Fetching\u2026</p>"))
         self.get_btn.setEnabled(False)
         self._fetch_thread = _ThemeVaultFetchThread(self.url_edit.text().strip())
         self._fetch_thread.done.connect(self._on_fetched)
@@ -212,7 +212,7 @@ class ThemeVaultPanel(QWidget):
 
     def _on_fetched(self, entries: list, error: str):
         if error:
-            self.detail_view.setHtml(f"<p>Couldn't load Theme Vault:<br>{_esc(error)}</p>")
+            self.detail_view.setHtml(self.tr("<p>Couldn't load Theme Vault:<br>{0}</p>").format(_esc(error)))
             return
         self.entries = entries
         self.list_widget.clear()
@@ -225,7 +225,7 @@ class ThemeVaultPanel(QWidget):
             item.setToolTip(f"{entry.host} \u00b7 {entry.description[:200]}")
             self.list_widget.addItem(item)
         self.detail_view.setHtml(
-            f"<p>{len(entries)} theme(s) available.</p>" if entries else "<p>No themes listed yet.</p>"
+            self.tr("<p>%n theme(s) available.</p>", "", len(entries)) if entries else self.tr("<p>No themes listed yet.</p>")
         )
 
     def _on_selection_changed(self, *_args):
@@ -241,32 +241,32 @@ class ThemeVaultPanel(QWidget):
 
         installable = bool(entry.link) and entry.host in INSTALLABLE_HOSTS
         self.install_btn.setEnabled(installable)
-        self.install_btn.setText(f"Install from {entry.host}" if installable else "Install")
+        self.install_btn.setText(self.tr("Install from {0}").format(entry.host) if installable else self.tr("Install"))
         if not installable:
             self.install_btn.setToolTip(
-                f"Theme Vault can't auto-install from {entry.host or 'this host'} -- use \"Get it ↗\" instead."
+                self.tr('Theme Vault can\'t auto-install from {0} -- use "Get it ↗" instead.').format(entry.host or self.tr('this host'))
             )
         else:
             self.install_btn.setToolTip("")
 
         self.get_btn.setEnabled(bool(entry.link))
-        self.get_btn.setText(f"Get it on {entry.host} \u2197" if entry.host else "Get it \u2197")
-        self.detail_view.setHtml(self._render_summary(entry) + "<p><i>Loading preview and README\u2026</i></p>")
+        self.get_btn.setText(self.tr("Get it on {0} \u2197").format(entry.host) if entry.host else self.tr("Get it \u2197"))
+        self.detail_view.setHtml(self._render_summary(entry) + self.tr("<p><i>Loading preview and README\u2026</i></p>"))
         self._detail_thread = _ThemeVaultDetailThread(entry)
         self._detail_thread.done.connect(self._on_detail_loaded)
         self._detail_thread.start()
 
     def _render_summary(self, entry) -> str:
-        meta_bits = [f"Author: {_esc(entry.author or 'unattributed')}"]
+        meta_bits = [self.tr("Author: {0}").format(_esc(entry.author or self.tr('unattributed')))]
         if entry.version:
-            meta_bits.append(f"Version: {_esc(entry.version)}")
-        meta_bits.append(f"Host: {_esc(entry.host)}")
+            meta_bits.append(self.tr("Version: {0}").format(_esc(entry.version)))
+        meta_bits.append(self.tr("Host: {0}").format(_esc(entry.host)))
         if entry.resolution:
-            meta_bits.append(f"Built for: {_esc(entry.resolution)}")
+            meta_bits.append(self.tr("Built for: {0}").format(_esc(entry.resolution)))
         if entry.conky_version:
-            meta_bits.append(f"Conky: {_esc(entry.conky_version)}")
+            meta_bits.append(self.tr("Conky: {0}").format(_esc(entry.conky_version)))
         if entry.license:
-            meta_bits.append(f"License: {_esc(entry.license)}")
+            meta_bits.append(self.tr("License: {0}").format(_esc(entry.license)))
 
         tags_html = " ".join(f"<code>{_esc(t)}</code>" for t in entry.tags)
 
@@ -274,8 +274,8 @@ class ThemeVaultPanel(QWidget):
         if entry.plugins:
             chips = " ".join(f"<code>{_esc(p)}</code>" for p in entry.plugins)
             plugins_html = (
-                f"<p><b>Uses these plugins:</b><br>{chips}<br>"
-                f"<i>Install these from Node Vault before trying this theme.</i></p>"
+                self.tr("<p><b>Uses these plugins:</b><br>{0}<br>"
+                "<i>Install these from Node Vault before trying this theme.</i></p>").format(chips)
             )
 
         return (
@@ -295,8 +295,8 @@ class ThemeVaultPanel(QWidget):
             preview_html = f'<p><img src="data:image/png;base64,{b64}" width="320"/></p>'
         if readme_error:
             readme_html = (
-                f"<p>Couldn't load the README ({_esc(readme_error)}). "
-                f"<a href=\"{_esc(entry.readme_url)}\">Open it directly</a></p>"
+                self.tr("<p>Couldn't load the README ({0}). "
+                "<a href=\"{1}\">Open it directly</a></p>").format(_esc(readme_error), _esc(entry.readme_url))
             )
         else:
             readme_html = theme_vault.render_readme_html(readme_text)
@@ -315,7 +315,7 @@ class ThemeVaultPanel(QWidget):
         entry = self._selected
         self.install_btn.setEnabled(False)
         self.get_btn.setEnabled(False)
-        self.status.setText(f"Installing '{entry.display_name}'\u2026")
+        self.status.setText(self.tr("Installing '{0}'\u2026").format(entry.display_name))
         self._install_thread = _ThemeVaultInstallWorker(entry)
         self._install_thread.progress.connect(self.status.setText)
         self._install_thread.finished_ok.connect(self._on_install_ok)
@@ -330,12 +330,12 @@ class ThemeVaultPanel(QWidget):
         self.status.setText(result.message)
         if result.success:
             QMessageBox.information(
-                self, "Installed",
-                f"{result.message}\n\nSwitch to the Manager tab to launch it.",
+                self, self.tr("Installed"),
+                self.tr("{0}\n\nSwitch to the Manager tab to launch it.").format(result.message),
             )
             self.theme_installed.emit()
         else:
-            QMessageBox.warning(self, "Install failed", result.message)
+            QMessageBox.warning(self, self.tr("Install failed"), result.message)
 
     def _on_install_err(self, err: str):
         self.get_btn.setEnabled(bool(self._selected and self._selected.link))
@@ -343,7 +343,7 @@ class ThemeVaultPanel(QWidget):
             self._selected and self._selected.link and self._selected.host in INSTALLABLE_HOSTS
         ))
         self.status.setText(err)
-        QMessageBox.warning(self, "Install failed", err)
+        QMessageBox.warning(self, self.tr("Install failed"), err)
 
 
 # ===========================================================================
@@ -436,21 +436,21 @@ class OcsPanel(QWidget):
         root.setContentsMargins(12, 12, 12, 12)
         root.setSpacing(10)
 
-        heading = QLabel("OpenDesktop / Pling")
+        heading = QLabel(self.tr("OpenDesktop / Pling"))
         heading.setProperty("role", "heading")
         root.addWidget(heading)
 
         blurb = QLabel(
-            "Search live content on Pling and openDesktop (OCS API). "
+            self.tr("Search live content on Pling and openDesktop (OCS API). "
             "Install places themes under ~/.config/conky/, then use the Manager tab to launch them. "
-            "Browser links using ocs:// also open here when Conky Studio is registered as the handler."
+            "Browser links using ocs:// also open here when Conky Studio is registered as the handler.")
         )
         blurb.setProperty("role", "caption")
         blurb.setWordWrap(True)
         root.addWidget(blurb)
 
         bar = QHBoxLayout()
-        bar.addWidget(QLabel("Provider"))
+        bar.addWidget(QLabel(self.tr("Provider")))
         self.provider = QComboBox()
         self.provider.addItem("Pling", "pling")
         self.provider.addItem("openDesktop", "opendesktop")
@@ -458,17 +458,17 @@ class OcsPanel(QWidget):
         bar.addWidget(self.provider)
 
         self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("Search (default: conky)\u2026")
+        self.search_edit.setPlaceholderText(self.tr("Search (default: conky)\u2026"))
         self.search_edit.returnPressed.connect(self.run_search)
         bar.addWidget(self.search_edit, 1)
 
-        self.search_btn = QPushButton("Search")
+        self.search_btn = QPushButton(self.tr("Search"))
         self.search_btn.setObjectName("primary")
         self.search_btn.clicked.connect(self.run_search)
         bar.addWidget(self.search_btn)
 
-        self.open_web_btn = QPushButton("Open website")
-        self.open_web_btn.setToolTip("Open the provider in your browser")
+        self.open_web_btn = QPushButton(self.tr("Open website"))
+        self.open_web_btn.setToolTip(self.tr("Open the provider in your browser"))
         self.open_web_btn.clicked.connect(self._open_website)
         bar.addWidget(self.open_web_btn)
         root.addLayout(bar)
@@ -488,13 +488,13 @@ class OcsPanel(QWidget):
         right_l.addWidget(self.detail, 1)
 
         btn_row = QHBoxLayout()
-        self.install_btn = QPushButton("Install theme")
+        self.install_btn = QPushButton(self.tr("Install theme"))
         self.install_btn.setObjectName("primary")
         self.install_btn.setEnabled(False)
         self.install_btn.clicked.connect(self._install)
         btn_row.addWidget(self.install_btn)
 
-        self.page_btn = QPushButton("View on site")
+        self.page_btn = QPushButton(self.tr("View on site"))
         self.page_btn.setEnabled(False)
         self.page_btn.clicked.connect(self._open_detail_page)
         btn_row.addWidget(self.page_btn)
@@ -506,7 +506,7 @@ class OcsPanel(QWidget):
         split.setStretchFactor(1, 3)
         root.addWidget(split, 1)
 
-        self.status = QLabel("Ready. press Search to browse Pling for “conky”.")
+        self.status = QLabel(self.tr("Ready. press Search to browse Pling for “conky”."))
         self.status.setProperty("role", "caption")
         self.status.setWordWrap(True)
         root.addWidget(self.status)
@@ -523,7 +523,7 @@ class OcsPanel(QWidget):
 
     def run_search(self):
         q = self.search_edit.text().strip() or "conky"
-        self._set_busy(True, f"Searching for “{q}”\u2026")
+        self._set_busy(True, self.tr("Searching for “{0}”\u2026").format(q))
         self.list.clear()
         self._results = []
         self._selected = None
@@ -541,7 +541,7 @@ class OcsPanel(QWidget):
         self._set_busy(False)
         self._results = list(hits)
         if not hits:
-            self.status.setText("No results. Try another query or provider.")
+            self.status.setText(self.tr("No results. Try another query or provider."))
             return
         for c in hits:
             label = c.name or f"#{c.id}"
@@ -553,11 +553,11 @@ class OcsPanel(QWidget):
             item.setData(Qt.ItemDataRole.UserRole, c.id)
             item.setToolTip(c.summary or (c.description[:200] if c.description else ""))
             self.list.addItem(item)
-        self.status.setText(f"{len(hits)} result(s). ★ = mentions Conky in name/description.")
+        self.status.setText(self.tr("%n result(s). ★ = mentions Conky in name/description.", "", len(hits)))
 
     def _on_search_err(self, err: str):
         self._set_busy(False, err)
-        QMessageBox.warning(self, "OpenDesktop / Pling", err)
+        QMessageBox.warning(self, self.tr("OpenDesktop / Pling"), err)
 
     def _on_select(self):
         items = self.list.selectedItems()
@@ -570,12 +570,12 @@ class OcsPanel(QWidget):
         stub = next((x for x in self._results if x.id == cid), None)
         if stub:
             self.detail.setHtml(
-                f"<h3>{_esc(stub.name)}</h3>"
-                f"<p><i>{_esc(stub.summary or '')}</i></p>"
-                f"<p>{_esc((stub.description or '')[:600])}</p>"
-                f"<p>Loading download links\u2026</p>"
+                self.tr("<h3>{0}</h3>"
+                "<p><i>{1}</i></p>"
+                "<p>{2}</p>"
+                "<p>Loading download links\u2026</p>").format(_esc(stub.name), _esc(stub.summary or ''), _esc((stub.description or '')[:600]))
             )
-        self._set_busy(True, "Loading details\u2026")
+        self._set_busy(True, self.tr("Loading details\u2026"))
         worker = _OcsDetailWorker(self._base_url(), str(cid), parent=self)
         worker.finished_ok.connect(self._on_detail_ok)
         worker.finished_err.connect(self._on_detail_err)
@@ -583,7 +583,7 @@ class OcsPanel(QWidget):
         worker.start()
 
     def _on_detail_ok(self, content: OcsContent):
-        self._set_busy(False, "Ready.")
+        self._set_busy(False, self.tr("Ready."))
         self._selected = content
         self._results = [content if x.id == content.id else x for x in self._results]
 
@@ -593,19 +593,19 @@ class OcsPanel(QWidget):
                 for d in content.downloads
             ) + "</ul>"
         else:
-            dl_html = "<p><b>No download links on this item.</b></p>"
+            dl_html = self.tr("<p><b>No download links on this item.</b></p>")
 
         preview = ""
         if content.preview_url:
             preview = f'<p><img src="{_esc(content.preview_url)}" style="max-width:280px;"/></p>'
 
         self.detail.setHtml(
-            f"<h3>{_esc(content.name)}</h3>{preview}"
-            f"<p><i>{_esc(content.summary or '')}</i></p>"
-            f"<p>{_esc(content.description or '')}</p>"
-            f"<p>Author: {_esc(content.author)} &nbsp;|&nbsp; "
-            f"Version: {_esc(content.version)} &nbsp;|&nbsp; Score: {_esc(content.score)}</p>"
-            f"<p><b>Files</b></p>{dl_html}"
+            self.tr("<h3>{0}</h3>{1}"
+            "<p><i>{2}</i></p>"
+            "<p>{3}</p>"
+            "<p>Author: {4} &nbsp;|&nbsp; "
+            "Version: {5} &nbsp;|&nbsp; Score: {6}</p>"
+            "<p><b>Files</b></p>{7}").format(_esc(content.name), preview, _esc(content.summary or ''), _esc(content.description or ''), _esc(content.author), _esc(content.version), _esc(content.score), dl_html)
         )
         self.install_btn.setEnabled(bool(content.downloads))
         self.page_btn.setEnabled(True)
@@ -616,9 +616,9 @@ class OcsPanel(QWidget):
 
     def _install(self):
         if not self._selected or not self._selected.downloads:
-            QMessageBox.warning(self, "Install", "No download links available.")
+            QMessageBox.warning(self, self.tr("Install"), self.tr("No download links available."))
             return
-        self._set_busy(True, "Installing\u2026")
+        self._set_busy(True, self.tr("Installing\u2026"))
         self.install_btn.setEnabled(False)
         worker = _OcsInstallWorker(self._selected, parent=self)
         worker.progress.connect(lambda m: self.status.setText(m))
@@ -633,18 +633,18 @@ class OcsPanel(QWidget):
         if result.success:
             self.status.setText(result.message)
             QMessageBox.information(
-                self, "Installed",
-                f"{result.message}\n\nSwitch to the Manager tab to launch it.",
+                self, self.tr("Installed"),
+                self.tr("{0}\n\nSwitch to the Manager tab to launch it.").format(result.message),
             )
             self.theme_installed.emit()
         else:
             self.status.setText(result.message)
-            QMessageBox.warning(self, "Install failed", result.message)
+            QMessageBox.warning(self, self.tr("Install failed"), result.message)
 
     def _on_install_err(self, err: str):
         self._set_busy(False)
         self.install_btn.setEnabled(bool(self._selected and self._selected.downloads))
-        QMessageBox.warning(self, "Install failed", err)
+        QMessageBox.warning(self, self.tr("Install failed"), err)
 
     def _open_website(self):
         key = self.provider.currentData() or "pling"
@@ -684,8 +684,8 @@ class StoreTab(QWidget):
         self.tabs = QTabWidget()
         self.theme_vault = ThemeVaultPanel()
         self.ocs = OcsPanel()
-        self.tabs.addTab(self.theme_vault, "Theme Vault")
-        self.tabs.addTab(self.ocs, "OpenDesktop / Pling")
+        self.tabs.addTab(self.theme_vault, self.tr("Theme Vault"))
+        self.tabs.addTab(self.ocs, self.tr("OpenDesktop / Pling"))
 
         self.theme_vault.theme_installed.connect(self.theme_installed.emit)
         self.ocs.theme_installed.connect(self.theme_installed.emit)
