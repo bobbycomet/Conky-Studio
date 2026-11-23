@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QMainWindow, QDockWidget, QLineEdit,
     QLabel, QPushButton, QTabWidget,
 )
-from PyQt6.QtCore import Qt, QPointF, pyqtSignal
+from PyQt6.QtCore import Qt, QPointF, pyqtSignal, QT_TRANSLATE_NOOP
 
 from conkystudio.model.project import Project
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
@@ -57,7 +57,7 @@ class _HiddenDocksStrip(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(6, 3, 6, 3)
         layout.setSpacing(6)
-        self._hint = QLabel("Hidden panels:")
+        self._hint = QLabel(self.tr("Hidden panels:"))
         self._hint.setProperty("role", "caption")
         layout.addWidget(self._hint)
         layout.addStretch(1)
@@ -115,7 +115,7 @@ class StudioTab(QWidget):
 
         name_bar = QHBoxLayout()
         name_bar.setContentsMargins(10, 8, 10, 0)
-        name_bar.addWidget(QLabel("HUD name"))
+        name_bar.addWidget(QLabel(self.tr("HUD name")))
         self.name_edit = QLineEdit(self.project.name)
         self.name_edit.setMaximumWidth(260)
         self.name_edit.editingFinished.connect(self._on_name_edited)
@@ -154,7 +154,7 @@ class StudioTab(QWidget):
         self.preview_panel = PreviewPanel(self.preview_controller)
         self.preview_panel.set_project_getter(lambda: self.project)
         self.preview_dock = self._make_dock(
-            "Live Preview", self.preview_panel, Qt.DockWidgetArea.BottomDockWidgetArea
+            QT_TRANSLATE_NOOP("StudioTab", "Live Preview"), self.preview_panel, Qt.DockWidgetArea.BottomDockWidgetArea
         )
 
         self.position_stage = PositionStagePanel(self.project)
@@ -162,7 +162,7 @@ class StudioTab(QWidget):
         # displays; the dock itself remains user-resizable.
         self.position_stage.setMinimumHeight(120)
         self.position_stage_dock = self._make_dock(
-            "Position Stage", self.position_stage, Qt.DockWidgetArea.BottomDockWidgetArea
+            QT_TRANSLATE_NOOP("StudioTab", "Position Stage"), self.position_stage, Qt.DockWidgetArea.BottomDockWidgetArea
         )
         self.dock_host.tabifyDockWidget(self.preview_dock, self.position_stage_dock)
         self.preview_dock.raise_()
@@ -171,24 +171,24 @@ class StudioTab(QWidget):
         self.palette = PalettePanel()
         self.palette.setMinimumWidth(230)
         self.palette.setMaximumWidth(340)
-        self.palette_dock = self._make_dock("Nodes", self.palette, Qt.DockWidgetArea.LeftDockWidgetArea)
+        self.palette_dock = self._make_dock(QT_TRANSLATE_NOOP("StudioTab", "Nodes"), self.palette, Qt.DockWidgetArea.LeftDockWidgetArea)
 
         self.layers_dock = LayersDock(self.project)
         self.layers_dock.setMinimumWidth(200)
         self.layers_dock.setMaximumWidth(300)
-        self.layers_dock_widget = self._make_dock("Layers", self.layers_dock, Qt.DockWidgetArea.RightDockWidgetArea)
+        self.layers_dock_widget = self._make_dock(QT_TRANSLATE_NOOP("StudioTab", "Layers"), self.layers_dock, Qt.DockWidgetArea.RightDockWidgetArea)
 
         self.property_panel = PropertyPanel(self.project)
         self.property_panel.setMinimumWidth(260)
         self.property_panel.setMaximumWidth(400)
-        self.property_dock = self._make_dock("Properties", self.property_panel, Qt.DockWidgetArea.RightDockWidgetArea)
+        self.property_dock = self._make_dock(QT_TRANSLATE_NOOP("StudioTab", "Properties"), self.property_panel, Qt.DockWidgetArea.RightDockWidgetArea)
 
         # Multi-monitor windows dock (tabified with Layers / Properties)
         self.windows_panel = WindowsPanel(self.project)
         self.windows_panel.setMinimumWidth(220)
         self.windows_panel.setMaximumWidth(380)
         self.windows_dock = self._make_dock(
-            "Windows", self.windows_panel, Qt.DockWidgetArea.RightDockWidgetArea
+            QT_TRANSLATE_NOOP("StudioTab", "Windows"), self.windows_panel, Qt.DockWidgetArea.RightDockWidgetArea
         )
 
         self.dock_host.tabifyDockWidget(self.layers_dock_widget, self.property_dock)
@@ -233,7 +233,7 @@ class StudioTab(QWidget):
 
     # ------------------------------------------------------------------
     def _make_dock(self, title: str, widget: QWidget, area: Qt.DockWidgetArea) -> QDockWidget:
-        dock = QDockWidget(title, self.dock_host)
+        dock = QDockWidget(self.tr(title), self.dock_host)
         dock.setObjectName(f"dock_{title.lower().replace(' ', '_')}")
         dock.setWidget(widget)
         dock.setFeatures(
@@ -242,7 +242,7 @@ class StudioTab(QWidget):
             | QDockWidget.DockWidgetFeature.DockWidgetFloatable
         )
         self.dock_host.addDockWidget(area, dock)
-        self.hidden_strip.register(dock, title)
+        self.hidden_strip.register(dock, self.tr(title))
         # A floated dock becomes its own real top-level window rather
         # than a Qt::Tool popup, so it stays open and usable even if the
         # main Conky Studio window gets minimized.

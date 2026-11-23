@@ -62,11 +62,11 @@ class _LayerRow(QWidget):
 
     def _apply_eye_text(self):
         self.eye_btn.setText("\U0001F441" if not self.eye_btn.isChecked() else "\u2014")
-        self.eye_btn.setToolTip("Hide" if not self.eye_btn.isChecked() else "Show")
+        self.eye_btn.setToolTip(self.tr("Hide") if not self.eye_btn.isChecked() else self.tr("Show"))
 
     def _apply_lock_text(self):
         self.lock_btn.setText("\U0001F512" if self.lock_btn.isChecked() else "\U0001F513")
-        self.lock_btn.setToolTip("Unlock" if self.lock_btn.isChecked() else "Lock")
+        self.lock_btn.setToolTip(self.tr("Unlock") if self.lock_btn.isChecked() else self.tr("Lock"))
 
     def _on_eye(self, checked: bool):
         self._apply_eye_text()
@@ -101,11 +101,11 @@ class LayersDock(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(6, 6, 6, 6)
 
-        heading = QLabel("Layers")
+        heading = QLabel(self.tr("Layers"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
 
-        hint = QLabel("Drag to reorder \u2014 top draws last (on top).")
+        hint = QLabel(self.tr("Drag to reorder \u2014 top draws last (on top)."))
         hint.setProperty("role", "caption")
         layout.addWidget(hint)
 

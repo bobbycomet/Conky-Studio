@@ -327,7 +327,7 @@ class NodeCanvasScene(QGraphicsScene):
         item = self.group_items.get(group_id)
         if not g:
             return
-        text, ok = QInputDialog.getText(None, "Rename group", "Title:", text=g.title)
+        text, ok = QInputDialog.getText(None, self.tr("Rename group"), self.tr("Title:"), text=g.title)
         if ok and text.strip():
             g.title = text.strip()
             if item:
@@ -352,7 +352,7 @@ class NodeCanvasScene(QGraphicsScene):
         item = self.label_items.get(label_id)
         if not lb:
             return
-        text, ok = QInputDialog.getMultiLineText(None, "Edit label", "Text:", text=lb.text)
+        text, ok = QInputDialog.getMultiLineText(None, self.tr("Edit label"), self.tr("Text:"), text=lb.text)
         if ok:
             lb.text = text
             if item:
@@ -503,31 +503,31 @@ class NodeCanvasView(QGraphicsView):
         selected_labels = [it for it in self._scene.selectedItems() if isinstance(it, LabelItem)]
 
         if len(selected_nodes) >= 2:
-            menu.addAction("Group selection", lambda: self._group_selection())
+            menu.addAction(self.tr("Group selection"), lambda: self._group_selection())
         if selected_groups or any(self._scene.project.group_for_node(n.node_id) for n in selected_nodes):
-            menu.addAction("Ungroup", self._scene.ungroup_selected)
+            menu.addAction(self.tr("Ungroup"), self._scene.ungroup_selected)
         for git in selected_groups:
             g = self._scene.project.group(git.group_id)
             if g:
-                label = "Expand group" if g.collapsed else "Collapse group"
+                label = self.tr("Expand group") if g.collapsed else self.tr("Collapse group")
                 menu.addAction(label, lambda gid=git.group_id: self._scene.toggle_group_collapsed(gid))
-                menu.addAction("Rename group…", lambda gid=git.group_id: self._scene._rename_group(gid))
+                menu.addAction(self.tr("Rename group…"), lambda gid=git.group_id: self._scene._rename_group(gid))
         menu.addSeparator()
-        menu.addAction("Add label here", lambda: self._add_label(scene_pos))
+        menu.addAction(self.tr("Add label here"), lambda: self._add_label(scene_pos))
         if selected_labels:
-            menu.addAction("Edit label…", lambda: self._scene._edit_label(selected_labels[0].label_id))
-            menu.addAction("Delete label", lambda: self._scene.remove_label(selected_labels[0].label_id))
+            menu.addAction(self.tr("Edit label…"), lambda: self._scene._edit_label(selected_labels[0].label_id))
+            menu.addAction(self.tr("Delete label"), lambda: self._scene.remove_label(selected_labels[0].label_id))
         menu.addSeparator()
-        menu.addAction("Delete", self._delete_selected)
+        menu.addAction(self.tr("Delete"), self._delete_selected)
         menu.exec(event.globalPos())
 
     def _group_selection(self):
-        title, ok = QInputDialog.getText(self, "Group nodes", "Group title:", text="Group")
+        title, ok = QInputDialog.getText(self, self.tr("Group nodes"), self.tr("Group title:"), text=self.tr("Group"))
         if ok:
-            self._scene.group_selected_nodes(title.strip() or "Group")
+            self._scene.group_selected_nodes(title.strip() or self.tr("Group"))
 
     def _add_label(self, scene_pos: QPointF):
-        text, ok = QInputDialog.getMultiLineText(self, "Add label", "Text:", text="Note")
+        text, ok = QInputDialog.getMultiLineText(self, self.tr("Add label"), self.tr("Text:"), text=self.tr("Note"))
         if ok and text.strip():
             self._scene.add_label_at(scene_pos, text.strip())
 
@@ -556,7 +556,7 @@ class NodeCanvasView(QGraphicsView):
             font = painter.font()
             font.setPointSize(13)
             painter.setFont(font)
-            text = ("Drag a node from the left to begin \u2014 or Project \u2192 New HUD for a starter layout "
+            text = self.tr("Drag a node from the left to begin \u2014 or Project \u2192 New HUD for a starter layout "
                     "with a couple of nodes already wired up.")
             painter.drawText(rect, Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap, text)
             painter.restore()
@@ -587,6 +587,6 @@ class NodeCanvasView(QGraphicsView):
 
     def context_menu_for(self, screen_pos):
         menu = QMenu(self)
-        menu.addAction("Delete", self._delete_selected)
+        menu.addAction(self.tr("Delete"), self._delete_selected)
         menu.exec(screen_pos)
 

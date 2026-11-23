@@ -33,21 +33,21 @@ class PreviewPanel(QWidget):
         layout.setSpacing(6)
 
         row = QHBoxLayout()
-        heading = QLabel("Live Preview")
+        heading = QLabel(self.tr("Live Preview"))
         heading.setProperty("role", "heading")
         row.addWidget(heading)
         row.addStretch(1)
 
-        self.status = QLabel("Stopped")
+        self.status = QLabel(self.tr("Stopped"))
         self.status.setProperty("role", "caption")
         row.addWidget(self.status)
 
-        self.start_btn = QPushButton("\u25b6 Start")
+        self.start_btn = QPushButton(self.tr("\u25b6 Start"))
         self.start_btn.setObjectName("primary")
         self.start_btn.clicked.connect(self._on_start)
         row.addWidget(self.start_btn)
 
-        self.stop_btn = QPushButton("\u25a0 Stop")
+        self.stop_btn = QPushButton(self.tr("\u25a0 Stop"))
         self.stop_btn.setEnabled(False)
         self.stop_btn.clicked.connect(self._on_stop)
         row.addWidget(self.stop_btn)
@@ -56,12 +56,12 @@ class PreviewPanel(QWidget):
         # Window selector (visible when project has >1 window, or always
         # so single-window projects still show "Main (primary)").
         win_row = QHBoxLayout()
-        win_row.addWidget(QLabel("Window"))
+        win_row.addWidget(QLabel(self.tr("Window")))
         self.window_combo = QComboBox()
         self.window_combo.setMinimumWidth(180)
         self.window_combo.setToolTip(
-            "Which Conky window conf Live Preview runs. "
-            "Add windows in the Windows dock for multi-monitor layouts."
+            self.tr("Which Conky window conf Live Preview runs. "
+            "Add windows in the Windows dock for multi-monitor layouts.")
         )
         self.window_combo.currentIndexChanged.connect(self._on_window_combo)
         win_row.addWidget(self.window_combo, 1)
@@ -71,7 +71,7 @@ class PreviewPanel(QWidget):
         self.log.setReadOnly(True)
         self.log.setMaximumHeight(110)
         self.log.setPlaceholderText(
-            "Conky log output appears here. Known errors are annotated with [hint] lines."
+            self.tr("Conky log output appears here. Known errors are annotated with [hint] lines.")
         )
         layout.addWidget(self.log)
 
@@ -84,7 +84,7 @@ class PreviewPanel(QWidget):
 
         # Seed with a single default entry until a project is attached
         self._suppress_window_combo = True
-        self.window_combo.addItem("Main (primary)", "primary")
+        self.window_combo.addItem(self.tr("Main (primary)"), "primary")
         self._suppress_window_combo = False
 
     def set_project_getter(self, fn):
@@ -116,7 +116,7 @@ class PreviewPanel(QWidget):
             if wid == current or (current in ("", "primary") and i == 0):
                 select_idx = i
         if self.window_combo.count() == 0:
-            self.window_combo.addItem("Main (primary)", "primary")
+            self.window_combo.addItem(self.tr("Main (primary)"), "primary")
         self.window_combo.setCurrentIndex(select_idx)
         self._suppress_window_combo = False
 
@@ -162,18 +162,18 @@ class PreviewPanel(QWidget):
         if severity == "ok":
             return True
 
-        body = session.warning or session.title or "Session may not support Conky overlays."
+        body = session.warning or session.title or self.tr("Session may not support Conky overlays.")
         if session.guidance:
             body += "\n\n" + "\n".join(f"• {g}" for g in session.guidance)
-        body += "\n\nOpen Tools → Hardware & Session for the full report."
+        body += self.tr("\n\nOpen Tools → Hardware & Session for the full report.")
 
         if severity == "block":
             box = QMessageBox(self)
             box.setIcon(QMessageBox.Icon.Warning)
-            box.setWindowTitle(session.title or "Session warning")
+            box.setWindowTitle(session.title or self.tr("Session warning"))
             box.setText(body)
-            start_anyway = box.addButton("Start anyway", QMessageBox.ButtonRole.AcceptRole)
-            box.addButton("Cancel", QMessageBox.ButtonRole.RejectRole)
+            start_anyway = box.addButton(self.tr("Start anyway"), QMessageBox.ButtonRole.AcceptRole)
+            box.addButton(self.tr("Cancel"), QMessageBox.ButtonRole.RejectRole)
             box.exec()
             return box.clickedButton() is start_anyway
 
@@ -186,8 +186,8 @@ class PreviewPanel(QWidget):
         if severity == "warn":
             reply = QMessageBox.warning(
                 self,
-                session.title or "Session warning",
-                body + "\n\nContinue with Live Preview?",
+                session.title or self.tr("Session warning"),
+                body + self.tr("\n\nContinue with Live Preview?"),
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                 QMessageBox.StandardButton.Yes,
             )
@@ -198,12 +198,12 @@ class PreviewPanel(QWidget):
         self.controller.stop()
 
     def _on_started(self):
-        self.status.setText("Running")
+        self.status.setText(self.tr("Running"))
         self.start_btn.setEnabled(False)
         self.stop_btn.setEnabled(True)
 
     def _on_stopped(self):
-        self.status.setText("Stopped")
+        self.status.setText(self.tr("Stopped"))
         self.start_btn.setEnabled(True)
         self.stop_btn.setEnabled(False)
 

@@ -67,10 +67,10 @@ class PropertyPanel(QWidget):
         w = QWidget()
         layout = QVBoxLayout(w)
         layout.setContentsMargins(14, 14, 14, 14)
-        heading = QLabel("Nothing selected")
+        heading = QLabel(self.tr("Nothing selected"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
-        cap = QLabel("Click a node on the canvas to edit its properties.")
+        cap = QLabel(self.tr("Click a node on the canvas to edit its properties."))
         cap.setProperty("role", "caption")
         cap.setWordWrap(True)
         layout.addWidget(cap)
@@ -81,14 +81,14 @@ class PropertyPanel(QWidget):
         w = QWidget()
         layout = QVBoxLayout(w)
         layout.setContentsMargins(14, 14, 14, 14)
-        heading = QLabel("Missing plugin")
+        heading = QLabel(self.tr("Missing plugin"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
         cap = QLabel(
-            f"Node type <b>{node.type}</b> is not installed.\n\n"
+            self.tr("Node type <b>{0}</b> is not installed.\n\n"
             "This project still opens so you can edit other nodes. "
             "Install the plugin via Tools → Plugins, or re-open the project "
-            "and use the missing-plugin prompt if a source URL was saved with it."
+            "and use the missing-plugin prompt if a source URL was saved with it.").format(node.type)
         )
         cap.setWordWrap(True)
         layout.addWidget(cap)
@@ -122,7 +122,7 @@ class PropertyPanel(QWidget):
 
         if node_id != CANVAS_NODE_ID:
             name_row = QHBoxLayout()
-            name_row.addWidget(QLabel("Name"))
+            name_row.addWidget(QLabel(self.tr("Name")))
             name_edit = QLineEdit(node.label)
             name_edit.setPlaceholderText(node_text(spec.label))
             name_edit.editingFinished.connect(lambda: self.label_changed.emit(node_id, name_edit.text()))
@@ -167,14 +167,14 @@ class PropertyPanel(QWidget):
         self.scroll.setWidget(root)
 
     def _interaction_box(self, node) -> QGroupBox:
-        box = QGroupBox("Interaction")
+        box = QGroupBox(self.tr("Interaction"))
         form = _wrapping_form()
         box.setLayout(form)
 
         cmd_edit = QLineEdit(node.on_click_command)
-        cmd_edit.setPlaceholderText("Shell command to run on click, e.g. playerctl play-pause")
+        cmd_edit.setPlaceholderText(self.tr("Shell command to run on click, e.g. playerctl play-pause"))
         cmd_edit.editingFinished.connect(lambda: self._set_click_field(node.id, "on_click_command", cmd_edit.text()))
-        form.addRow("On click", cmd_edit)
+        form.addRow(self.tr("On click"), cmd_edit)
 
         # A 2x2 grid (X/Y on one row, W/H on the next) rather than one
         # long X-Y-W-H row -- four label+spinbox pairs side by side was
@@ -203,10 +203,10 @@ class PropertyPanel(QWidget):
             cell_layout.addWidget(spin)
             cell_layout.addStretch(1)
             region_grid.addWidget(cell, row, col)
-        form.addRow("Click region", region_row)
+        form.addRow(self.tr("Click region"), region_row)
 
-        hint = QLabel("Region is in canvas pixels, independent of this node's own drawing position -- "
-                       "set it to wherever you actually want the clickable hotspot.")
+        hint = QLabel(self.tr("Region is in canvas pixels, independent of this node's own drawing position -- "
+                       "set it to wherever you actually want the clickable hotspot."))
         hint.setProperty("role", "caption")
         hint.setWordWrap(True)
         form.addRow(hint)
@@ -225,11 +225,11 @@ class PropertyPanel(QWidget):
         w = QWidget()
         row = QHBoxLayout(w)
         row.setContentsMargins(0, 0, 0, 0)
-        chip = QLabel(f"\u25cf bound to {src_label}")
+        chip = QLabel(self.tr("\u25cf bound to {0}").format(src_label))
         chip.setStyleSheet("color: #4fd1c5; font-weight: 600;")
         chip.setWordWrap(True)
         row.addWidget(chip, 1)
-        btn = QPushButton("Unbind")
+        btn = QPushButton(self.tr("Unbind"))
         btn.setFixedWidth(70)
         btn.clicked.connect(lambda: self.unbind_requested.emit(dst_node_id, prop_key))
         row.addWidget(btn)
@@ -328,12 +328,12 @@ class PropertyPanel(QWidget):
                 # script_path uses the same PATH editor — broaden the filter.
                 is_script = prop_key == "script_path"
                 if is_script:
-                    caption = "Choose script file"
-                    filt = "Scripts (*.sh *.bash *.py *.lua);;All files (*)"
+                    caption = self.tr("Choose script file")
+                    filt = self.tr("Scripts (*.sh *.bash *.py *.lua);;All files (*)")
                     asset_kind = "scripts"
                 else:
-                    caption = "Choose image file"
-                    filt = "Images (*.png *.svg *.jpg *.jpeg *.webp);;All files (*)"
+                    caption = self.tr("Choose image file")
+                    filt = self.tr("Images (*.png *.svg *.jpg *.jpeg *.webp);;All files (*)")
                     asset_kind = "images"
                 path, _ = QFileDialog.getOpenFileName(
                     parent,
