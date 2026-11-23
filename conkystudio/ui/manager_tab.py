@@ -38,7 +38,7 @@ class _DropArea(QFrame):
         self.setFrameShape(QFrame.Shape.StyledPanel)
         self.setMinimumHeight(56)
         layout = QVBoxLayout(self)
-        label = QLabel("Drop a .zip, .tar.gz, or .tar theme here to install it, or click to browse")
+        label = QLabel(self.tr("Drop a .zip, .tar.gz, or .tar theme here to install it, or click to browse"))
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label.setWordWrap(True)
         layout.addWidget(label)
@@ -48,9 +48,9 @@ class _DropArea(QFrame):
     def mousePressEvent(self, event):
         paths, _ = QFileDialog.getOpenFileNames(
             self,
-            "Choose theme archive(s)",
+            self.tr("Choose theme archive(s)"),
             "",
-            "Theme archives (*.zip *.tar.gz *.tgz *.tar);;All files (*)",
+            self.tr("Theme archives (*.zip *.tar.gz *.tgz *.tar);;All files (*)"),
         )
         if paths:
             self._on_files(paths)
@@ -78,11 +78,11 @@ class ManagerTab(QWidget):
         outer.setSpacing(10)
 
         heading_row = QHBoxLayout()
-        heading = QLabel("Theme Manager")
+        heading = QLabel(self.tr("Theme Manager"))
         heading.setProperty("role", "heading")
         heading_row.addWidget(heading)
         heading_row.addStretch(1)
-        refresh_btn = QPushButton("Refresh")
+        refresh_btn = QPushButton(self.tr("Refresh"))
         refresh_btn.clicked.connect(self.refresh)
         heading_row.addWidget(refresh_btn)
         outer.addLayout(heading_row)
@@ -110,26 +110,26 @@ class ManagerTab(QWidget):
 
         # Per-theme monitor pin (saved into theme.json, applied at Start)
         pin_row = QHBoxLayout()
-        pin_row.addWidget(QLabel("Pin to monitor"))
+        pin_row.addWidget(QLabel(self.tr("Pin to monitor")))
         self.monitor_combo = QComboBox()
         self.monitor_combo.setToolTip(
-            "Pin this theme to a specific output when you press Start. "
-            "Saved into theme.json. 'Auto' leaves placement to the conf / alignment."
+            self.tr("Pin this theme to a specific output when you press Start. "
+            "Saved into theme.json. 'Auto' leaves placement to the conf / alignment.")
         )
         self._fill_monitor_combo()
         self.monitor_combo.currentIndexChanged.connect(self._on_monitor_changed)
         pin_row.addWidget(self.monitor_combo, 1)
-        rescan_mon_btn = QPushButton("Rescan")
-        rescan_mon_btn.setToolTip("Rescan connected monitors")
+        rescan_mon_btn = QPushButton(self.tr("Rescan"))
+        rescan_mon_btn.setToolTip(self.tr("Rescan connected monitors"))
         rescan_mon_btn.clicked.connect(self._rescan_monitors)
         pin_row.addWidget(rescan_mon_btn)
         detail_layout.addLayout(pin_row)
 
         btn_row = QHBoxLayout()
-        self.start_btn = QPushButton("\u25b6 Start")
+        self.start_btn = QPushButton(self.tr("\u25b6 Start"))
         self.start_btn.setObjectName("primary")
         self.start_btn.clicked.connect(self._start_selected)
-        self.stop_btn = QPushButton("\u25a0 Stop")
+        self.stop_btn = QPushButton(self.tr("\u25a0 Stop"))
         self.stop_btn.clicked.connect(self._stop_selected)
         btn_row.addWidget(self.start_btn)
         btn_row.addWidget(self.stop_btn)
@@ -137,19 +137,19 @@ class ManagerTab(QWidget):
 
         # Start at login (plain XDG autostart; no lock-in -- see manager/autostart.py)
         as_row = QHBoxLayout()
-        self.autostart_chk = QCheckBox("Start at login")
+        self.autostart_chk = QCheckBox(self.tr("Start at login"))
         self.autostart_chk.setToolTip(
-            "Adds a standard autostart entry for this theme (~/.config/autostart). Untick to remove it; "
-            "the theme itself is never modified.")
+            self.tr("Adds a standard autostart entry for this theme (~/.config/autostart). Untick to remove it; "
+            "the theme itself is never modified."))
         self.autostart_chk.toggled.connect(self._on_autostart_toggled)
         self.autostart_delay = QSpinBox()
         self.autostart_delay.setRange(0, autostart.MAX_DELAY)
         self.autostart_delay.setValue(autostart.DEFAULT_DELAY)
         self.autostart_delay.setSuffix(" s")
-        self.autostart_delay.setToolTip("Wait this long after login so the desktop is ready before the theme starts.")
+        self.autostart_delay.setToolTip(self.tr("Wait this long after login so the desktop is ready before the theme starts."))
         self.autostart_delay.valueChanged.connect(self._on_autostart_delay_changed)
         as_row.addWidget(self.autostart_chk)
-        as_row.addWidget(QLabel("after"))
+        as_row.addWidget(QLabel(self.tr("after")))
         as_row.addWidget(self.autostart_delay)
         as_row.addStretch(1)
         detail_layout.addLayout(as_row)
@@ -161,13 +161,13 @@ class ManagerTab(QWidget):
         detail_layout.addWidget(self.autostart_note)
 
         btn_row2 = QHBoxLayout()
-        open_folder_btn = QPushButton("Open Folder")
+        open_folder_btn = QPushButton(self.tr("Open Folder"))
         open_folder_btn.clicked.connect(self._open_folder_selected)
-        duplicate_btn = QPushButton("Duplicate")
+        duplicate_btn = QPushButton(self.tr("Duplicate"))
         duplicate_btn.clicked.connect(self._duplicate_selected)
-        export_btn = QPushButton("Export .zip")
+        export_btn = QPushButton(self.tr("Export .zip"))
         export_btn.clicked.connect(self._export_selected)
-        uninstall_btn = QPushButton("Uninstall")
+        uninstall_btn = QPushButton(self.tr("Uninstall"))
         uninstall_btn.setObjectName("danger")
         uninstall_btn.clicked.connect(self._uninstall_selected)
         for b in (open_folder_btn, duplicate_btn, export_btn, uninstall_btn):
@@ -175,7 +175,7 @@ class ManagerTab(QWidget):
         detail_layout.addLayout(btn_row2)
 
         # Shown only when the selected theme has no theme.json yet.
-        self.generate_meta_btn = QPushButton("Generate theme.json for this theme")
+        self.generate_meta_btn = QPushButton(self.tr("Generate theme.json for this theme"))
         self.generate_meta_btn.setObjectName("primary")
         self.generate_meta_btn.clicked.connect(self._generate_theme_json)
         self.generate_meta_btn.setVisible(False)
@@ -189,15 +189,15 @@ class ManagerTab(QWidget):
         self.meta_toggle.clicked.connect(self._toggle_meta)
         meta_row.addWidget(self.meta_toggle)
         meta_row.addStretch(1)
-        self.meta_edit_btn = QPushButton("Edit")
+        self.meta_edit_btn = QPushButton(self.tr("Edit"))
         self.meta_edit_btn.clicked.connect(self._start_editing_meta)
         meta_row.addWidget(self.meta_edit_btn)
-        self.meta_save_btn = QPushButton("Save")
+        self.meta_save_btn = QPushButton(self.tr("Save"))
         self.meta_save_btn.setObjectName("primary")
         self.meta_save_btn.clicked.connect(self._save_meta)
         self.meta_save_btn.setVisible(False)
         meta_row.addWidget(self.meta_save_btn)
-        self.meta_cancel_btn = QPushButton("Cancel")
+        self.meta_cancel_btn = QPushButton(self.tr("Cancel"))
         self.meta_cancel_btn.clicked.connect(self._cancel_editing_meta)
         self.meta_cancel_btn.setVisible(False)
         meta_row.addWidget(self.meta_cancel_btn)
@@ -223,15 +223,15 @@ class ManagerTab(QWidget):
         self.readme_toggle.clicked.connect(self._toggle_readme)
         readme_row.addWidget(self.readme_toggle)
         readme_row.addStretch(1)
-        self.readme_edit_btn = QPushButton("Edit")
+        self.readme_edit_btn = QPushButton(self.tr("Edit"))
         self.readme_edit_btn.clicked.connect(self._start_editing_readme)
         readme_row.addWidget(self.readme_edit_btn)
-        self.readme_save_btn = QPushButton("Save")
+        self.readme_save_btn = QPushButton(self.tr("Save"))
         self.readme_save_btn.setObjectName("primary")
         self.readme_save_btn.clicked.connect(self._save_readme)
         self.readme_save_btn.setVisible(False)
         readme_row.addWidget(self.readme_save_btn)
-        self.readme_cancel_btn = QPushButton("Cancel")
+        self.readme_cancel_btn = QPushButton(self.tr("Cancel"))
         self.readme_cancel_btn.clicked.connect(self._cancel_editing_readme)
         self.readme_cancel_btn.setVisible(False)
         readme_row.addWidget(self.readme_cancel_btn)
@@ -303,7 +303,7 @@ class ManagerTab(QWidget):
 
         self.detail_name.setText(t.meta.name)
         self.detail_meta.setText(
-            f"by {t.meta.author or 'unknown'} \u00b7 v{t.meta.version} \u00b7 {t.meta.resolution}\n{t.meta.description}"
+            self.tr("by {0} \u00b7 v{1} \u00b7 {2}\n{3}").format(t.meta.author or self.tr('unknown'), t.meta.version, t.meta.resolution, t.meta.description)
         )
 
         # --- monitor pin ---
@@ -316,7 +316,7 @@ class ManagerTab(QWidget):
             with open(readme_path, "r", encoding="utf-8", errors="replace") as f:
                 self.readme_view.setPlainText(f.read())
         else:
-            self.readme_view.setPlainText("(no README.md in this theme)")
+            self.readme_view.setPlainText(self.tr("(no README.md in this theme)"))
         self.readme_toggle.setChecked(False)
         self.readme_view.setVisible(False)
         self.readme_toggle.setText("\u25b8 README")
@@ -337,10 +337,10 @@ class ManagerTab(QWidget):
                     pass
                 self.meta_view.setPlainText(raw)
             except OSError:
-                self.meta_view.setPlainText("(could not read theme.json)")
+                self.meta_view.setPlainText(self.tr("(could not read theme.json)"))
         else:
             self.meta_view.setPlainText(
-                "(no theme.json yet; use Generate above, or Edit and Save to create one)"
+                self.tr("(no theme.json yet; use Generate above, or Edit and Save to create one)")
             )
         self.meta_toggle.setChecked(False)
         self.meta_view.setVisible(False)
@@ -424,19 +424,19 @@ class ManagerTab(QWidget):
             return
         text = self.meta_view.toPlainText().strip()
         if not text:
-            QMessageBox.warning(self, "theme.json", "Content is empty, nothing saved.")
+            QMessageBox.warning(self, "theme.json", self.tr("Content is empty, nothing saved."))
             return
         try:
             data = json.loads(text)
         except json.JSONDecodeError as e:
             QMessageBox.warning(
                 self,
-                "Invalid JSON",
-                f"theme.json must be valid JSON before it can be saved:\n\n{e}",
+                self.tr("Invalid JSON"),
+                self.tr("theme.json must be valid JSON before it can be saved:\n\n{0}").format(e),
             )
             return
         if not isinstance(data, dict):
-            QMessageBox.warning(self, "Invalid theme.json", "Root value must be a JSON object.")
+            QMessageBox.warning(self, self.tr("Invalid theme.json"), self.tr("Root value must be a JSON object."))
             return
         pretty = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
         path = os.path.join(t.path, THEME_META_FILENAME)
@@ -444,7 +444,7 @@ class ManagerTab(QWidget):
             with open(path, "w", encoding="utf-8") as f:
                 f.write(pretty)
         except OSError as e:
-            QMessageBox.warning(self, "Couldn't save theme.json", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't save theme.json"), str(e))
             return
         self.meta_view.setPlainText(pretty)
         self.meta_view.setReadOnly(True)
@@ -465,12 +465,12 @@ class ManagerTab(QWidget):
         t = self._selected_theme()
         if t is None:
             return
-        name, ok = QInputDialog.getText(self, "Generate theme.json", "Theme name:", text=t.meta.name)
+        name, ok = QInputDialog.getText(self, self.tr("Generate theme.json"), self.tr("Theme name:"), text=t.meta.name)
         if not ok or not name.strip():
             return
-        author, _ok2 = QInputDialog.getText(self, "Generate theme.json", "Author (optional):", text=t.meta.author)
+        author, _ok2 = QInputDialog.getText(self, self.tr("Generate theme.json"), self.tr("Author (optional):"), text=t.meta.author)
         description, _ok3 = QInputDialog.getText(
-            self, "Generate theme.json", "Description (optional):", text=t.meta.description or ""
+            self, self.tr("Generate theme.json"), self.tr("Description (optional):"), text=t.meta.description or ""
         )
         meta = ThemeMeta(
             name=name.strip(),
@@ -488,16 +488,16 @@ class ManagerTab(QWidget):
         for path in paths:
             lower = path.lower()
             if not lower.endswith((".zip", ".tar.gz", ".tgz", ".tar")):
-                notes.append(f"{os.path.basename(path)}: unsupported type (use .zip / .tar.gz / .tgz / .tar)")
+                notes.append(self.tr("{0}: unsupported type (use .zip / .tar.gz / .tgz / .tar)").format(os.path.basename(path)))
                 continue
             result = installer.install_theme_archive(path)
             notes.append(result.message)
             if not result.success:
-                QMessageBox.warning(self, "Install failed", result.message)
+                QMessageBox.warning(self, self.tr("Install failed"), result.message)
         self.refresh()
         if notes:
             # Always surface what happened (including whether start.sh was generated)
-            QMessageBox.information(self, "Install", "\n".join(notes))
+            QMessageBox.information(self, self.tr("Install"), "\n".join(notes))
 
     def _fill_monitor_combo(self):
         self.monitor_combo.blockSignals(True)
@@ -553,7 +553,7 @@ class ManagerTab(QWidget):
             t.has_theme_json = True
             self.generate_meta_btn.setVisible(False)
         except Exception as e:
-            QMessageBox.warning(self, "Monitor pin", f"Could not save monitor pin: {e}")
+            QMessageBox.warning(self, self.tr("Monitor pin"), self.tr("Could not save monitor pin: {0}").format(e))
 
     def _start_selected(self):
         t = self._selected_theme()
@@ -581,18 +581,18 @@ class ManagerTab(QWidget):
         t = self._selected_theme()
         if not t:
             return
-        name, ok = QInputDialog.getText(self, "Duplicate theme", "New name:", text=f"{t.meta.name} copy")
+        name, ok = QInputDialog.getText(self, self.tr("Duplicate theme"), self.tr("New name:"), text=f"{t.meta.name} copy")
         if ok and name.strip():
             result = installer.duplicate_theme(t.path, name.strip())
             if not result.success:
-                QMessageBox.warning(self, "Duplicate failed", result.message)
+                QMessageBox.warning(self, self.tr("Duplicate failed"), result.message)
             self.refresh()
 
     def _export_selected(self):
         t = self._selected_theme()
         if not t:
             return
-        out_path, _ = QFileDialog.getSaveFileName(self, "Export theme as", f"{t.meta.name}.zip", "Zip archive (*.zip)")
+        out_path, _ = QFileDialog.getSaveFileName(self, self.tr("Export theme as"), f"{t.meta.name}.zip", self.tr("Zip archive (*.zip)"))
         if out_path:
             installer.export_theme_zip(t.path, out_path)
 
@@ -612,7 +612,7 @@ class ManagerTab(QWidget):
             self.autostart_delay.blockSignals(False)
         self.autostart_note.setVisible(False)
         if t is not None and not t.has_start_sh:
-            self.autostart_chk.setToolTip("This theme has no start.sh, so there is nothing to start at login.")
+            self.autostart_chk.setToolTip(self.tr("This theme has no start.sh, so there is nothing to start at login."))
 
     def _apply_autostart(self, enable: bool) -> None:
         t = self._selected_theme()
@@ -624,7 +624,7 @@ class ManagerTab(QWidget):
             self.autostart_chk.blockSignals(True)
             self.autostart_chk.setChecked(not enable)
             self.autostart_chk.blockSignals(False)
-            QMessageBox.warning(self, "Start at login", res.message)
+            QMessageBox.warning(self, self.tr("Start at login"), res.message)
             return
         note = "\n".join(res.notes)
         self.autostart_note.setText(note)
@@ -641,7 +641,7 @@ class ManagerTab(QWidget):
         t = self._selected_theme()
         if not t:
             return
-        confirm = QMessageBox.question(self, "Uninstall theme", f"Delete '{t.meta.name}' permanently? This can't be undone.")
+        confirm = QMessageBox.question(self, self.tr("Uninstall theme"), self.tr("Delete '{0}' permanently? This can't be undone.").format(t.meta.name))
         if confirm == QMessageBox.StandardButton.Yes:
             self.process_manager.stop(t.path)
             autostart.disable(t.path)          # never leave a broken login item behind
