@@ -16,6 +16,7 @@ from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal
 
 from conkystudio.theme import PALETTE
 from conkystudio.model.project import Project, NodeInstance, new_id
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
 from conkystudio.ui.studio.graphics_items import (
@@ -436,7 +437,7 @@ class NodeCanvasScene(QGraphicsScene):
         if n:
             n.label = new_label
         if item:
-            item.set_title(new_label or registry.get(n.type).label)
+            item.set_title(new_label or node_text(registry.get(n.type).label))
         self.graph_changed.emit()
 
 

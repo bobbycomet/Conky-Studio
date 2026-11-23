@@ -24,6 +24,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, pyqtSignal
 
 from conkystudio.model.project import Project
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
 from conkystudio.ui.widgets import ColorSwatchButton, SliderSpin
@@ -114,7 +115,7 @@ class PropertyPanel(QWidget):
         layout.setContentsMargins(12, 12, 12, 12)
         layout.setSpacing(10)
 
-        header = QLabel(spec.label)
+        header = QLabel(node_text(spec.label))
         header.setProperty("role", "heading")
         header.setWordWrap(True)
         layout.addWidget(header)
@@ -123,13 +124,13 @@ class PropertyPanel(QWidget):
             name_row = QHBoxLayout()
             name_row.addWidget(QLabel("Name"))
             name_edit = QLineEdit(node.label)
-            name_edit.setPlaceholderText(spec.label)
+            name_edit.setPlaceholderText(node_text(spec.label))
             name_edit.editingFinished.connect(lambda: self.label_changed.emit(node_id, name_edit.text()))
             name_row.addWidget(name_edit, 1)
             layout.addLayout(name_row)
 
         if spec.description:
-            desc = QLabel(spec.description)
+            desc = QLabel(node_text(spec.description))
             desc.setProperty("role", "caption")
             desc.setWordWrap(True)
             layout.addWidget(desc)
@@ -139,7 +140,7 @@ class PropertyPanel(QWidget):
         group_order: list[str] = []
         for pspec in spec.properties:
             if pspec.group not in groups:
-                box = QGroupBox(pspec.group)
+                box = QGroupBox(node_text(pspec.group))
                 form = _wrapping_form()
                 box.setLayout(form)
                 groups[pspec.group] = form
@@ -149,12 +150,12 @@ class PropertyPanel(QWidget):
 
             edge = self.project.edge_for_prop(node_id, pspec.key)
             if pspec.bindable and edge is not None:
-                form.addRow(pspec.label, self._bound_chip(edge.src_node, node_id, pspec.key))
+                form.addRow(node_text(pspec.label), self._bound_chip(edge.src_node, node_id, pspec.key))
             else:
                 editor = self._make_editor(node, pspec)
                 if pspec.help:
-                    editor.setToolTip(pspec.help)
-                form.addRow(pspec.label, editor)
+                    editor.setToolTip(node_text(pspec.help))
+                form.addRow(node_text(pspec.label), editor)
 
         for gname in group_order:
             layout.addWidget(boxes[gname])
@@ -220,7 +221,7 @@ class PropertyPanel(QWidget):
 
     def _bound_chip(self, src_node_id: str, dst_node_id: str, prop_key: str) -> QWidget:
         src = self.project.node(src_node_id)
-        src_label = (src.label or registry.get(src.type).label) if src else "?"
+        src_label = (src.label or node_text(registry.get(src.type).label)) if src else "?"
         w = QWidget()
         row = QHBoxLayout(w)
         row.setContentsMargins(0, 0, 0, 0)
@@ -263,7 +264,7 @@ class PropertyPanel(QWidget):
             choices = pspec.choices or []
             labels = pspec.choice_labels or choices
             for c, l in zip(choices, labels):
-                w.addItem(l, c)
+                w.addItem(node_text(l), c)
             idx = choices.index(value) if value in choices else 0
             w.setCurrentIndex(idx)
             w.currentIndexChanged.connect(lambda i, k=pspec.key, cc=choices: self._set_prop(k, cc[i]) if 0 <= i < len(cc) else None)

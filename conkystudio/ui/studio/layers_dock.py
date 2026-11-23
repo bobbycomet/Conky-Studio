@@ -20,6 +20,7 @@ from PyQt6.QtGui import QColor
 
 from conkystudio.theme import PALETTE
 from conkystudio.model.project import Project
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
 
@@ -139,9 +140,9 @@ class LayersDock(QWidget):
         for n in visual_nodes:
             if registry.has(n.type):
                 spec = registry.get(n.type)
-                color, label = spec.color, (n.label or spec.label)
+                color, label = spec.color, (n.label or node_text(spec.label))
             else:
-                color, label = "#c44", (n.label or f"Missing: {n.type}")
+                color, label = "#c44", (n.label or self.tr("Missing: {0}").format(n.type))
             item = QListWidgetItem()
             item.setData(_NODE_ID_ROLE, n.id)
             item.setSizeHint(_LayerRow(n.id, "", color, True, False).sizeHint())

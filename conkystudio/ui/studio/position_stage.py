@@ -46,6 +46,7 @@ from PyQt6.QtGui import (
 from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal, QLineF
 
 from conkystudio.model.project import Project, NodeInstance
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
 from conkystudio.theme import PALETTE
@@ -416,7 +417,7 @@ class StageScene(QGraphicsScene):
             scene_x = px - w / 2 if keys.x_center else px
             scene_y = py - h / 2 if keys.y_center else py
 
-            label = n.label or (registry.get(n.type).label if registry.has(n.type) else n.type)
+            label = n.label or (node_text(registry.get(n.type).label) if registry.has(n.type) else n.type)
             # Shorten long labels
             if len(label) > 18:
                 label = label[:16] + "…"

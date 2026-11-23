@@ -38,6 +38,7 @@ def collect() -> list[str]:
         if _wanted(s):
             seen.setdefault(s, None)
 
+    add("Other")  # palette fallback for a spec without a subcategory
     for spec in registry.all_specs():
         add(spec.label)
         add(spec.description)

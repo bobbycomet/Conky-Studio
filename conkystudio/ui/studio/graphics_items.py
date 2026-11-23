@@ -16,6 +16,7 @@ from PyQt6.QtGui import QBrush, QColor, QPen, QPainterPath, QFont
 from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal, QObject
 
 from conkystudio.theme import PALETTE
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 
 # Slightly roomier than the original 176×26 so multi-word titles and a
@@ -130,7 +131,7 @@ class NodeItem(QGraphicsRectItem):
         header.setPen(QPen(Qt.PenStyle.NoPen))
         self._header = header
 
-        title = QGraphicsTextItem(label or self.spec.label, self)
+        title = QGraphicsTextItem(label or node_text(self.spec.label), self)
         title.setDefaultTextColor(QColor("#0b0d10"))
         f = QFont(); f.setBold(True); f.setPointSize(9)
         title.setFont(f)
@@ -151,7 +152,7 @@ class NodeItem(QGraphicsRectItem):
         elif self.spec.category in ("visual", "logic"):
             if bindable:
                 for prop in bindable:
-                    row = QGraphicsTextItem(prop.label, self)
+                    row = QGraphicsTextItem(node_text(prop.label), self)
                     row.setDefaultTextColor(QColor(PALETTE["text_secondary"]))
                     f2 = QFont(); f2.setPointSize(8)
                     row.setFont(f2)
@@ -184,7 +185,7 @@ class NodeItem(QGraphicsRectItem):
             self.output_socket.setPos(NODE_WIDTH, HEADER_H + (height - HEADER_H) / 2)
 
     def _make_desc(self, y: float) -> QGraphicsTextItem:
-        desc = QGraphicsTextItem(self._short(self.spec.description, _DESC_CHARS), self)
+        desc = QGraphicsTextItem(self._short(node_text(self.spec.description), _DESC_CHARS), self)
         desc.setDefaultTextColor(QColor(PALETTE["text_muted"]))
         f2 = QFont(); f2.setPointSize(8)
         desc.setFont(f2)

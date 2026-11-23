@@ -17,6 +17,7 @@ from PyQt6.QtGui import QColor, QIcon, QPixmap, QPainter, QDrag
 from PyQt6.QtCore import Qt, QMimeData, QByteArray, pyqtSignal
 
 from conkystudio.theme import PALETTE
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.ui.studio.node_canvas import NODE_MIME_TYPE
 
@@ -205,7 +206,8 @@ class PalettePanel(QWidget):
                 specs = [s for s in specs if s.simple_mode]
             if query:
                 specs = [s for s in specs if query in s.label.lower() or query in s.type.lower()
-                          or query in s.subcategory.lower()]
+                          or query in s.subcategory.lower()
+                          or query in node_text(s.label).lower() or query in node_text(s.subcategory).lower()]
 
             section.setVisible(bool(specs))
             if not specs:
@@ -231,15 +233,15 @@ class PalettePanel(QWidget):
             for subcat in ordered_subcats:
                 if subcat not in by_sub:
                     continue
-                sub_item = QTreeWidgetItem([subcat])
+                sub_item = QTreeWidgetItem([node_text(subcat)])
                 sub_item.setFlags(Qt.ItemFlag.ItemIsEnabled)
                 sub_item.setForeground(0, QColor("#9aa2ad"))
                 tree.addTopLevelItem(sub_item)
                 for spec in by_sub[subcat]:
-                    leaf = QTreeWidgetItem([spec.label])
+                    leaf = QTreeWidgetItem([node_text(spec.label)])
                     leaf.setIcon(0, _swatch_icon(spec.color))
                     leaf.setData(0, _NODE_TYPE_ROLE, spec.type)
-                    leaf.setToolTip(0, spec.description)
+                    leaf.setToolTip(0, node_text(spec.description))
                     leaf.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled)
                     sub_item.addChild(leaf)
                 sub_item.setExpanded(bool(query))  # collapsed by default; search expands matches
