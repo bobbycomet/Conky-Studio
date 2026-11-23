@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from PyQt6.QtCore import QRect, QPoint, QTimer
+from PyQt6.QtCore import QRect, QPoint, QTimer, QCoreApplication
 from PyQt6.QtWidgets import QWidget
 
 from conkystudio.ui.studio.studio_tour import _HighlightRing, _TourCard
@@ -79,54 +79,54 @@ class ThemeWizardTour:
 
         self._steps = [
             _Step(
-                "Theme Wizard is a learning tool",
-                "This builds a starter node graph so you can learn Studio — not a finished "
+                QCoreApplication.translate("ThemeWizardTour", "Theme Wizard is a learning tool"),
+                QCoreApplication.translate("ThemeWizardTour", "This builds a starter node graph so you can learn Studio — not a finished "
                 "theme ready to export as-is. Expect to rename the project (no spaces — use "
                 "hyphens like Minimal-HUD), rewire nodes, and fix sensor poll modes. That "
-                "editing is intentional.",
+                "editing is intentional."),
                 target=None,
             ),
             _Step(
-                "Category",
-                "Pick the visual style. Each one sets its own accent colours, font, and layout — "
+                QCoreApplication.translate("ThemeWizardTour", "Category"),
+                QCoreApplication.translate("ThemeWizardTour", "Pick the visual style. Each one sets its own accent colours, font, and layout — "
                 "Sci-Fi and Cyberpunk lean on glow and flourish, Minimal and Terminal stay flat "
                 "and quiet. The full guided tour pre-selects Minimal + Showcase for a dense "
-                "learning graph.",
+                "learning graph."),
                 target=_w("cat_box"),
             ),
             _Step(
-                "Resolution",
-                "Match this to your monitor. The generated layout fills the whole canvas at this "
-                "size, so panel positions and chrome are sized proportionally to it.",
+                QCoreApplication.translate("ThemeWizardTour", "Resolution"),
+                QCoreApplication.translate("ThemeWizardTour", "Match this to your monitor. The generated layout fills the whole canvas at this "
+                "size, so panel positions and chrome are sized proportionally to it."),
                 target=_w("res_combo"),
             ),
             _Step(
-                "Panels",
-                "Choose which data panels to include -- CPU, GPU, weather, music, and so on. A "
-                "panel is skipped automatically if its underlying data source isn't available.",
+                QCoreApplication.translate("ThemeWizardTour", "Panels"),
+                QCoreApplication.translate("ThemeWizardTour", "Choose which data panels to include -- CPU, GPU, weather, music, and so on. A "
+                "panel is skipped automatically if its underlying data source isn't available."),
                 target=_w("panel_box"),
             ),
             _Step(
-                "Extras",
-                "Chrome, status LEDs, history graphs, glow, gradients, and more -- optional "
+                QCoreApplication.translate("ThemeWizardTour", "Extras"),
+                QCoreApplication.translate("ThemeWizardTour", "Chrome, status LEDs, history graphs, glow, gradients, and more -- optional "
                 "flourishes layered on top of the core panels. Complexity below resets these to "
-                "sensible per-tier defaults, but you can still fine-tune any of them by hand.",
+                "sensible per-tier defaults, but you can still fine-tune any of them by hand."),
                 target=_w("opt_box"),
             ),
             _Step(
-                "Complexity",
-                "Simple keeps just the theme's signature element. Full adds framing chrome and a "
+                QCoreApplication.translate("ThemeWizardTour", "Complexity"),
+                QCoreApplication.translate("ThemeWizardTour", "Simple keeps just the theme's signature element. Full adds framing chrome and a "
                 "real Source → Logic → Visual demo chain (a smoothed value gating a warning LED). "
                 "Showcase adds every animated flourish -- orbit fields, a per-core CPU strip, a "
-                "live process table, a footer ticker.",
+                "live process table, a footer ticker."),
                 target=_w("tier_box"),
             ),
             _Step(
-                "Create, then edit in Studio",
-                "Hit Create to drop the graph onto the Studio canvas. Sensor nodes default to "
+                QCoreApplication.translate("ThemeWizardTour", "Create, then edit in Studio"),
+                QCoreApplication.translate("ThemeWizardTour", "Hit Create to drop the graph onto the Studio canvas. Sensor nodes default to "
                 "execi so you can see that mode first-hand; switch GPU/temp/fan sources to "
                 "Background daemon for zero-stutter HUDs. Reopen this tour anytime a category "
-                "is picked, or run Help → Take the Full Tour for Wizard → Studio → Manager → Store.",
+                "is picked, or run Help → Take the Full Tour for Wizard → Studio → Manager → Store."),
                 target=None,
             ),
         ]
@@ -167,9 +167,9 @@ class ThemeWizardTour:
         step = self._steps[self._index]
         self._card.title.setText(step.title)
         self._card.body.setText(step.body)
-        self._card.progress.setText(f"Step {self._index + 1} of {len(self._steps)}")
+        self._card.progress.setText(QCoreApplication.translate("ThemeWizardTour", "Step {0} of {1}").format(self._index + 1, len(self._steps)))
         self._card.back_btn.setEnabled(self._index > 0)
-        self._card.next_btn.setText("Finish" if self._index == len(self._steps) - 1 else "Next")
+        self._card.next_btn.setText(QCoreApplication.translate("ThemeWizardTour", "Finish") if self._index == len(self._steps) - 1 else QCoreApplication.translate("ThemeWizardTour", "Next"))
 
         target = self._target_widget()
         if self._ring is not None:

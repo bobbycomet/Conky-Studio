@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from PyQt6.QtCore import Qt, QRect, QPoint, QTimer
+from PyQt6.QtCore import Qt, QRect, QPoint, QTimer, QCoreApplication
 from PyQt6.QtGui import QPainter, QColor, QPen, QBrush
 from PyQt6.QtWidgets import (
     QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QFrame,
@@ -90,9 +90,9 @@ class _TourCard(QFrame):
         self.progress.setProperty("role", "caption")
         lay.addWidget(self.progress)
         row = QHBoxLayout()
-        self.back_btn = QPushButton("Back")
-        self.skip_btn = QPushButton("Skip tour")
-        self.next_btn = QPushButton("Next")
+        self.back_btn = QPushButton(self.tr("Back"))
+        self.skip_btn = QPushButton(self.tr("Skip tour"))
+        self.next_btn = QPushButton(self.tr("Next"))
         self.next_btn.setObjectName("primary")
         row.addWidget(self.back_btn)
         row.addWidget(self.skip_btn)
@@ -163,113 +163,113 @@ class StudioTour:
 
         self._steps = [
             _Step(
-                "Welcome to the Studio",
-                "Design Conky HUDs as a node graph. Each step points at one area. "
+                QCoreApplication.translate("StudioTour", "Welcome to the Studio"),
+                QCoreApplication.translate("StudioTour", "Design Conky HUDs as a node graph. Each step points at one area. "
                 "Press Next to continue, or Skip tour anytime. Panels stay fully visible — "
                 "nothing is dimmed. For Wizard → Studio → Manager → Store in one pass, use "
-                "Help → Take the Full Tour.",
+                "Help → Take the Full Tour."),
                 target=None,
             ),
             _Step(
-                "Palette — Sources",
-                "Sources are your data.\n"
+                QCoreApplication.translate("StudioTour", "Palette — Sources"),
+                QCoreApplication.translate("StudioTour", "Sources are your data.\n"
                 "• Native (teal): CPU %, RAM, disk, network, uptime, battery — Conky "
                 "variables, no extra process.\n"
                 "• Sensors (amber): CPU/GPU temp, GPU util, fan RPM, disk temp.\n"
                 "• Weather / Media / Network / Custom: scripts (curl, playerctl, …).\n"
-                "Palette subcategories group them (System, Sensors, Weather, Media, …).",
+                "Palette subcategories group them (System, Sensors, Weather, Media, …)."),
                 target=_w("palette"),
             ),
             _Step(
-                "Palette — Logic",
-                "Logic sits between sources and visuals: Smooth (EMA), Hysteresis, "
+                QCoreApplication.translate("StudioTour", "Palette — Logic"),
+                QCoreApplication.translate("StudioTour", "Logic sits between sources and visuals: Smooth (EMA), Hysteresis, "
                 "Threshold, Math, Map Range, String Format, Enum Map, and more. Quiet "
-                "noisy sensors, gate LEDs, or format text before a visual reads the value.",
+                "noisy sensors, gate LEDs, or format text before a visual reads the value."),
                 target=_w("palette"),
             ),
             _Step(
-                "Palette — Visuals (overview)",
-                "What appears on the desktop:\n"
+                QCoreApplication.translate("StudioTour", "Palette — Visuals (overview)"),
+                QCoreApplication.translate("StudioTour", "What appears on the desktop:\n"
                 "• Gauges & Bars — arc, bar, needle, segmented, LED, reactor\n"
                 "• Graphs — history, sparkline, multi-series, radar, top table, core strip\n"
                 "• Text — labels, flip cards\n"
                 "• Effects — glow, spiral, matrix rain, orbit, equalizer, fan, vinyl\n"
                 "• Shapes / Icons / Advanced — rectangles, lines, weather icons, Custom Lua\n"
-                "Overview only — open a node’s Properties help for detail.",
+                "Overview only — open a node’s Properties help for detail."),
                 target=_w("palette"),
             ),
             _Step(
-                "Sensor poll mode: daemon vs execi",
-                "GPU util, temps, and fan RPM are scripted sensors. Theme Wizard graphs "
+                QCoreApplication.translate("StudioTour", "Sensor poll mode: daemon vs execi"),
+                QCoreApplication.translate("StudioTour", "GPU util, temps, and fan RPM are scripted sensors. Theme Wizard graphs "
                 "default those to Simple (execi) so you can see stutter or blank values "
                 "first-hand.\n\n"
                 "For a smooth HUD: select each Sensors-subcategory source → Polling mode → "
                 "Background daemon (zero-stutter). Daemon writes a cache from start.sh; "
-                "Lua only reads and never blocks the draw.",
+                "Lua only reads and never blocks the draw."),
                 target=_w("property_panel"),
             ),
             _Step(
-                "Theme names — no spaces",
-                "Names like “Minimal HUD” break install folders and start.sh lock files. "
+                QCoreApplication.translate("StudioTour", "Theme names — no spaces"),
+                QCoreApplication.translate("StudioTour", "Names like “Minimal HUD” break install folders and start.sh lock files. "
                 "Use hyphens: Minimal-HUD, reactor-core, my-desk.\n\n"
                 "Rename before Build & Install. Spaces are a common first-run error — fix "
-                "the name before treating a blank screen as a graphics bug.",
+                "the name before treating a blank screen as a graphics bug."),
                 target=None,
             ),
             _Step(
-                "Canvas",
-                "Wire outputs into inputs by dragging between ports. "
+                QCoreApplication.translate("StudioTour", "Canvas"),
+                QCoreApplication.translate("StudioTour", "Wire outputs into inputs by dragging between ports. "
                 "Data flows Source → (optional Logic) → Visual. "
-                "Select a node to edit its properties on the right.",
+                "Select a node to edit its properties on the right."),
                 target=_w("view"),
             ),
             _Step(
-                "Layers",
-                "Reorder draw order, lock nodes, and jump to a node by clicking its row. "
-                "Tabified with Properties and Windows on the right.",
+                QCoreApplication.translate("StudioTour", "Layers"),
+                QCoreApplication.translate("StudioTour", "Reorder draw order, lock nodes, and jump to a node by clicking its row. "
+                "Tabified with Properties and Windows on the right."),
                 target=_w("layers_dock"),
             ),
             _Step(
-                "Properties",
-                "When a node is selected, its fields appear here — position, colours, "
+                QCoreApplication.translate("StudioTour", "Properties"),
+                QCoreApplication.translate("StudioTour", "When a node is selected, its fields appear here — position, colours, "
                 "poll mode, gradients, blend. Canvas / window geometry still lives on the "
-                "Canvas node at the top of the graph.",
+                "Canvas node at the top of the graph."),
                 target=_w("property_panel"),
             ),
             _Step(
-                "Windows / Monitors",
-                "Add extra Conky windows for multi-monitor layouts. "
+                QCoreApplication.translate("StudioTour", "Windows / Monitors"),
+                QCoreApplication.translate("StudioTour", "Add extra Conky windows for multi-monitor layouts. "
                 "Each window can pin to a different output (xrandr / wlr-randr). "
-                "Single-monitor projects keep one auto window.",
+                "Single-monitor projects keep one auto window."),
                 target=_w("windows_panel"),
             ),
             _Step(
-                "Live Preview",
-                "Start runs a real Conky process against a scratch build of your graph. "
-                "Use the Window combo to preview a specific monitor conf when you have several.",
+                QCoreApplication.translate("StudioTour", "Live Preview"),
+                QCoreApplication.translate("StudioTour", "Start runs a real Conky process against a scratch build of your graph. "
+                "Use the Window combo to preview a specific monitor conf when you have several."),
                 target=_w("preview_panel"),
             ),
             _Step(
-                "Position Stage",
-                "Drag visual proxies on a plane the size of your Conky window to place them quickly. "
+                QCoreApplication.translate("StudioTour", "Position Stage"),
+                QCoreApplication.translate("StudioTour", "Drag visual proxies on a plane the size of your Conky window to place them quickly. "
                 "X/Y spinboxes in Properties remain for pixel-perfect tweaks. "
                 "Snap and Fit help alignment. Live Preview can stay on while you drag; "
-                "the HUD updates when you release the mouse.",
+                "the HUD updates when you release the mouse."),
                 target=_w("position_stage"),
             ),
             _Step(
-                "Save project vs Build",
-                "• Project → Save Project… writes a .json graph you can reopen and edit.\n"
+                QCoreApplication.translate("StudioTour", "Save project vs Build"),
+                QCoreApplication.translate("StudioTour", "• Project → Save Project… writes a .json graph you can reopen and edit.\n"
                 "• Project → Build to Folder… / Build & Install exports real Conky files "
                 "(conky.conf, render.lua, scripts/, start.sh) under ~/.config/conky/<Name>.\n\n"
                 "Save while learning. Build when you want Manager to Start the HUD. "
-                "Re-building overwrites generated files from the current graph.",
+                "Re-building overwrites generated files from the current graph."),
                 target=None,
             ),
             _Step(
-                "You're set",
-                "Re-open this tour anytime from Help → Learn Studio. "
-                "For Theme Wizard + Manager + Store in one pass: Help → Take the Full Tour.",
+                QCoreApplication.translate("StudioTour", "You're set"),
+                QCoreApplication.translate("StudioTour", "Re-open this tour anytime from Help → Learn Studio. "
+                "For Theme Wizard + Manager + Store in one pass: Help → Take the Full Tour."),
                 target=None,
             ),
         ]
@@ -310,9 +310,9 @@ class StudioTour:
         step = self._steps[self._index]
         self._card.title.setText(step.title)
         self._card.body.setText(step.body)
-        self._card.progress.setText(f"Step {self._index + 1} of {len(self._steps)}")
+        self._card.progress.setText(QCoreApplication.translate("StudioTour", "Step {0} of {1}").format(self._index + 1, len(self._steps)))
         self._card.back_btn.setEnabled(self._index > 0)
-        self._card.next_btn.setText("Finish" if self._index == len(self._steps) - 1 else "Next")
+        self._card.next_btn.setText(QCoreApplication.translate("StudioTour", "Finish") if self._index == len(self._steps) - 1 else QCoreApplication.translate("StudioTour", "Next"))
 
         # Raise relevant docks so highlights are visible
         try:

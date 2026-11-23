@@ -24,7 +24,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
-from PyQt6.QtCore import QTimer, QRect, QPoint
+from PyQt6.QtCore import QTimer, QRect, QPoint, QCoreApplication
 from PyQt6.QtWidgets import QWidget, QTabWidget
 
 from conkystudio.ui.studio.studio_tour import _HighlightRing, _TourCard
@@ -139,7 +139,7 @@ class GuidedTour:
             self.main.current_project_path = None
             self.main.tabs.setCurrentWidget(self.studio)
             self.main.statusBar().showMessage(
-                f"Tour project loaded: {project.name} — continue with Studio steps"
+                QCoreApplication.translate("GuidedTour", "Tour project loaded: {0} — continue with Studio steps").format(project.name)
             )
         else:
             # User cancelled Create — still continue the tour on whatever
@@ -154,12 +154,12 @@ class GuidedTour:
     def _fallback_select_minimal_showcase(self, dialog):
         try:
             for btn in dialog.category_group.buttons():
-                if btn.text() == "Minimal":
+                if btn.property("wizard_key") == "Minimal":
                     btn.setChecked(True)
                     dialog._on_category_chosen(btn)
                     break
             for btn in dialog.tier_group.buttons():
-                if btn.text() == "Showcase":
+                if btn.property("wizard_key") == "Showcase":
                     btn.setChecked(True)
                     dialog._on_tier_changed(btn)
                     break
@@ -174,47 +174,47 @@ class GuidedTour:
 
         wizard_tour._steps = [
             _Step(
-                "Theme Wizard is a learning tool",
-                "This wizard builds a starter node graph so you can learn Studio — "
+                QCoreApplication.translate("GuidedTour", "Theme Wizard is a learning tool"),
+                QCoreApplication.translate("GuidedTour", "This wizard builds a starter node graph so you can learn Studio — "
                 "it is not a finished theme ready to export as-is. Expect to rename the "
                 "project, move nodes, change poll modes, and rewire edges. That editing "
-                "is the point of the tour.",
+                "is the point of the tour."),
                 target=None,
             ),
             _Step(
-                "Minimal + Showcase (tour default)",
-                "For this walkthrough we pre-select Minimal (clean glass layout) and "
+                QCoreApplication.translate("GuidedTour", "Minimal + Showcase (tour default)"),
+                QCoreApplication.translate("GuidedTour", "For this walkthrough we pre-select Minimal (clean glass layout) and "
                 "Showcase complexity (chrome, LEDs, graphs, core strip, process table, "
                 "signature flourish). You can change these later; the tour only needs a "
-                "dense graph to point at real nodes.",
+                "dense graph to point at real nodes."),
                 target=_w("cat_box"),
             ),
             _Step(
-                "Category & resolution",
-                "Category picks colours, fonts, and layout personality. Resolution should "
+                QCoreApplication.translate("GuidedTour", "Category & resolution"),
+                QCoreApplication.translate("GuidedTour", "Category picks colours, fonts, and layout personality. Resolution should "
                 "match the monitor you will pin the HUD to — the wizard places panels "
-                "across the full canvas at that size.",
+                "across the full canvas at that size."),
                 target=_w("res_combo"),
             ),
             _Step(
-                "Panels",
-                "Toggle which data blocks to include (CPU, GPU, weather, music, …). "
+                QCoreApplication.translate("GuidedTour", "Panels"),
+                QCoreApplication.translate("GuidedTour", "Toggle which data blocks to include (CPU, GPU, weather, music, …). "
                 "A panel is skipped automatically if its source node type is missing "
-                "from this install.",
+                "from this install."),
                 target=_w("panel_box"),
             ),
             _Step(
-                "Extras & complexity",
-                "Extras layer chrome, LEDs, graphs, gradients, and flourishes. Complexity "
+                QCoreApplication.translate("GuidedTour", "Extras & complexity"),
+                QCoreApplication.translate("GuidedTour", "Extras layer chrome, LEDs, graphs, gradients, and flourishes. Complexity "
                 "resets those checkboxes to Simple / Full / Showcase defaults — Showcase "
-                "turns almost everything on so the Studio phase has more to show.",
+                "turns almost everything on so the Studio phase has more to show."),
                 target=_w("tier_box"),
             ),
             _Step(
-                "Create, then edit in Studio",
-                "Hit Create to drop the graph onto the Studio canvas. Next steps cover "
+                QCoreApplication.translate("GuidedTour", "Create, then edit in Studio"),
+                QCoreApplication.translate("GuidedTour", "Hit Create to drop the graph onto the Studio canvas. Next steps cover "
                 "node categories, a deliberate sensor poll-mode gotcha, and naming rules "
-                "before Manager and Store.",
+                "before Manager and Store."),
                 target=None,
             ),
         ]
@@ -273,40 +273,40 @@ class GuidedTour:
         self._steps = [
             # ---- Studio intro ----
             _Step(
-                "Studio — your node graph",
-                "Everything the wizard created is editable here. Sources feed Logic "
+                QCoreApplication.translate("GuidedTour", "Studio — your node graph"),
+                QCoreApplication.translate("GuidedTour", "Everything the wizard created is editable here. Sources feed Logic "
                 "(optional), which feeds Visuals. Drag between ports to wire; select a "
-                "node to edit properties on the right.",
+                "node to edit properties on the right."),
                 target=_studio("view"),
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Palette — Sources",
-                "Sources are sensors and system reads.\n"
+                QCoreApplication.translate("GuidedTour", "Palette — Sources"),
+                QCoreApplication.translate("GuidedTour", "Sources are sensors and system reads.\n"
                 "• Native (teal): CPU %, RAM, disk, network, uptime, battery — free "
                 "Conky variables, no scripts.\n"
                 "• Sensors (amber): CPU/GPU temp, GPU util, fan RPM, disk temp — need "
                 "lm-sensors / nvidia-smi / smartctl.\n"
                 "• Weather / Media / Network / Custom: external scripts (curl, playerctl, …).\n"
-                "Subcategories in the palette group them: System, Sensors, Weather, Media, …",
+                "Subcategories in the palette group them: System, Sensors, Weather, Media, …"),
                 target=_studio("palette"),
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Palette — Logic",
-                "Logic sits between sources and visuals: Smooth (EMA), Hysteresis, "
+                QCoreApplication.translate("GuidedTour", "Palette — Logic"),
+                QCoreApplication.translate("GuidedTour", "Logic sits between sources and visuals: Smooth (EMA), Hysteresis, "
                 "Threshold, Math, Map Range, String Format, Enum Map, and more. Use them "
                 "to quiet noisy sensors, gate LEDs, or format text. Output is still a "
-                "value another node can wire into.",
+                "value another node can wire into."),
                 target=_studio("palette"),
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Palette — Visuals (overview)",
-                "What you see on the desktop:\n"
+                QCoreApplication.translate("GuidedTour", "Palette — Visuals (overview)"),
+                QCoreApplication.translate("GuidedTour", "What you see on the desktop:\n"
                 "• Gauges & Bars — arc, bar, needle, segmented, LED, reactor\n"
                 "• Graphs — history, sparkline, multi-series, radar chart, top table\n"
                 "• Text — labels, flip cards\n"
@@ -314,143 +314,143 @@ class GuidedTour:
                 "• Shapes — rectangle, lines, brackets, crosshair\n"
                 "• Icons & Images — PNG/SVG, weather icons, album art\n"
                 "• Advanced — Custom Lua\n"
-                "This is an overview only; open a node’s Properties help text for detail.",
+                "This is an overview only; open a node’s Properties help text for detail."),
                 target=_studio("palette"),
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Sensor poll mode: daemon vs execi",
-                "GPU util, GPU/CPU/disk temp, and fan RPM are scripted sensors. "
+                QCoreApplication.translate("GuidedTour", "Sensor poll mode: daemon vs execi"),
+                QCoreApplication.translate("GuidedTour", "GPU util, GPU/CPU/disk temp, and fan RPM are scripted sensors. "
                 "Wizard themes deliberately default those to Simple (execi) so you can "
                 "see stutter or blank values first-hand on a high-FPS HUD.\n\n"
                 "For a smooth desktop HUD, select each Sensors-subcategory source and "
                 "set Polling mode → Background daemon (zero-stutter). Daemon writes a "
-                "cache file from start.sh; Lua only reads, never blocks the draw.",
+                "cache file from start.sh; Lua only reads, never blocks the draw."),
                 target=_studio("property_panel"),
                 on_enter=_raise_dock("Properties"),
                 phase="studio",
             ),
             _Step(
-                "Theme names — no spaces",
-                "Names like “Minimal HUD” break install paths and start.sh lock files. "
+                QCoreApplication.translate("GuidedTour", "Theme names — no spaces"),
+                QCoreApplication.translate("GuidedTour", "Names like “Minimal HUD” break install paths and start.sh lock files. "
                 "Use hyphens instead: Minimal-HUD, reactor-core, my-desk.\n\n"
                 "Rename under Project → Save / the project name field before "
                 "Build & Install. Spaces are a common first-run error; fix the name "
-                "before you treat a blank screen as a graphics bug.",
+                "before you treat a blank screen as a graphics bug."),
                 target=None,
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Canvas & wiring",
-                "Drag from an output port to an input port. Data flows "
+                QCoreApplication.translate("GuidedTour", "Canvas & wiring"),
+                QCoreApplication.translate("GuidedTour", "Drag from an output port to an input port. Data flows "
                 "Source → (optional Logic) → Visual. Unwired bindable properties use "
-                "the constant in the property panel.",
+                "the constant in the property panel."),
                 target=_studio("view"),
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             _Step(
-                "Layers",
-                "Draw order, lock, and jump-to-node. Tabified with Properties and "
-                "Windows on the right dock stack.",
+                QCoreApplication.translate("GuidedTour", "Layers"),
+                QCoreApplication.translate("GuidedTour", "Draw order, lock, and jump-to-node. Tabified with Properties and "
+                "Windows on the right dock stack."),
                 target=_studio("layers_dock"),
                 on_enter=_raise_dock("Layers"),
                 phase="studio",
             ),
             _Step(
-                "Properties",
-                "Selected node’s fields: position, colours, ranges, poll mode, gradients, "
+                QCoreApplication.translate("GuidedTour", "Properties"),
+                QCoreApplication.translate("GuidedTour", "Selected node’s fields: position, colours, ranges, poll mode, gradients, "
                 "blend mode. The Canvas node at the top of the graph holds window size, "
-                "FPS, and alignment.",
+                "FPS, and alignment."),
                 target=_studio("property_panel"),
                 on_enter=_raise_dock("Properties"),
                 phase="studio",
             ),
             _Step(
-                "Windows / Monitors",
-                "Extra Conky windows for multi-monitor layouts. Pin each to an output "
-                "when needed. Single-monitor projects keep one auto window.",
+                QCoreApplication.translate("GuidedTour", "Windows / Monitors"),
+                QCoreApplication.translate("GuidedTour", "Extra Conky windows for multi-monitor layouts. Pin each to an output "
+                "when needed. Single-monitor projects keep one auto window."),
                 target=_studio("windows_panel"),
                 on_enter=_raise_dock("Windows"),
                 phase="studio",
             ),
             _Step(
-                "Live Preview",
-                "Start runs a real Conky against a scratch build of your graph — not a "
-                "mock. Use it to verify poll modes and layout before installing.",
+                QCoreApplication.translate("GuidedTour", "Live Preview"),
+                QCoreApplication.translate("GuidedTour", "Start runs a real Conky against a scratch build of your graph — not a "
+                "mock. Use it to verify poll modes and layout before installing."),
                 target=_studio("preview_panel"),
                 on_enter=_raise_dock("Live Preview"),
                 phase="studio",
             ),
             _Step(
-                "Position Stage",
-                "Drag visual proxies on a plane the size of your Conky window. Fine-tune "
+                QCoreApplication.translate("GuidedTour", "Position Stage"),
+                QCoreApplication.translate("GuidedTour", "Drag visual proxies on a plane the size of your Conky window. Fine-tune "
                 "with X/Y in Properties. Live Preview can stay on; the HUD updates when "
-                "you release the mouse.",
+                "you release the mouse."),
                 target=_studio("position_stage"),
                 on_enter=_raise_dock("Position"),
                 phase="studio",
             ),
             _Step(
-                "Save project vs Build",
-                "• Project → Save Project… writes a .json graph you can reopen and edit "
+                QCoreApplication.translate("GuidedTour", "Save project vs Build"),
+                QCoreApplication.translate("GuidedTour", "• Project → Save Project… writes a .json graph you can reopen and edit "
                 "(your working document).\n"
                 "• Project → Build to Folder… / Build & Install exports real Conky files "
                 "(conky.conf, render.lua, scripts/, start.sh) under ~/.config/conky/"
                 "<Name>.\n\n"
                 "Save often while learning. Build when you want Manager to Start the HUD. "
-                "Re-building overwrites generated files from the current graph.",
+                "Re-building overwrites generated files from the current graph."),
                 target=None,
                 on_enter=_goto_studio,
                 phase="studio",
             ),
             # ---- Manager ----
             _Step(
-                "Manager tab",
-                "Lists themes already under ~/.config/conky and ~/.conky. Start / Stop "
+                QCoreApplication.translate("GuidedTour", "Manager tab"),
+                QCoreApplication.translate("GuidedTour", "Lists themes already under ~/.config/conky and ~/.conky. Start / Stop "
                 "run each theme’s start.sh (same files you could launch by hand). Conky "
-                "Studio does not need to stay open for an installed HUD to keep running.",
+                "Studio does not need to stay open for an installed HUD to keep running."),
                 target=None,
                 on_enter=_goto_manager,
                 phase="manager",
             ),
             _Step(
-                "Install, export, metadata",
-                "Drop a .zip / .tar.gz on the install area, or use Export .zip / Duplicate / "
+                QCoreApplication.translate("GuidedTour", "Install, export, metadata"),
+                QCoreApplication.translate("GuidedTour", "Drop a .zip / .tar.gz on the install area, or use Export .zip / Duplicate / "
                 "Uninstall on the selected theme. Generate or edit theme.json and README "
-                "from the detail pane so the library shows a proper name and description.",
+                "from the detail pane so the library shows a proper name and description."),
                 target=None,
                 on_enter=_goto_manager,
                 phase="manager",
             ),
             # ---- Store ----
             _Step(
-                "Store — Theme Vault",
-                "Catalog of community themes. Link-out only: open the host (GitHub, Pling, …) "
+                QCoreApplication.translate("GuidedTour", "Store — Theme Vault"),
+                QCoreApplication.translate("GuidedTour", "Catalog of community themes. Link-out only: open the host (GitHub, Pling, …) "
                 "in your browser. Nothing is downloaded from here automatically — read the "
-                "README on the host first.",
+                "README on the host first."),
                 target=None,
                 on_enter=_goto_store,
                 phase="store",
             ),
             _Step(
-                "Store — OpenDesktop / Pling",
-                "Live OCS search that can Install into ~/.config/conky/. After install, "
+                QCoreApplication.translate("GuidedTour", "Store — OpenDesktop / Pling"),
+                QCoreApplication.translate("GuidedTour", "Live OCS search that can Install into ~/.config/conky/. After install, "
                 "switch to Manager and hit Start. Prefer themes you trust; scripts run "
-                "on your machine like any other Conky theme.",
+                "on your machine like any other Conky theme."),
                 target=None,
                 on_enter=_goto_store,
                 phase="store",
             ),
             _Step(
-                "You're set",
-                "Full tour complete. Re-run anytime from Help → Take the Full Tour. "
+                QCoreApplication.translate("GuidedTour", "You're set"),
+                QCoreApplication.translate("GuidedTour", "Full tour complete. Re-run anytime from Help → Take the Full Tour. "
                 "Partial tours: Learn Theme Wizard, Learn Studio. "
                 "Rename with hyphens, set sensor nodes to daemon when you want zero "
                 "stutter, Save the .json while editing, Build & Install when ready for "
-                "Manager.",
+                "Manager."),
                 target=None,
                 on_enter=_goto_studio,
                 phase="",
@@ -499,9 +499,9 @@ class GuidedTour:
 
         self._card.title.setText(step.title)
         self._card.body.setText(step.body)
-        self._card.progress.setText(f"Step {self._index + 1} of {len(self._steps)}")
+        self._card.progress.setText(QCoreApplication.translate("GuidedTour", "Step {0} of {1}").format(self._index + 1, len(self._steps)))
         self._card.back_btn.setEnabled(self._index > 0)
-        self._card.next_btn.setText("Finish" if self._index == len(self._steps) - 1 else "Next")
+        self._card.next_btn.setText(QCoreApplication.translate("GuidedTour", "Finish") if self._index == len(self._steps) - 1 else QCoreApplication.translate("GuidedTour", "Next"))
 
         target = self._target_widget()
         if self._ring is not None:
@@ -552,7 +552,7 @@ class GuidedTour:
         if self._index >= len(self._steps) - 1:
             self.stop()
             try:
-                self.main.statusBar().showMessage("Full tour finished — Help → Take the Full Tour to run again")
+                self.main.statusBar().showMessage(QCoreApplication.translate("GuidedTour", "Full tour finished — Help → Take the Full Tour to run again"))
             except Exception:
                 pass
             return
