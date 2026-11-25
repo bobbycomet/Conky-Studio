@@ -45,11 +45,12 @@ def handle_ocs_url(
 
     if parent is not None:
         try:
+            from PyQt6.QtCore import QCoreApplication
             from PyQt6.QtWidgets import QMessageBox
             if result.success:
-                QMessageBox.information(parent, "OCS install", result.message)
+                QMessageBox.information(parent, QCoreApplication.translate("OcsHandler", "OCS install"), result.message)
             else:
-                QMessageBox.warning(parent, "OCS install", result.message)
+                QMessageBox.warning(parent, QCoreApplication.translate("OcsHandler", "OCS install"), result.message)
         except Exception:
             pass
 
@@ -79,11 +80,12 @@ def install_content(
         )
     if parent is not None:
         try:
+            from PyQt6.QtCore import QCoreApplication
             from PyQt6.QtWidgets import QMessageBox
             if result.success:
-                QMessageBox.information(parent, "Install", result.message)
+                QMessageBox.information(parent, QCoreApplication.translate("OcsHandler", "Install"), result.message)
             else:
-                QMessageBox.warning(parent, "Install", result.message)
+                QMessageBox.warning(parent, QCoreApplication.translate("OcsHandler", "Install"), result.message)
         except Exception:
             pass
     return result

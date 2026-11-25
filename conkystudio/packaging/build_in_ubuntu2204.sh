@@ -15,5 +15,6 @@ RT="$(command -v docker || command -v podman)" || { echo "need docker or podman"
     libgl1 libegl1 libglib2.0-0 libfontconfig1 libdbus-1-3 libxkbcommon0 libxkbcommon-x11-0 \
     libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
     libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb-xfixes0 libxcb-sync1 libxcb-shm0 libxcb-render0 \
-    libx11-xcb1 libxrender1 libsm6 libice6 libwayland-client0 libwayland-cursor0 libwayland-egl1
+    libx11-xcb1 libxrender1 libsm6 libice6 libwayland-client0 libwayland-cursor0 libwayland-egl1 \
+    qt6-l10n-tools
   ./build_appimage.sh'

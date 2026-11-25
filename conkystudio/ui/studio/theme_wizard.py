@@ -16,6 +16,7 @@ and optional logic (threshold → LED) when those node types exist.
 """
 from __future__ import annotations
 
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 from PyQt6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QCheckBox,
     QButtonGroup, QRadioButton, QPushButton, QGroupBox, QGridLayout,
@@ -80,12 +81,21 @@ CATEGORY_STYLES = {
         "warn": "#ff3b3b", "text_dim": "#4fb8d6", "layout": "arkhamos",
     },
 }
-CATEGORY_ORDER = ["Minimal", "Gaming", "RPG", "Sci-Fi", "Cyberpunk", "Terminal", "Fantasy", "Arkhamos"]
+CATEGORY_ORDER = [
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Minimal"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Gaming"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "RPG"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Sci-Fi"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Cyberpunk"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Terminal"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Fantasy"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Arkhamos"),
+]
 
 # Core system panels
 PANEL_ORDER = [
-    "Weather", "CPU", "GPU", "RAM", "Disk", "Battery",
-    "Network", "Clock", "Calendar", "Music", "Moon", "System",
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Weather"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "CPU"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "GPU"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "RAM"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Disk"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Battery"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Network"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Clock"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Calendar"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Music"),
+    QT_TRANSLATE_NOOP("ThemeWizardDialog", "Moon"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "System"),
 ]
 
 # Extra chrome / behaviour toggles (not data panels). Ordered roughly by
@@ -94,15 +104,15 @@ PANEL_ORDER = [
 # theme_wizard_patch.DEFAULT_OPTIONS_BY_TIER) so Simple/Full stay the
 # "solid HUD" look and Showcase is the one that visibly goes further.
 OPTION_ORDER = [
-    ("chrome", "Panel chrome (rects / lines)"),
-    ("leds", "Status LEDs (threshold)"),
-    ("graphs", "History graphs"),
-    ("brackets", "Corner brackets"),
-    ("glow", "Glow accents"),
-    ("gradient_fills", "Gradient fills"),
-    ("secondary_gauge", "Secondary trend readouts"),
-    ("signature_effect", "Signature flourish"),
-    ("footer_ticker", "Footer ticker line"),
+    ("chrome", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Panel chrome (rects / lines)")),
+    ("leds", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Status LEDs (threshold)")),
+    ("graphs", QT_TRANSLATE_NOOP("ThemeWizardDialog", "History graphs")),
+    ("brackets", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Corner brackets")),
+    ("glow", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Glow accents")),
+    ("gradient_fills", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Gradient fills")),
+    ("secondary_gauge", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Secondary trend readouts")),
+    ("signature_effect", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Signature flourish")),
+    ("footer_ticker", QT_TRANSLATE_NOOP("ThemeWizardDialog", "Footer ticker line")),
 ]
 
 DEFAULT_PANELS = ["Weather", "CPU", "GPU", "RAM", "Clock", "Network", "System"]
@@ -1249,7 +1259,7 @@ def build_wizard_project(
 class ThemeWizardDialog(QDialog):
     def __init__(self, parent=None, *, startup_mode: bool = False):
         super().__init__(parent)
-        self.setWindowTitle("Theme Wizard" if not startup_mode else "Welcome Create a Theme")
+        self.setWindowTitle(self.tr("Theme Wizard") if not startup_mode else self.tr("Welcome Create a Theme"))
         self.resize(520, 680)
         self.result_project: Project | None = None
         self.startup_mode = startup_mode
@@ -1258,14 +1268,14 @@ class ThemeWizardDialog(QDialog):
         root = QVBoxLayout(self)
         if startup_mode:
             welcome = QLabel(
-                "Welcome to Conky Studio. Pick a style and a few panels to generate a starter HUD, "
-                "or skip and open a blank canvas. You can always open this again via Project → New HUD…"
+                self.tr("Welcome to Conky Studio. Pick a style and a few panels to generate a starter HUD, "
+                "or skip and open a blank canvas. You can always open this again via Project → New HUD…")
             )
             welcome.setWordWrap(True)
             welcome.setProperty("role", "caption")
             root.addWidget(welcome)
 
-        heading = QLabel("Create Theme")
+        heading = QLabel(self.tr("Create Theme"))
         heading.setProperty("role", "heading")
         root.addWidget(heading)
 
@@ -1275,12 +1285,13 @@ class ThemeWizardDialog(QDialog):
         body = QWidget()
         layout = QVBoxLayout(body)
 
-        self.cat_box = QGroupBox("Category")
+        self.cat_box = QGroupBox(self.tr("Category"))
         cat_layout = QGridLayout()
         self.cat_box.setLayout(cat_layout)
         self.category_group = QButtonGroup(self)
         for i, cat in enumerate(CATEGORY_ORDER):
-            radio = QRadioButton(cat)
+            radio = QRadioButton(self.tr(cat))
+            radio.setProperty("wizard_key", cat)
             if i == 0:
                 radio.setChecked(True)
             self.category_group.addButton(radio)
@@ -1293,40 +1304,42 @@ class ThemeWizardDialog(QDialog):
         self.category_group.buttonClicked.connect(self._on_category_chosen)
 
         res_row = QHBoxLayout()
-        res_row.addWidget(QLabel("Resolution"))
+        res_row.addWidget(QLabel(self.tr("Resolution")))
         self.res_combo = QComboBox()
         self.res_combo.addItems(list(RESOLUTIONS.keys()))
         res_row.addWidget(self.res_combo, 1)
         layout.addLayout(res_row)
 
-        self.panel_box = QGroupBox("Panels")
+        self.panel_box = QGroupBox(self.tr("Panels"))
         panel_layout = QGridLayout()
         self.panel_box.setLayout(panel_layout)
         self.panel_checks = {}
         for i, panel_name in enumerate(PANEL_ORDER):
-            cb = QCheckBox(panel_name)
+            cb = QCheckBox(self.tr(panel_name))
             cb.setChecked(panel_name in DEFAULT_PANELS)
             self.panel_checks[panel_name] = cb
             panel_layout.addWidget(cb, i // 2, i % 2)
         layout.addWidget(self.panel_box)
 
-        self.opt_box = QGroupBox("Extras")
+        self.opt_box = QGroupBox(self.tr("Extras"))
         opt_layout = QGridLayout()
         self.opt_box.setLayout(opt_layout)
         self.option_checks = {}
         for i, (key, label) in enumerate(OPTION_ORDER):
-            cb = QCheckBox(label)
+            cb = QCheckBox(self.tr(label))
             cb.setChecked(DEFAULT_OPTIONS.get(key, True))
             self.option_checks[key] = cb
             opt_layout.addWidget(cb, i // 2, i % 2)
         layout.addWidget(self.opt_box)
 
-        self.tier_box = QGroupBox("Complexity")
+        self.tier_box = QGroupBox(self.tr("Complexity"))
         tier_layout = QHBoxLayout()
         self.tier_box.setLayout(tier_layout)
         self.tier_group = QButtonGroup(self)
-        for name in ("Simple", "Full", "Showcase"):
-            radio = QRadioButton(name)
+        for name in (QT_TRANSLATE_NOOP("ThemeWizardDialog", "Simple"), QT_TRANSLATE_NOOP("ThemeWizardDialog", "Full"),
+                     QT_TRANSLATE_NOOP("ThemeWizardDialog", "Showcase")):
+            radio = QRadioButton(self.tr(name))
+            radio.setProperty("wizard_key", name)
             if name == "Full":
                 radio.setChecked(True)
             self.tier_group.addButton(radio)
@@ -1336,14 +1349,14 @@ class ThemeWizardDialog(QDialog):
         self._on_tier_changed(self.tier_group.checkedButton())
 
         note = QLabel(
-            "Every category builds a full-resolution dashboard. "
+            self.tr("Every category builds a full-resolution dashboard. "
             "Panels: system vitals, weather, music, calendar, battery, network graphs. "
             "Extras: rectangle chrome, threshold LEDs, history graphs, corner brackets, glow, "
             "gradient fills, secondary trend readouts, each theme's signature flourish, and a footer ticker. "
             "Complexity: Simple (sparse), Full (logic demo chain), Showcase (core strip, top table, orbits). "
             "Missing optional node types are skipped automatically. "
             "Calendar uses Wall Calendar when available; Music needs playerctl. "
-            "Attach images on Image nodes after create."
+            "Attach images on Image nodes after create.")
         )
         note.setProperty("role", "caption")
         note.setWordWrap(True)
@@ -1353,25 +1366,25 @@ class ThemeWizardDialog(QDialog):
         root.addWidget(scroll, 1)
 
         if startup_mode:
-            self.dont_show_cb = QCheckBox("Do not show this wizard on startup again")
+            self.dont_show_cb = QCheckBox(self.tr("Do not show this wizard on startup again"))
             root.addWidget(self.dont_show_cb)
         else:
             self.dont_show_cb = None
 
         btn_row = QHBoxLayout()
         if startup_mode:
-            skip_btn = QPushButton("Skip — blank canvas")
+            skip_btn = QPushButton(self.tr("Skip — blank canvas"))
             skip_btn.clicked.connect(self._on_skip)
             btn_row.addWidget(skip_btn)
-        self.tour_btn = QPushButton("Take the tour")
+        self.tour_btn = QPushButton(self.tr("Take the tour"))
         self.tour_btn.setVisible(False)
         self.tour_btn.clicked.connect(self._on_tour)
         btn_row.addWidget(self.tour_btn)
         btn_row.addStretch(1)
-        cancel_btn = QPushButton("Cancel" if not startup_mode else "Close")
+        cancel_btn = QPushButton(self.tr("Cancel") if not startup_mode else self.tr("Close"))
         cancel_btn.clicked.connect(self._on_skip if startup_mode else self.reject)
         btn_row.addWidget(cancel_btn)
-        create_btn = QPushButton("Create")
+        create_btn = QPushButton(self.tr("Create"))
         create_btn.setObjectName("primary")
         create_btn.clicked.connect(self._on_create)
         btn_row.addWidget(create_btn)
@@ -1399,12 +1412,12 @@ class ThemeWizardDialog(QDialog):
         extras defaults so Create yields a dense learning graph.
         """
         for btn in self.category_group.buttons():
-            if btn.text() == "Minimal":
+            if btn.property("wizard_key") == "Minimal":
                 btn.setChecked(True)
                 self._on_category_chosen(btn)
                 break
         for btn in self.tier_group.buttons():
-            if btn.text() == "Showcase":
+            if btn.property("wizard_key") == "Showcase":
                 btn.setChecked(True)
                 self._on_tier_changed(btn)
                 break
@@ -1423,7 +1436,7 @@ class ThemeWizardDialog(QDialog):
         visually denser HUD."""
         if radio is None:
             return
-        tier = radio.text()
+        tier = radio.property("wizard_key")
         defaults = DEFAULT_OPTIONS_BY_TIER.get(tier, DEFAULT_OPTIONS)
         for key, cb in self.option_checks.items():
             cb.setChecked(defaults.get(key, False))
@@ -1442,12 +1455,12 @@ class ThemeWizardDialog(QDialog):
 
     def _on_create(self):
         self._remember_skip_pref()
-        category = self.category_group.checkedButton().text() if self.category_group.checkedButton() else "Minimal"
+        category = self.category_group.checkedButton().property("wizard_key") if self.category_group.checkedButton() else "Minimal"
         resolution = self.res_combo.currentText()
         panels = [name for name, cb in self.panel_checks.items() if cb.isChecked()]
         options = {key: cb.isChecked() for key, cb in self.option_checks.items()}
         tier_btn = self.tier_group.checkedButton()
-        complexity = tier_btn.text() if tier_btn else "Full"
+        complexity = tier_btn.property("wizard_key") if tier_btn else "Full"
         # Folder / lock-file safe name: spaces break install paths and start.sh
         # locks. Use a hyphen so "Minimal HUD" becomes "Minimal-HUD".
         safe_name = f"{category}-HUD".replace(" ", "-")

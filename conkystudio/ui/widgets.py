@@ -46,7 +46,7 @@ class ColorSwatchButton(QPushButton):
         # Parent to the top-level window, not the swatch, so the dialog
         # does not sit under the swatch's stylesheet cascade.
         parent = self.window() if self.window() is not None else self
-        color = QColorDialog.getColor(QColor(self._hex), parent, "Choose colour")
+        color = QColorDialog.getColor(QColor(self._hex), parent, self.tr("Choose colour"))
         if color.isValid():
             self._hex = color.name()
             self._apply_style()

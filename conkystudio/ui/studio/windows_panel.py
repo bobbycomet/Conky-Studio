@@ -56,13 +56,13 @@ class WindowsPanel(QWidget):
         layout.setContentsMargins(12, 12, 12, 12)
         layout.setSpacing(10)
 
-        heading = QLabel("Windows / Monitors")
+        heading = QLabel(self.tr("Windows / Monitors"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
 
         hint = QLabel(
-            "Each window is a separate Conky process. Single-monitor themes "
-            "keep one entry (auto). Add more to pin HUDs to specific outputs."
+            self.tr("Each window is a separate Conky process. Single-monitor themes "
+            "keep one entry (auto). Add more to pin HUDs to specific outputs.")
         )
         hint.setProperty("role", "caption")
         hint.setWordWrap(True)
@@ -76,47 +76,47 @@ class WindowsPanel(QWidget):
 
         btn_row = QHBoxLayout()
         btn_row.setSpacing(4)
-        add_btn = QPushButton("Add")
-        add_btn.setToolTip("Add window")
+        add_btn = QPushButton(self.tr("Add"))
+        add_btn.setToolTip(self.tr("Add window"))
         add_btn.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         add_btn.clicked.connect(self._add)
         btn_row.addWidget(add_btn)
-        self.remove_btn = QPushButton("Remove")
-        self.remove_btn.setToolTip("Remove selected window")
+        self.remove_btn = QPushButton(self.tr("Remove"))
+        self.remove_btn.setToolTip(self.tr("Remove selected window"))
         self.remove_btn.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         self.remove_btn.clicked.connect(self._remove)
         btn_row.addWidget(self.remove_btn)
-        refresh_btn = QPushButton("Rescan")
-        refresh_btn.setToolTip("Rescan monitors")
+        refresh_btn = QPushButton(self.tr("Rescan"))
+        refresh_btn.setToolTip(self.tr("Rescan monitors"))
         refresh_btn.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         refresh_btn.clicked.connect(self._rescan_monitors)
         btn_row.addWidget(refresh_btn)
         btn_row.addStretch(1)
         layout.addLayout(btn_row)
 
-        box = QGroupBox("Selected window")
+        box = QGroupBox(self.tr("Selected window"))
         form = _wrapping_form()
         box.setLayout(form)
 
         self.name_edit = QLineEdit()
         self.name_edit.editingFinished.connect(self._apply_editor)
-        form.addRow("Name", self.name_edit)
+        form.addRow(self.tr("Name"), self.name_edit)
 
         self.monitor_combo = QComboBox()
         self.monitor_combo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self._fill_monitors()
         self.monitor_combo.currentIndexChanged.connect(self._apply_editor)
-        form.addRow("Monitor", self.monitor_combo)
+        form.addRow(self.tr("Monitor"), self.monitor_combo)
 
         self.width_spin = QSpinBox()
         self.width_spin.setRange(64, 7680)
         self.width_spin.valueChanged.connect(self._apply_editor)
-        form.addRow("Width", self.width_spin)
+        form.addRow(self.tr("Width"), self.width_spin)
 
         self.height_spin = QSpinBox()
         self.height_spin.setRange(64, 4320)
         self.height_spin.valueChanged.connect(self._apply_editor)
-        form.addRow("Height", self.height_spin)
+        form.addRow(self.tr("Height"), self.height_spin)
 
         self.align_combo = QComboBox()
         self.align_combo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -127,56 +127,56 @@ class WindowsPanel(QWidget):
         ):
             self.align_combo.addItem(a, a)
         self.align_combo.currentIndexChanged.connect(self._apply_editor)
-        form.addRow("Alignment", self.align_combo)
+        form.addRow(self.tr("Alignment"), self.align_combo)
 
         self.window_type_combo = QComboBox()
         self.window_type_combo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         for value, label in (
-            ("auto", "Auto-detect (recommended)"),
-            ("normal", "Normal (undecorated, always-below)"),
-            ("desktop", "Desktop"),
-            ("dock", "Dock"),
+            ("auto", self.tr("Auto-detect (recommended)")),
+            ("normal", self.tr("Normal (undecorated, always-below)")),
+            ("desktop", self.tr("Desktop")),
+            ("dock", self.tr("Dock")),
         ):
             self.window_type_combo.addItem(label, value)
         self.window_type_combo.setToolTip(
-            "Per-window layering, same choices as the Canvas node's Window layering "
+            self.tr("Per-window layering, same choices as the Canvas node's Window layering "
             "field. Desktop/Dock are the common cause of an X BadWindow error on this "
             "window specifically -- if this window misbehaves or won't stay anchored, "
-            "try Normal here, independent of what the primary window/Canvas uses."
+            "try Normal here, independent of what the primary window/Canvas uses.")
         )
         self.window_type_combo.currentIndexChanged.connect(self._apply_editor)
-        form.addRow("Window type", self.window_type_combo)
+        form.addRow(self.tr("Window type"), self.window_type_combo)
 
         self.gap_x_spin = QSpinBox()
         self.gap_x_spin.setRange(0, 4000)
         self.gap_x_spin.valueChanged.connect(self._apply_editor)
-        form.addRow("Gap X", self.gap_x_spin)
+        form.addRow(self.tr("Gap X"), self.gap_x_spin)
 
         self.gap_y_spin = QSpinBox()
         self.gap_y_spin.setRange(0, 4000)
         self.gap_y_spin.valueChanged.connect(self._apply_editor)
-        form.addRow("Gap Y", self.gap_y_spin)
+        form.addRow(self.tr("Gap Y"), self.gap_y_spin)
 
-        self.enabled_chk = QCheckBox("Enabled")
+        self.enabled_chk = QCheckBox(self.tr("Enabled"))
         self.enabled_chk.toggled.connect(self._apply_editor)
         form.addRow(self.enabled_chk)
 
-        preview_btn = QPushButton("Preview this window")
-        preview_btn.setToolTip("Live Preview shows only the selected window conf")
+        preview_btn = QPushButton(self.tr("Preview this window"))
+        preview_btn.setToolTip(self.tr("Live Preview shows only the selected window conf"))
         preview_btn.clicked.connect(self._preview_selected)
         form.addRow(preview_btn)
 
-        scene_btn = QPushButton("Use visible layers as scene")
+        scene_btn = QPushButton(self.tr("Use visible layers as scene"))
         scene_btn.setToolTip(
-            "Store the currently visible (eye-open) visual nodes as this window's "
+            self.tr("Store the currently visible (eye-open) visual nodes as this window's "
             "scene filter. Other windows can keep the full graph or their own subset. "
-            "Clear scene filter restores the full shared graph for this window."
+            "Clear scene filter restores the full shared graph for this window.")
         )
         scene_btn.clicked.connect(self._capture_visible_scene)
         form.addRow(scene_btn)
 
-        clear_scene_btn = QPushButton("Clear scene filter")
-        clear_scene_btn.setToolTip("This window draws the full shared graph again")
+        clear_scene_btn = QPushButton(self.tr("Clear scene filter"))
+        clear_scene_btn.setToolTip(self.tr("This window draws the full shared graph again"))
         clear_scene_btn.clicked.connect(self._clear_scene_filter)
         form.addRow(clear_scene_btn)
 
@@ -215,7 +215,7 @@ class WindowsPanel(QWidget):
         for w in sorted(self.project.windows, key=lambda x: (x.z, x.id)):
             mon = w.monitor or "auto"
             mark = " *" if w.id == primary.id else ""
-            disabled = "" if w.enabled else " (off)"
+            disabled = "" if w.enabled else self.tr(" (off)")
             item = QListWidgetItem(f"{w.name or w.id} @ {mon}{mark}{disabled}")
             item.setData(_WINDOW_ID_ROLE, w.id)
             self.list_widget.addItem(item)
@@ -255,9 +255,9 @@ class WindowsPanel(QWidget):
         self.enabled_chk.setChecked(w.enabled)
         vids = getattr(w, "visible_node_ids", None) or []
         if vids:
-            self.scene_label.setText(f"Scene filter: {len(vids)} node(s)")
+            self.scene_label.setText(self.tr("Scene filter: %n node(s)", "", len(vids)))
         else:
-            self.scene_label.setText("Scene filter: full shared graph")
+            self.scene_label.setText(self.tr("Scene filter: full shared graph"))
         self._suppress = False
 
     def _capture_visible_scene(self):
@@ -271,7 +271,7 @@ class WindowsPanel(QWidget):
             and getattr(n, "visible", True)
         ]
         w.visible_node_ids = list(ids)
-        self.scene_label.setText(f"Scene filter: {len(ids)} node(s)")
+        self.scene_label.setText(self.tr("Scene filter: %n node(s)", "", len(ids)))
         self.windows_changed.emit()
 
     def _clear_scene_filter(self):
@@ -279,7 +279,7 @@ class WindowsPanel(QWidget):
         if w is None:
             return
         w.visible_node_ids = []
-        self.scene_label.setText("Scene filter: full shared graph")
+        self.scene_label.setText(self.tr("Scene filter: full shared graph"))
         self.windows_changed.emit()
 
     def _apply_editor(self, *_args):
@@ -322,7 +322,7 @@ class WindowsPanel(QWidget):
         if w is None:
             return
         if len(self.project.ensure_windows()) <= 1:
-            QMessageBox.information(self, "Windows", "A project always needs at least one window.")
+            QMessageBox.information(self, self.tr("Windows"), self.tr("A project always needs at least one window."))
             return
         self.project.remove_window(w.id)
         self.refresh()

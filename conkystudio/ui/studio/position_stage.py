@@ -46,6 +46,7 @@ from PyQt6.QtGui import (
 from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal, QLineF
 
 from conkystudio.model.project import Project, NodeInstance
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.nodes.canvas import CANVAS_NODE_ID
 from conkystudio.theme import PALETTE
@@ -416,7 +417,7 @@ class StageScene(QGraphicsScene):
             scene_x = px - w / 2 if keys.x_center else px
             scene_y = py - h / 2 if keys.y_center else py
 
-            label = n.label or (registry.get(n.type).label if registry.has(n.type) else n.type)
+            label = n.label or (node_text(registry.get(n.type).label) if registry.has(n.type) else n.type)
             # Shorten long labels
             if len(label) > 18:
                 label = label[:16] + "…"
@@ -632,15 +633,15 @@ class PositionStagePanel(QWidget):
 
         # ---- header row ----
         header = QHBoxLayout()
-        title = QLabel("Position Stage")
+        title = QLabel(self.tr("Position Stage"))
         title.setProperty("role", "heading")
         header.addWidget(title)
         header.addStretch(1)
         layout.addLayout(header)
 
         hint = QLabel(
-            "Drag visuals on the window plane. Does not replace X/Y spinboxes — "
-            "an alternate layout editor. Ctrl+scroll zooms · Alt+drag or middle-click pans."
+            self.tr("Drag visuals on the window plane. Does not replace X/Y spinboxes — "
+            "an alternate layout editor. Ctrl+scroll zooms · Alt+drag or middle-click pans.")
         )
         hint.setProperty("role", "caption")
         hint.setWordWrap(True)
@@ -648,48 +649,48 @@ class PositionStagePanel(QWidget):
 
         # ---- controls row ----
         ctrl = QHBoxLayout()
-        ctrl.addWidget(QLabel("Window"))
+        ctrl.addWidget(QLabel(self.tr("Window")))
         self.window_combo = QComboBox()
         self.window_combo.setMinimumWidth(140)
         self.window_combo.setToolTip(
-            "Which window’s resolution the stage represents. "
-            "Matches Live Preview / Windows dock."
+            self.tr("Which window’s resolution the stage represents. "
+            "Matches Live Preview / Windows dock.")
         )
         self.window_combo.currentIndexChanged.connect(self._on_window_changed)
         ctrl.addWidget(self.window_combo, 1)
 
-        self.snap_chk = QCheckBox("Snap")
-        self.snap_chk.setToolTip("Snap dragged positions to a pixel grid")
+        self.snap_chk = QCheckBox(self.tr("Snap"))
+        self.snap_chk.setToolTip(self.tr("Snap dragged positions to a pixel grid"))
         self.snap_chk.toggled.connect(self._on_snap_changed)
         ctrl.addWidget(self.snap_chk)
 
-        ctrl.addWidget(QLabel("Step"))
+        ctrl.addWidget(QLabel(self.tr("Step")))
         self.snap_spin = QSpinBox()
         self.snap_spin.setRange(1, 100)
         self.snap_spin.setValue(10)
-        self.snap_spin.setSuffix(" px")
+        self.snap_spin.setSuffix(self.tr(" px"))
         self.snap_spin.setFixedWidth(72)
-        self.snap_spin.setToolTip("Grid step in pixels when Snap is on")
+        self.snap_spin.setToolTip(self.tr("Grid step in pixels when Snap is on"))
         self.snap_spin.valueChanged.connect(self._on_snap_changed)
         ctrl.addWidget(self.snap_spin)
 
-        self.lock_chk = QCheckBox("Lock position")
+        self.lock_chk = QCheckBox(self.tr("Lock position"))
         self.lock_chk.setToolTip(
-            "Freeze the selected visual's stage position. "
-            "Same as the lock icon in Layers — uncheck to move again."
+            self.tr("Freeze the selected visual's stage position. "
+            "Same as the lock icon in Layers — uncheck to move again.")
         )
         self.lock_chk.setEnabled(False)
         self.lock_chk.toggled.connect(self._on_lock_toggled)
         ctrl.addWidget(self.lock_chk)
 
-        fit_btn = QPushButton("Fit")
-        fit_btn.setToolTip("Zoom to fit the window rectangle")
+        fit_btn = QPushButton(self.tr("Fit"))
+        fit_btn.setToolTip(self.tr("Zoom to fit the window rectangle"))
         fit_btn.clicked.connect(self._fit)
         ctrl.addWidget(fit_btn)
 
         refresh_btn = QPushButton("↻")
         refresh_btn.setFixedWidth(32)
-        refresh_btn.setToolTip("Reload proxies from the current project")
+        refresh_btn.setToolTip(self.tr("Reload proxies from the current project"))
         refresh_btn.clicked.connect(self.refresh)
         ctrl.addWidget(refresh_btn)
 
@@ -770,9 +771,10 @@ class PositionStagePanel(QWidget):
         visuals = self._visuals_for_window()
         self.scene.sync_proxies(visuals)
         self.view.ensure_item_drag_mode()
+        self._status_base = self.tr("{0}×{1} px  ·  %n visual(s)", "", len(visuals)).format(w, h)
         self.status.setText(
-            f"{w}×{h} px  ·  {len(visuals)} visual(s)"
-            + ("  ·  snap " + str(self.snap_spin.value()) + "px" if self.snap_chk.isChecked() else "")
+            self._status_base
+            + (self.tr("  ·  snap {0}px").format(self.snap_spin.value()) if self.snap_chk.isChecked() else "")
         )
 
     def notify_graph_changed(self):
@@ -787,7 +789,7 @@ class PositionStagePanel(QWidget):
         self._suppress = True
         self.window_combo.clear()
         if self.project is None:
-            self.window_combo.addItem("Main (primary)", "primary")
+            self.window_combo.addItem(self.tr("Main (primary)"), "primary")
             self._suppress = False
             return
 
@@ -806,7 +808,7 @@ class PositionStagePanel(QWidget):
             wins = list(getattr(self.project, "windows", []) or [])
 
         if not wins:
-            self.window_combo.addItem("Main (primary)", "primary")
+            self.window_combo.addItem(self.tr("Main (primary)"), "primary")
         else:
             primary = None
             if hasattr(self.project, "primary_window"):
@@ -820,7 +822,7 @@ class PositionStagePanel(QWidget):
                 if mon not in ("auto", "primary"):
                     label = f"{label} @ {mon}"
                 if primary is not None and getattr(w, "id", None) == getattr(primary, "id", None):
-                    label = f"{label} (primary)"
+                    label = self.tr("{0} (primary)").format(label)
                 self.window_combo.addItem(label, getattr(w, "id", "primary"))
 
         # Restore selection
@@ -907,8 +909,8 @@ class PositionStagePanel(QWidget):
     def _on_snap_changed(self, *_args):
         self.scene.set_snap(self.snap_chk.isChecked(), self.snap_spin.value())
         self.status.setText(
-            self.status.text().split("  ·  snap")[0]
-            + ("  ·  snap " + str(self.snap_spin.value()) + "px" if self.snap_chk.isChecked() else "")
+            getattr(self, "_status_base", self.status.text())
+            + (self.tr("  ·  snap {0}px").format(self.snap_spin.value()) if self.snap_chk.isChecked() else "")
         )
 
     def _on_proxy_moved(self, node_id: str):

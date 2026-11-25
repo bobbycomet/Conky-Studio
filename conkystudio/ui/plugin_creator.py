@@ -129,7 +129,7 @@ class _PropertyEditorDialog(QDialog):
 
     def __init__(self, prop: Optional[PluginProperty] = None, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Property" if prop else "Add property")
+        self.setWindowTitle(self.tr("Property") if prop else self.tr("Add property"))
         self.resize(420, 420)
         self.result_prop: Optional[PluginProperty] = None
 
@@ -137,77 +137,77 @@ class _PropertyEditorDialog(QDialog):
         form = QFormLayout()
 
         self.key_edit = QLineEdit(prop.key if prop else "")
-        self.key_edit.setPlaceholderText("e.g. radius")
-        form.addRow("Key", self.key_edit)
+        self.key_edit.setPlaceholderText(self.tr("e.g. radius"))
+        form.addRow(self.tr("Key"), self.key_edit)
 
         self.label_edit = QLineEdit(prop.label if prop else "")
-        self.label_edit.setPlaceholderText("Shown in the inspector")
-        form.addRow("Label", self.label_edit)
+        self.label_edit.setPlaceholderText(self.tr("Shown in the inspector"))
+        form.addRow(self.tr("Label"), self.label_edit)
 
         self.kind_combo = QComboBox()
         for k in sorted(ALLOWED_KINDS):
             self.kind_combo.addItem(k)
         if prop and prop.kind in ALLOWED_KINDS:
             self.kind_combo.setCurrentText(prop.kind)
-        form.addRow("Kind", self.kind_combo)
+        form.addRow(self.tr("Kind"), self.kind_combo)
 
         self.default_edit = QLineEdit("" if prop is None else str(prop.default))
-        form.addRow("Default", self.default_edit)
+        form.addRow(self.tr("Default"), self.default_edit)
 
         self.min_spin = QDoubleSpinBox()
         self.min_spin.setRange(-1e9, 1e9)
         self.min_spin.setDecimals(4)
         self.min_spin.setValue(float(prop.minimum) if prop else 0.0)
-        form.addRow("Minimum", self.min_spin)
+        form.addRow(self.tr("Minimum"), self.min_spin)
 
         self.max_spin = QDoubleSpinBox()
         self.max_spin.setRange(-1e9, 1e9)
         self.max_spin.setDecimals(4)
         self.max_spin.setValue(float(prop.maximum) if prop else 100.0)
-        form.addRow("Maximum", self.max_spin)
+        form.addRow(self.tr("Maximum"), self.max_spin)
 
         self.step_spin = QDoubleSpinBox()
         self.step_spin.setRange(0.0001, 1e6)
         self.step_spin.setDecimals(4)
         self.step_spin.setValue(float(prop.step) if prop else 1.0)
-        form.addRow("Step", self.step_spin)
+        form.addRow(self.tr("Step"), self.step_spin)
 
         self.choices_edit = QLineEdit(
             ",".join(prop.choices) if prop and prop.choices else ""
         )
-        self.choices_edit.setPlaceholderText("enum only: a,b,c")
-        form.addRow("Choices", self.choices_edit)
+        self.choices_edit.setPlaceholderText(self.tr("enum only: a,b,c"))
+        form.addRow(self.tr("Choices"), self.choices_edit)
 
         self.choice_labels_edit = QLineEdit(
             ",".join(prop.choice_labels) if prop and prop.choice_labels else ""
         )
-        self.choice_labels_edit.setPlaceholderText("optional friendly labels")
-        form.addRow("Choice labels", self.choice_labels_edit)
+        self.choice_labels_edit.setPlaceholderText(self.tr("optional friendly labels"))
+        form.addRow(self.tr("Choice labels"), self.choice_labels_edit)
 
-        self.bindable_chk = QCheckBox("Bindable (accepts a wire)")
+        self.bindable_chk = QCheckBox(self.tr("Bindable (accepts a wire)"))
         self.bindable_chk.setChecked(bool(prop.bindable) if prop else False)
         form.addRow(self.bindable_chk)
 
         self.accepts_edit = QLineEdit(
             ",".join(prop.accepts) if prop and prop.accepts else ""
         )
-        self.accepts_edit.setPlaceholderText("e.g. percent,number,celsius")
-        form.addRow("Accepts kinds", self.accepts_edit)
+        self.accepts_edit.setPlaceholderText(self.tr("e.g. percent,number,celsius"))
+        form.addRow(self.tr("Accepts kinds"), self.accepts_edit)
 
         self.group_edit = QLineEdit(prop.group if prop else "General")
-        form.addRow("Group", self.group_edit)
+        form.addRow(self.tr("Group"), self.group_edit)
 
         self.help_edit = QPlainTextEdit(prop.help if prop else "")
         self.help_edit.setMaximumHeight(60)
-        form.addRow("Help", self.help_edit)
+        form.addRow(self.tr("Help"), self.help_edit)
 
         layout.addLayout(form)
 
         btns = QHBoxLayout()
-        ok = QPushButton("OK")
+        ok = QPushButton(self.tr("OK"))
         ok.setObjectName("primary")
         ok.clicked.connect(self._accept)
-        cancel = QPushButton("Cancel")
+        cancel = QPushButton(self.tr("Cancel"))
         cancel.clicked.connect(self.reject)
         btns.addWidget(ok)
         btns.addWidget(cancel)
@@ -217,8 +217,8 @@ class _PropertyEditorDialog(QDialog):
         key = self.key_edit.text().strip()
         if not _PROP_KEY_RE.match(key):
             QMessageBox.warning(
-                self, "Property",
-                "Key must be lowercase letters/digits/underscores, starting with a letter.",
+                self, self.tr("Property"),
+                self.tr("Key must be lowercase letters/digits/underscores, starting with a letter."),
             )
             return
         kind = self.kind_combo.currentText()
@@ -236,7 +236,7 @@ class _PropertyEditorDialog(QDialog):
         if kind == "enum":
             choices = [c.strip() for c in self.choices_edit.text().split(",") if c.strip()]
             if not choices:
-                QMessageBox.warning(self, "Property", "Enum kind needs at least one choice.")
+                QMessageBox.warning(self, self.tr("Property"), self.tr("Enum kind needs at least one choice."))
                 return
             labels = [c.strip() for c in self.choice_labels_edit.text().split(",") if c.strip()]
             choice_labels = labels if labels else None
@@ -272,7 +272,7 @@ class PluginCreatorDialog(QDialog):
 
     def __init__(self, parent=None, *, seed_from_custom_lua: str | None = None):
         super().__init__(parent)
-        self.setWindowTitle("Plugin Creation")
+        self.setWindowTitle(self.tr("Plugin Creation"))
         self.resize(780, 720)
         self.exported_path: str = ""
         self._properties: list[PluginProperty] = []
@@ -280,14 +280,14 @@ class PluginCreatorDialog(QDialog):
 
         root = QVBoxLayout(self)
 
-        heading = QLabel("Plugin Creation")
+        heading = QLabel(self.tr("Plugin Creation"))
         heading.setProperty("role", "heading")
         root.addWidget(heading)
 
         intro = QLabel(
-            "Turn an escape-hatch custom node into a portable plugin. "
+            self.tr("Turn an escape-hatch custom node into a portable plugin. "
             "Fill identity, properties, and the code body, then Validate and Export. "
-            "Exported JSON matches the community plugins.json / local pack format."
+            "Exported JSON matches the community plugins.json / local pack format.")
         )
         intro.setProperty("role", "caption")
         intro.setWordWrap(True)
@@ -304,24 +304,24 @@ class PluginCreatorDialog(QDialog):
 
         # Footer actions
         footer = QHBoxLayout()
-        self.validate_btn = QPushButton("Validate")
+        self.validate_btn = QPushButton(self.tr("Validate"))
         self.validate_btn.clicked.connect(self._validate)
         footer.addWidget(self.validate_btn)
 
-        self.export_btn = QPushButton("Export JSON…")
+        self.export_btn = QPushButton(self.tr("Export JSON…"))
         self.export_btn.setObjectName("primary")
         self.export_btn.clicked.connect(self._export_json)
         footer.addWidget(self.export_btn)
 
-        self.install_btn = QPushButton("Install locally")
+        self.install_btn = QPushButton(self.tr("Install locally"))
         self.install_btn.setToolTip(
-            f"Write into {LOCAL_PLUGINS_DIR} and register for this session"
+            self.tr("Write into {0} and register for this session").format(LOCAL_PLUGINS_DIR)
         )
         self.install_btn.clicked.connect(self._install_local)
         footer.addWidget(self.install_btn)
 
         footer.addStretch(1)
-        close_btn = QPushButton("Close")
+        close_btn = QPushButton(self.tr("Close"))
         close_btn.clicked.connect(self.accept)
         footer.addWidget(close_btn)
         root.addLayout(footer)
@@ -346,39 +346,39 @@ class PluginCreatorDialog(QDialog):
             self.category_combo.addItem(c)
         self.category_combo.setCurrentText("visual")
         self.category_combo.currentTextChanged.connect(self._on_category_changed)
-        form.addRow("Category", self.category_combo)
+        form.addRow(self.tr("Category"), self.category_combo)
 
         self.id_edit = QLineEdit(_default_id_for_category("visual"))
         self.id_edit.setPlaceholderText("visual.plugin.my_ring")
-        form.addRow("Type id", self.id_edit)
+        form.addRow(self.tr("Type id"), self.id_edit)
 
         self.label_edit = QLineEdit("My Plugin Node")
-        form.addRow("Label", self.label_edit)
+        form.addRow(self.tr("Label"), self.label_edit)
 
         self.author_edit = QLineEdit("")
-        form.addRow("Author", self.author_edit)
+        form.addRow(self.tr("Author"), self.author_edit)
 
         self.version_edit = QLineEdit("1.0.0")
-        form.addRow("Version", self.version_edit)
+        form.addRow(self.tr("Version"), self.version_edit)
 
         self.desc_edit = QPlainTextEdit("")
         self.desc_edit.setMaximumHeight(80)
-        self.desc_edit.setPlaceholderText("Short description shown in the Plugins dialog / store.")
-        form.addRow("Description", self.desc_edit)
+        self.desc_edit.setPlaceholderText(self.tr("Short description shown in the Plugins dialog / store."))
+        form.addRow(self.tr("Description"), self.desc_edit)
 
         self.color_edit = QLineEdit("#8a5fd6")
-        form.addRow("Accent colour", self.color_edit)
+        form.addRow(self.tr("Accent colour"), self.color_edit)
 
         self.subcategory_edit = QLineEdit("Plugins")
-        form.addRow("Subcategory", self.subcategory_edit)
+        form.addRow(self.tr("Subcategory"), self.subcategory_edit)
 
         self.output_kind_combo = QComboBox()
         self.output_kind_combo.addItem("(none)")
         for k in sorted(ALLOWED_OUTPUT_KINDS):
             self.output_kind_combo.addItem(k)
-        form.addRow("Output kind", self.output_kind_combo)
+        form.addRow(self.tr("Output kind"), self.output_kind_combo)
 
-        self.simple_mode_chk = QCheckBox("Show in Simple palette")
+        self.simple_mode_chk = QCheckBox(self.tr("Show in Simple palette"))
         form.addRow(self.simple_mode_chk)
 
         # Source-only polling defaults
@@ -386,17 +386,17 @@ class PluginCreatorDialog(QDialog):
         for m in sorted(ALLOWED_POLL_MODES):
             self.poll_mode_combo.addItem(m)
         self.poll_mode_combo.setCurrentText("execi")
-        form.addRow("Poll mode default", self.poll_mode_combo)
+        form.addRow(self.tr("Poll mode default"), self.poll_mode_combo)
 
         self.poll_interval_spin = QSpinBox()
         self.poll_interval_spin.setRange(1, 3600)
         self.poll_interval_spin.setValue(5)
-        form.addRow("Poll interval (sec)", self.poll_interval_spin)
+        form.addRow(self.tr("Poll interval (sec)"), self.poll_interval_spin)
 
         hint = QLabel(
-            "Id must look like category.plugin.name (lowercase). "
+            self.tr("Id must look like category.plugin.name (lowercase). "
             "Logic needs output_kind + lua_expr; visual needs lua_draw_body; "
-            "source needs script_body; canvas_ext needs conf directives."
+            "source needs script_body; canvas_ext needs conf directives.")
         )
         hint.setProperty("role", "caption")
         hint.setWordWrap(True)
@@ -405,14 +405,14 @@ class PluginCreatorDialog(QDialog):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setWidget(w)
-        self.tabs.addTab(scroll, "1 · Identity")
+        self.tabs.addTab(scroll, self.tr("1 · Identity"))
 
     def _build_properties_tab(self):
         w = QWidget()
         layout = QVBoxLayout(w)
 
         layout.addWidget(QLabel(
-            "Properties become inspector fields. In the code body, reference them as {key}."
+            self.tr("Properties become inspector fields. In the code body, reference them as {key}.")
         ))
 
         self.prop_list = QListWidget()
@@ -420,14 +420,14 @@ class PluginCreatorDialog(QDialog):
         layout.addWidget(self.prop_list, 1)
 
         row = QHBoxLayout()
-        add_btn = QPushButton("Add…")
+        add_btn = QPushButton(self.tr("Add…"))
         add_btn.clicked.connect(self._add_property)
-        edit_btn = QPushButton("Edit…")
+        edit_btn = QPushButton(self.tr("Edit…"))
         edit_btn.clicked.connect(self._edit_property)
-        remove_btn = QPushButton("Remove")
+        remove_btn = QPushButton(self.tr("Remove"))
         remove_btn.clicked.connect(self._remove_property)
-        presets_btn = QPushButton("Add common…")
-        presets_btn.setToolTip("Insert typical position / style properties for the current category")
+        presets_btn = QPushButton(self.tr("Add common…"))
+        presets_btn.setToolTip(self.tr("Insert typical position / style properties for the current category"))
         presets_btn.clicked.connect(self._add_common_properties)
         row.addWidget(add_btn)
         row.addWidget(edit_btn)
@@ -436,7 +436,7 @@ class PluginCreatorDialog(QDialog):
         row.addStretch(1)
         layout.addLayout(row)
 
-        self.tabs.addTab(w, "2 · Properties")
+        self.tabs.addTab(w, self.tr("2 · Properties"))
 
     def _build_body_tab(self):
         w = QWidget()
@@ -452,16 +452,16 @@ class PluginCreatorDialog(QDialog):
 
         self.body_edit = QPlainTextEdit()
         self.body_edit.setFont(mono)
-        self.body_edit.setPlaceholderText("Code body — see Identity for which field this maps to.")
+        self.body_edit.setPlaceholderText(self.tr("Code body — see Identity for which field this maps to."))
         layout.addWidget(self.body_edit, 1)
 
         self.helpers_edit = QPlainTextEdit()
         self.helpers_edit.setFont(mono)
         self.helpers_edit.setMaximumHeight(100)
         self.helpers_edit.setPlaceholderText(
-            "Optional lua_helpers (emitted once per project). Leave blank if unused."
+            self.tr("Optional lua_helpers (emitted once per project). Leave blank if unused.")
         )
-        layout.addWidget(QLabel("Shared helpers (visual only, optional)"))
+        layout.addWidget(QLabel(self.tr("Shared helpers (visual only, optional)")))
         layout.addWidget(self.helpers_edit)
 
         # canvas_ext: key=value lines
@@ -469,61 +469,61 @@ class PluginCreatorDialog(QDialog):
         self.conf_edit.setFont(mono)
         self.conf_edit.setMaximumHeight(120)
         self.conf_edit.setPlaceholderText(
-            "canvas_ext only: one directive per line, e.g.\n"
+            self.tr("canvas_ext only: one directive per line, e.g.\n"
             "border_width={width}\n"
-            "temperature_unit=celsius"
+            "temperature_unit=celsius")
         )
-        layout.addWidget(QLabel("Conf directives (canvas_ext)"))
+        layout.addWidget(QLabel(self.tr("Conf directives (canvas_ext)")))
         layout.addWidget(self.conf_edit)
 
-        load_custom = QPushButton("Paste starter template")
+        load_custom = QPushButton(self.tr("Paste starter template"))
         load_custom.clicked.connect(self._load_starter)
         layout.addWidget(load_custom)
 
-        self.tabs.addTab(w, "3 · Code body")
+        self.tabs.addTab(w, self.tr("3 · Code body"))
 
     def _build_media_tab(self):
         w = QWidget()
         form = QFormLayout(w)
 
         self.tags_edit = QLineEdit("")
-        self.tags_edit.setPlaceholderText("comma-separated, e.g. gauge,glow,hud")
-        form.addRow("Tags", self.tags_edit)
+        self.tags_edit.setPlaceholderText(self.tr("comma-separated, e.g. gauge,glow,hud"))
+        form.addRow(self.tr("Tags"), self.tags_edit)
 
         self.homepage_edit = QLineEdit("")
-        form.addRow("Homepage URL", self.homepage_edit)
+        form.addRow(self.tr("Homepage URL"), self.homepage_edit)
 
         self.license_edit = QLineEdit("")
-        self.license_edit.setPlaceholderText("e.g. MIT")
-        form.addRow("License", self.license_edit)
+        self.license_edit.setPlaceholderText(self.tr("e.g. MIT"))
+        form.addRow(self.tr("License"), self.license_edit)
 
         self.icon_edit = QLineEdit("")
-        self.icon_edit.setPlaceholderText("https://…/icon.png  or  bare icon.png")
-        form.addRow("Icon", self.icon_edit)
+        self.icon_edit.setPlaceholderText(self.tr("https://…/icon.png  or  bare icon.png"))
+        form.addRow(self.tr("Icon"), self.icon_edit)
 
         self.screenshot_edit = QLineEdit("")
-        form.addRow("Screenshot (store)", self.screenshot_edit)
+        form.addRow(self.tr("Screenshot (store)"), self.screenshot_edit)
 
         self.gif_edit = QLineEdit("")
-        form.addRow("GIF demo (store)", self.gif_edit)
+        form.addRow(self.tr("GIF demo (store)"), self.gif_edit)
 
         self.video_edit = QLineEdit("")
-        form.addRow("Video link (store)", self.video_edit)
+        form.addRow(self.tr("Video link (store)"), self.video_edit)
 
         note = QLabel(
-            "Icon is the only media field Studio shows in the palette / Plugins list. "
-            "Screenshot, GIF, and video are for the community store website only."
+            self.tr("Icon is the only media field Studio shows in the palette / Plugins list. "
+            "Screenshot, GIF, and video are for the community store website only.")
         )
         note.setProperty("role", "caption")
         note.setWordWrap(True)
         form.addRow(note)
 
-        self.tabs.addTab(w, "4 · Media")
+        self.tabs.addTab(w, self.tr("4 · Media"))
 
     def _build_export_tab(self):
         w = QWidget()
         layout = QVBoxLayout(w)
-        layout.addWidget(QLabel("Validation output and export preview"))
+        layout.addWidget(QLabel(self.tr("Validation output and export preview")))
 
         self.validation_log = QPlainTextEdit()
         self.validation_log.setReadOnly(True)
@@ -532,11 +532,11 @@ class PluginCreatorDialog(QDialog):
         self.validation_log.setFont(mono)
         layout.addWidget(self.validation_log, 1)
 
-        preview_btn = QPushButton("Preview JSON")
+        preview_btn = QPushButton(self.tr("Preview JSON"))
         preview_btn.clicked.connect(self._preview_json)
         layout.addWidget(preview_btn)
 
-        self.tabs.addTab(w, "5 · Validate / Export")
+        self.tabs.addTab(w, self.tr("5 · Validate / Export"))
 
     # ---- category ------------------------------------------------------
 
@@ -563,10 +563,10 @@ class PluginCreatorDialog(QDialog):
         self.body_edit.setEnabled(not is_canvas)
 
         hints = {
-            "logic": "Body = lua_expr (expression returning a value). Placeholders: {prop_key}.",
-            "visual": "Body = lua_draw_body inside draw_node_*(cr, W, H). Placeholders: {prop_key}. Color props expand to r, g, b floats.",
-            "source": "Body = bash script_body. Last stdout line is the value. Placeholders become literal text.",
-            "canvas_ext": "Use Conf directives below (allowed keys only). Body box is unused.",
+            "logic": self.tr("Body = lua_expr (expression returning a value). Placeholders: {prop_key}."),
+            "visual": self.tr("Body = lua_draw_body inside draw_node_*(cr, W, H). Placeholders: {prop_key}. Color props expand to r, g, b floats."),
+            "source": self.tr("Body = bash script_body. Last stdout line is the value. Placeholders become literal text."),
+            "canvas_ext": self.tr("Use Conf directives below (allowed keys only). Body box is unused."),
         }
         self.body_hint.setText(hints.get(cat, ""))
 
@@ -594,7 +594,7 @@ class PluginCreatorDialog(QDialog):
         dlg = _PropertyEditorDialog(parent=self)
         if dlg.exec() and dlg.result_prop:
             if any(p.key == dlg.result_prop.key for p in self._properties):
-                QMessageBox.warning(self, "Property", f"Duplicate key: {dlg.result_prop.key}")
+                QMessageBox.warning(self, self.tr("Property"), self.tr("Duplicate key: {0}").format(dlg.result_prop.key))
                 return
             self._properties.append(dlg.result_prop)
             self._refresh_prop_list()
@@ -608,7 +608,7 @@ class PluginCreatorDialog(QDialog):
             new_key = dlg.result_prop.key
             for i, p in enumerate(self._properties):
                 if i != row and p.key == new_key:
-                    QMessageBox.warning(self, "Property", f"Duplicate key: {new_key}")
+                    QMessageBox.warning(self, self.tr("Property"), self.tr("Duplicate key: {0}").format(new_key))
                     return
             self._properties[row] = dlg.result_prop
             self._refresh_prop_list()
@@ -661,7 +661,7 @@ class PluginCreatorDialog(QDialog):
                 self._properties.append(p)
                 added += 1
         self._refresh_prop_list()
-        self.status.setText(f"Added {added} common property(ies).")
+        self.status.setText(self.tr("Added %n common property(ies).", "", added))
 
     # ---- build PluginNode ----------------------------------------------
 
@@ -721,23 +721,23 @@ class PluginCreatorDialog(QDialog):
         # Extra client-side checks that mirror loader._validate closely
         if not _ID_RE.match(plugin.id):
             errors.append(
-                f"{plugin.id}: id must match logic.* / visual.* / source.* / canvas_ext.* "
-                f"(e.g. visual.plugin.ring)"
+                self.tr("{0}: id must match logic.* / visual.* / source.* / canvas_ext.* "
+                "(e.g. visual.plugin.ring)").format(plugin.id)
             )
         if plugin.category == "logic" and not (plugin.lua_expr or "").strip():
-            errors.append(f"{plugin.id}: logic plugins need lua_expr")
+            errors.append(self.tr("{0}: logic plugins need lua_expr").format(plugin.id))
         if plugin.category == "visual" and not (plugin.lua_draw_body or "").strip():
-            errors.append(f"{plugin.id}: visual plugins need lua_draw_body")
+            errors.append(self.tr("{0}: visual plugins need lua_draw_body").format(plugin.id))
         if plugin.category == "source" and not (plugin.script_body or "").strip():
-            errors.append(f"{plugin.id}: source plugins need script_body")
+            errors.append(self.tr("{0}: source plugins need script_body").format(plugin.id))
         if plugin.category == "canvas_ext":
             if not plugin.conf_directives:
-                errors.append(f"{plugin.id}: canvas_ext needs at least one conf directive")
+                errors.append(self.tr("{0}: canvas_ext needs at least one conf directive").format(plugin.id))
             for key in plugin.conf_directives:
                 if key not in CANVAS_EXT_ALLOWED_KEYS:
                     errors.append(
-                        f"{plugin.id}: conf key {key!r} not in allowed list "
-                        f"({sorted(CANVAS_EXT_ALLOWED_KEYS)})"
+                        self.tr("{0}: conf key {1!r} not in allowed list "
+                        "({2})").format(plugin.id, key, sorted(CANVAS_EXT_ALLOWED_KEYS))
                     )
 
         # Placeholder coverage
@@ -750,25 +750,25 @@ class PluginCreatorDialog(QDialog):
         for match in re.findall(r"\{([a-z][a-z0-9_]*)\}", template):
             if match not in keys and match != "cr":
                 errors.append(
-                    f"{plugin.id}: template references {{{match}}} but no such property"
+                    self.tr("{0}: template references {{{1}}} but no such property").format(plugin.id, match)
                 )
 
         self.tabs.setCurrentIndex(4)
         if errors:
             self.validation_log.setPlainText(
-                "VALIDATION FAILED\n\n" + "\n".join(f"• {e}" for e in errors)
+                self.tr("VALIDATION FAILED\n\n") + "\n".join(f"• {e}" for e in errors)
             )
-            self.status.setText(f"{len(errors)} validation error(s).")
+            self.status.setText(self.tr("%n validation error(s).", "", len(errors)))
             return False
 
         self.validation_log.setPlainText(
-            "VALIDATION OK\n\n"
-            f"id: {plugin.id}\n"
-            f"category: {plugin.category}\n"
-            f"properties: {len(plugin.properties)}\n"
-            f"Ready to export or install."
+            self.tr("VALIDATION OK\n\n"
+            "id: {0}\n"
+            "category: {1}\n"
+            "properties: {2}\n"
+            "Ready to export or install.").format(plugin.id, plugin.category, len(plugin.properties))
         )
-        self.status.setText("Validation passed.")
+        self.status.setText(self.tr("Validation passed."))
         return True
 
     def _preview_json(self):
@@ -785,17 +785,17 @@ class PluginCreatorDialog(QDialog):
     def _export_json(self):
         if not self._validate():
             QMessageBox.warning(
-                self, "Plugin Creation",
-                "Fix validation errors before exporting.",
+                self, self.tr("Plugin Creation"),
+                self.tr("Fix validation errors before exporting."),
             )
             return
         plugin = self.build_plugin()
         default_name = plugin.id.replace(".", "_") + ".json"
         path, _ = QFileDialog.getSaveFileName(
             self,
-            "Export plugin JSON",
+            self.tr("Export plugin JSON"),
             default_name,
-            "Plugin JSON (*.json);;All files (*)",
+            self.tr("Plugin JSON (*.json);;All files (*)"),
         )
         if not path:
             return
@@ -806,10 +806,10 @@ class PluginCreatorDialog(QDialog):
         # OR a mini-manifest — both are loadable via load_manifest_file.
         as_manifest = QMessageBox.question(
             self,
-            "Export format",
-            "Export as a full manifest (plugins: […])?\n\n"
+            self.tr("Export format"),
+            self.tr("Export as a full manifest (plugins: […])?\n\n"
             "Yes = manifest wrapper (drop into ~/.config/conky-studio/plugins/)\n"
-            "No  = single plugin object (for $ref / store packs)",
+            "No  = single plugin object (for $ref / store packs)"),
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.Yes,
         )
@@ -827,18 +827,18 @@ class PluginCreatorDialog(QDialog):
         try:
             Path(path).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         except OSError as e:
-            QMessageBox.warning(self, "Export failed", str(e))
+            QMessageBox.warning(self, self.tr("Export failed"), str(e))
             return
 
         self.exported_path = path
-        self.status.setText(f"Exported to {path}")
-        QMessageBox.information(self, "Export complete", f"Wrote:\n{path}")
+        self.status.setText(self.tr("Exported to {0}").format(path))
+        QMessageBox.information(self, self.tr("Export complete"), self.tr("Wrote:\n{0}").format(path))
 
     def _install_local(self):
         if not self._validate():
             QMessageBox.warning(
-                self, "Plugin Creation",
-                "Fix validation errors before installing.",
+                self, self.tr("Plugin Creation"),
+                self.tr("Fix validation errors before installing."),
             )
             return
         plugin = self.build_plugin()
@@ -848,20 +848,20 @@ class PluginCreatorDialog(QDialog):
             if hasattr(plugin_loader, "clear_uninstalled"):
                 plugin_loader.clear_uninstalled([plugin.id])
         except plugin_loader.PluginError as e:
-            QMessageBox.warning(self, "Install failed", str(e))
+            QMessageBox.warning(self, self.tr("Install failed"), str(e))
             return
         except Exception as e:
-            QMessageBox.warning(self, "Install failed", str(e))
+            QMessageBox.warning(self, self.tr("Install failed"), str(e))
             return
 
         self.exported_path = str(plugin_loader.installed_pack_path())
-        self.status.setText(f"Installed {plugin.id} into local plugins pack.")
+        self.status.setText(self.tr("Installed {0} into local plugins pack.").format(plugin.id))
         QMessageBox.information(
             self,
-            "Installed",
-            f"{plugin.label} ({plugin.id}) is registered for this session "
-            f"and saved under {LOCAL_PLUGINS_DIR}.\n\n"
-            "It appears in the Nodes palette after refresh.",
+            self.tr("Installed"),
+            self.tr("{0} ({1}) is registered for this session "
+            "and saved under {2}.\n\n"
+            "It appears in the Nodes palette after refresh.").format(plugin.label, plugin.id, LOCAL_PLUGINS_DIR),
         )
 
 

@@ -12,7 +12,7 @@ from PyQt6.QtWidgets import (
     QDialogButtonBox, QWidget,
 )
 from PyQt6.QtGui import QAction, QGuiApplication
-from PyQt6.QtCore import Qt, QDir, QTimer, QRect
+from PyQt6.QtCore import Qt, QDir, QTimer, QRect, QT_TRANSLATE_NOOP
 
 from conkystudio.model.project import Project
 from conkystudio.ui.manager_tab import ManagerTab
@@ -41,46 +41,46 @@ class PluginsDialog(QDialog):
     # Categories plugins may use -- display label -> registry category key.
     # "All" is handled separately (maps to None, no filter).
     _CATEGORY_FILTER_KEYS = {
-        "Logic": "logic",
-        "Visual": "visual",
-        "Source": "source",
-        "Canvas Ext": "canvas_ext",
+        QT_TRANSLATE_NOOP("PluginsDialog", "Logic"): "logic",
+        QT_TRANSLATE_NOOP("PluginsDialog", "Visual"): "visual",
+        QT_TRANSLATE_NOOP("PluginsDialog", "Source"): "source",
+        QT_TRANSLATE_NOOP("PluginsDialog", "Canvas Ext"): "canvas_ext",
     }
-    _CATEGORY_FILTERS = ("All",) + tuple(_CATEGORY_FILTER_KEYS.keys())
+    _CATEGORY_FILTERS = (QT_TRANSLATE_NOOP("PluginsDialog", "All"),) + tuple(_CATEGORY_FILTER_KEYS.keys())
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Plugins")
+        self.setWindowTitle(self.tr("Plugins"))
         self.resize(620, 620)
         self._manifest = None
         self._installed_cache: list = []  # raw meta dicts, filtered on display
         self._fetch_cache: list = []      # PluginNode instances from last Fetch
         layout = QVBoxLayout(self)
 
-        heading = QLabel("Plugins")
+        heading = QLabel(self.tr("Plugins"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
         warn = QLabel(
-            "A plugin's Lua runs wherever you use it, inside Conky's own process -- the same trust "
+            self.tr("A plugin's Lua runs wherever you use it, inside Conky's own process -- the same trust "
             "level as installing a theme or script. Only load plugins from a source you trust. "
             "Installed plugins are saved under ~/.config/conky-studio/plugins/ and stay available "
-            "across restarts and Fetch operations until you uninstall them."
+            "across restarts and Fetch operations until you uninstall them.")
         )
         warn.setProperty("role", "caption")
         warn.setWordWrap(True)
         layout.addWidget(warn)
 
-        installed_heading = QLabel("Installed")
+        installed_heading = QLabel(self.tr("Installed"))
         installed_heading.setProperty("role", "heading")
         layout.addWidget(installed_heading)
 
         installed_filter_row = QHBoxLayout()
-        installed_filter_row.addWidget(QLabel("Category"))
+        installed_filter_row.addWidget(QLabel(self.tr("Category")))
         self.installed_category = QComboBox()
         for name in self._CATEGORY_FILTERS:
-            self.installed_category.addItem(name)
+            self.installed_category.addItem(self.tr(name), name)
         self.installed_category.setToolTip(
-            "Show only installed plugins in this category (Logic / Visual / Source / Canvas Ext)"
+            self.tr("Show only installed plugins in this category (Logic / Visual / Source / Canvas Ext)")
         )
         self.installed_category.currentIndexChanged.connect(self._rebuild_installed_list)
         installed_filter_row.addWidget(self.installed_category)
@@ -93,41 +93,41 @@ class PluginsDialog(QDialog):
         layout.addWidget(self.installed_list, 1)
 
         installed_btn_row = QHBoxLayout()
-        self.uninstall_btn = QPushButton("Uninstall")
+        self.uninstall_btn = QPushButton(self.tr("Uninstall"))
         self.uninstall_btn.setToolTip(
-            "Remove selected or checked plugins from this session and from disk "
-            "(only items currently visible under the category filter are considered)"
+            self.tr("Remove selected or checked plugins from this session and from disk "
+            "(only items currently visible under the category filter are considered)")
         )
         self.uninstall_btn.clicked.connect(self._uninstall_selected)
         installed_btn_row.addWidget(self.uninstall_btn)
         installed_btn_row.addStretch(1)
         layout.addLayout(installed_btn_row)
 
-        fetch_heading = QLabel("Fetch / install more")
+        fetch_heading = QLabel(self.tr("Fetch / install more"))
         fetch_heading.setProperty("role", "heading")
         layout.addWidget(fetch_heading)
 
         url_row = QHBoxLayout()
-        url_row.addWidget(QLabel("Manifest URL"))
+        url_row.addWidget(QLabel(self.tr("Manifest URL")))
         self.url_edit = QLineEdit(getattr(plugin_loader, "DEFAULT_PLUGINS_URL", ""))
         url_row.addWidget(self.url_edit, 1)
-        fetch_btn = QPushButton("Fetch")
+        fetch_btn = QPushButton(self.tr("Fetch"))
         fetch_btn.setObjectName("primary")
         fetch_btn.clicked.connect(self._fetch)
         url_row.addWidget(fetch_btn)
-        visit_store_btn = QPushButton("Visit Store \u2197")
-        visit_store_btn.setToolTip("Open the Node Vault website in your browser")
+        visit_store_btn = QPushButton(self.tr("Visit Store \u2197"))
+        visit_store_btn.setToolTip(self.tr("Open the Node Vault website in your browser"))
         visit_store_btn.clicked.connect(self._open_node_vault)
         url_row.addWidget(visit_store_btn)
         layout.addLayout(url_row)
 
         fetch_filter_row = QHBoxLayout()
-        fetch_filter_row.addWidget(QLabel("Category"))
+        fetch_filter_row.addWidget(QLabel(self.tr("Category")))
         self.fetch_category = QComboBox()
         for name in self._CATEGORY_FILTERS:
-            self.fetch_category.addItem(name)
+            self.fetch_category.addItem(self.tr(name), name)
         self.fetch_category.setToolTip(
-            "Show only catalogue plugins in this category before installing"
+            self.tr("Show only catalogue plugins in this category before installing")
         )
         self.fetch_category.currentIndexChanged.connect(self._rebuild_fetch_list)
         fetch_filter_row.addWidget(self.fetch_category)
@@ -138,16 +138,16 @@ class PluginsDialog(QDialog):
         layout.addWidget(self.list_widget, 1)
 
         btn_row = QHBoxLayout()
-        self.load_btn = QPushButton("Install Checked")
+        self.load_btn = QPushButton(self.tr("Install Checked"))
         self.load_btn.setObjectName("primary")
         self.load_btn.setEnabled(False)
         self.load_btn.setToolTip(
-            "Install checked plugins from the list below "
-            "(only the currently filtered category is shown)"
+            self.tr("Install checked plugins from the list below "
+            "(only the currently filtered category is shown)")
         )
         self.load_btn.clicked.connect(self._load_checked)
         btn_row.addWidget(self.load_btn)
-        close_btn = QPushButton("Close")
+        close_btn = QPushButton(self.tr("Close"))
         close_btn.clicked.connect(self.accept)
         btn_row.addWidget(close_btn)
         layout.addLayout(btn_row)
@@ -156,7 +156,7 @@ class PluginsDialog(QDialog):
             self._refresh_installed()
         except Exception as e:
             self.installed_list.clear()
-            self.installed_list.addItem("(could not list installed plugins: %s)" % e)
+            self.installed_list.addItem(self.tr("(could not list installed plugins: {0})").format(e))
             self.uninstall_btn.setEnabled(False)
 
     def _open_node_vault(self):
@@ -170,7 +170,7 @@ class PluginsDialog(QDialog):
 
     def _filter_category_value(self, combo: QComboBox):
         """None = All; otherwise the registry category key (logic/visual/source/canvas_ext)."""
-        text = (combo.currentText() or "All").strip()
+        text = (combo.currentData() or "All").strip()
         if text == "All":
             return None
         return self._CATEGORY_FILTER_KEYS.get(text, text.lower())
@@ -181,7 +181,7 @@ class PluginsDialog(QDialog):
         except Exception as e:
             self._installed_cache = []
             self.installed_list.clear()
-            item = QListWidgetItem("(error listing plugins: %s)" % e)
+            item = QListWidgetItem(self.tr("(error listing plugins: {0})").format(e))
             item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
             self.installed_list.addItem(item)
             self.uninstall_btn.setEnabled(False)
@@ -207,9 +207,9 @@ class PluginsDialog(QDialog):
             ]
         if not filtered:
             if not self._installed_cache:
-                msg = "(none installed yet)"
+                msg = self.tr("(none installed yet)")
             else:
-                msg = "(none in this category)"
+                msg = self.tr("(none in this category)")
             item = QListWidgetItem(msg)
             item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
             self.installed_list.addItem(item)
@@ -235,7 +235,7 @@ class PluginsDialog(QDialog):
             item.setData(Qt.ItemDataRole.UserRole, pid)
             tip = meta.get("description") or ""
             if meta.get("source"):
-                tip = (tip + " | " if tip else "") + ("Source: %s" % meta["source"])
+                tip = (tip + " | " if tip else "") + (self.tr("Source: {0}").format(meta["source"]))
             if tip:
                 item.setToolTip(tip)
             self.installed_list.addItem(item)
@@ -254,19 +254,19 @@ class PluginsDialog(QDialog):
         if not ids:
             QMessageBox.information(
                 self,
-                "Plugins",
-                "Select or check one or more installed plugins, then click Uninstall.",
+                self.tr("Plugins"),
+                self.tr("Select or check one or more installed plugins, then click Uninstall."),
             )
             return
         try:
             removed, errors = plugin_loader.uninstall_plugins(ids)
         except Exception as e:
-            QMessageBox.warning(self, "Plugins", "Uninstall failed: %s" % e)
+            QMessageBox.warning(self, self.tr("Plugins"), self.tr("Uninstall failed: {0}").format(e))
             return
-        msg = ("Uninstalled: " + ", ".join(removed)) if removed else "Nothing uninstalled."
+        msg = self.tr("Uninstalled: {0}").format(", ".join(removed)) if removed else self.tr("Nothing uninstalled.")
         if errors:
-            msg += " | Errors: " + " ; ".join(errors)
-        QMessageBox.information(self, "Plugins", msg)
+            msg += self.tr(" | Errors: {0}").format(" ; ".join(errors))
+        QMessageBox.information(self, self.tr("Plugins"), msg)
         try:
             self._refresh_installed()
         except Exception:
@@ -297,11 +297,11 @@ class PluginsDialog(QDialog):
         try:
             self._manifest = plugin_loader.fetch_manifest(self.url_edit.text().strip())
         except Exception as e:
-            QMessageBox.warning(self, "Couldn't fetch plugins", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't fetch plugins"), str(e))
             return
         plugins = getattr(self._manifest, "plugins", None) or []
         if not plugins:
-            self.list_widget.addItem("(manifest has no plugins listed yet)")
+            self.list_widget.addItem(self.tr("(manifest has no plugins listed yet)"))
             return
         # Alphabetical by label, then id
         self._fetch_cache = sorted(
@@ -317,7 +317,7 @@ class PluginsDialog(QDialog):
         self.list_widget.clear()
         if not self._fetch_cache:
             if self._manifest is not None:
-                self.list_widget.addItem("(manifest has no plugins listed yet)")
+                self.list_widget.addItem(self.tr("(manifest has no plugins listed yet)"))
             self.load_btn.setEnabled(False)
             return
         try:
@@ -334,7 +334,7 @@ class PluginsDialog(QDialog):
                 already = getattr(plugin, "id", None) in loaded
                 label = "%s  (%s)" % (plugin.label, plugin.category)
                 if already:
-                    label += "  - already installed"
+                    label += self.tr("  - already installed")
                 item = QListWidgetItem(label)
                 flags = (
                     Qt.ItemFlag.ItemIsEnabled
@@ -356,7 +356,7 @@ class PluginsDialog(QDialog):
             except Exception:
                 continue
         if shown == 0:
-            self.list_widget.addItem("(none in this category)")
+            self.list_widget.addItem(self.tr("(none in this category)"))
             self.load_btn.setEnabled(False)
         else:
             self.load_btn.setEnabled(True)
@@ -392,11 +392,11 @@ class PluginsDialog(QDialog):
                 except Exception:
                     pass
             except OSError as e:
-                errors.append("Could not save plugins for next launch: %s" % e)
-        msg = ("Installed: " + ", ".join(loaded)) if loaded else "Nothing installed."
+                errors.append(self.tr("Could not save plugins for next launch: {0}").format(e))
+        msg = self.tr("Installed: {0}").format(", ".join(loaded)) if loaded else self.tr("Nothing installed.")
         if errors:
-            msg += " | Errors: " + " ; ".join(errors)
-        QMessageBox.information(self, "Plugins", msg)
+            msg += self.tr(" | Errors: {0}").format(" ; ".join(errors))
+        QMessageBox.information(self, self.tr("Plugins"), msg)
         try:
             self._refresh_installed()
         except Exception:
@@ -411,20 +411,20 @@ class PluginsDialog(QDialog):
 class GettingStartedDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Getting Started")
+        self.setWindowTitle(self.tr("Getting Started"))
         self.resize(640, 560)
         layout = QVBoxLayout(self)
 
-        heading = QLabel("Getting Started with Conky Studio")
+        heading = QLabel(self.tr("Getting Started with Conky Studio"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
 
         body = QPlainTextEdit()
         body.setReadOnly(True)
-        body.setPlainText(_GETTING_STARTED_TEXT)
+        body.setPlainText(self.tr(_GETTING_STARTED_TEXT))
         layout.addWidget(body, 1)
 
-        close = QPushButton("Close")
+        close = QPushButton(self.tr("Close"))
         close.setObjectName("primary")
         close.clicked.connect(self.accept)
         layout.addWidget(close)
@@ -435,32 +435,32 @@ class SupportDialog(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Support")
+        self.setWindowTitle(self.tr("Support"))
         self.resize(480, 280)
         layout = QVBoxLayout(self)
 
-        heading = QLabel("Support & guides")
+        heading = QLabel(self.tr("Support & guides"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
 
         body = QLabel(
-            "Get help, share HUDs, and watch video guides from the developer.\n\n"
-            "These links stay available anytime under Help → Support."
+            self.tr("Get help, share HUDs, and watch video guides from the developer.\n\n"
+            "These links stay available anytime under Help → Support.")
         )
         body.setWordWrap(True)
         layout.addWidget(body)
 
-        discord_btn = QPushButton("Open Discord")
+        discord_btn = QPushButton(self.tr("Open Discord"))
         discord_btn.setObjectName("primary")
         discord_btn.clicked.connect(lambda: self._open(SUPPORT_DISCORD_URL))
         layout.addWidget(discord_btn)
 
-        yt_btn = QPushButton("Open YouTube (@BobbyComet)")
+        yt_btn = QPushButton(self.tr("Open YouTube (@BobbyComet)"))
         yt_btn.clicked.connect(lambda: self._open(SUPPORT_YOUTUBE_URL))
         layout.addWidget(yt_btn)
 
         layout.addStretch(1)
-        close = QPushButton("Close")
+        close = QPushButton(self.tr("Close"))
         close.clicked.connect(self.accept)
         layout.addWidget(close)
 
@@ -477,33 +477,33 @@ class UpdateAvailableDialog(QDialog):
 
     def __init__(self, result: "update_checker.UpdateCheckResult", parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Update Available")
+        self.setWindowTitle(self.tr("Update Available"))
         self.resize(460, 220)
         self._download_url = result.download_url
         layout = QVBoxLayout(self)
 
-        heading = QLabel("A new version of Conky Studio is available")
+        heading = QLabel(self.tr("A new version of Conky Studio is available"))
         heading.setProperty("role", "heading")
         heading.setWordWrap(True)
         layout.addWidget(heading)
 
         body = QLabel(
-            f"You have v{result.current_version}. "
-            f"v{result.latest_version or '?'} is now available.\n\n"
+            self.tr("You have v{0}. "
+            "v{1} is now available.\n\n"
             "Go to GitHub to get the new release, or if it is installed, use "
-            "Griffin Updater to update to the new version."
+            "Griffin Updater to update to the new version.").format(result.current_version, result.latest_version or '?')
         )
         body.setWordWrap(True)
         layout.addWidget(body)
 
         layout.addStretch(1)
 
-        github_btn = QPushButton("Open GitHub Release")
+        github_btn = QPushButton(self.tr("Open GitHub Release"))
         github_btn.setObjectName("primary")
         github_btn.clicked.connect(self._open_github)
         layout.addWidget(github_btn)
 
-        close = QPushButton("Close")
+        close = QPushButton(self.tr("Close"))
         close.clicked.connect(self.accept)
         layout.addWidget(close)
 
@@ -513,7 +513,7 @@ class UpdateAvailableDialog(QDialog):
         QDesktopServices.openUrl(QUrl(self._download_url))
 
 
-_GETTING_STARTED_TEXT = """Welcome to Conky Studio! You can build a live desktop HUD without writing a full theme by hand.
+_GETTING_STARTED_TEXT = QT_TRANSLATE_NOOP("GettingStartedDialog", """Welcome to Conky Studio! You can build a live desktop HUD without writing a full theme by hand.
 
 
 What You’re Building
@@ -654,22 +654,22 @@ Start with:
 Get that working, then expand.
 
 That’s how you build everything.
-"""
+""")
 
 
 class HardwareDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Hardware & Session")
+        self.setWindowTitle(self.tr("Hardware & Session"))
         self.resize(560, 420)
         layout = QVBoxLayout(self)
-        heading = QLabel("Hardware & Session Report")
+        heading = QLabel(self.tr("Hardware & Session Report"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
         self.text = QPlainTextEdit()
         self.text.setReadOnly(True)
         layout.addWidget(self.text, 1)
-        close = QPushButton("Close")
+        close = QPushButton(self.tr("Close"))
         close.clicked.connect(self.accept)
         layout.addWidget(close)
         self._run()
@@ -703,7 +703,7 @@ class SaveProjectDialog(QDialog):
     # result_mode: "save" | "skip" | None (cancel)
     def __init__(self, project: Project, suggested_path: str = "", parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Save Project")
+        self.setWindowTitle(self.tr("Save Project"))
         self.setMinimumWidth(520)
         self.project = project
         self.result_mode: str | None = None
@@ -715,16 +715,16 @@ class SaveProjectDialog(QDialog):
         root = QVBoxLayout(self)
 
         intro = QLabel(
-            "Every save creates a portable .cstudio package (project graph + "
+            self.tr("Every save creates a portable .cstudio package (project graph + "
             "imported images + manifest). Fill in the package info below, or "
-            "click Skip for a generic manifest."
+            "click Skip for a generic manifest.")
         )
         intro.setWordWrap(True)
         intro.setProperty("role", "caption")
         root.addWidget(intro)
 
         # ---- Manifest fields ----------------------------------------------
-        manifest_box = QGroupBox("Package manifest (manifest.json)")
+        manifest_box = QGroupBox(self.tr("Package manifest (manifest.json)"))
         form = QFormLayout(manifest_box)
 
         self.name_edit = QLineEdit(project.name or "Untitled HUD")
@@ -734,46 +734,45 @@ class SaveProjectDialog(QDialog):
         self.description_edit.setMaximumHeight(80)
         self.notes_edit = QPlainTextEdit()
         self.notes_edit.setPlaceholderText(
-            "Optional notes for anyone who opens this package…"
+            self.tr("Optional notes for anyone who opens this package…")
         )
         self.notes_edit.setMaximumHeight(70)
 
-        form.addRow("Name", self.name_edit)
-        form.addRow("Author", self.author_edit)
-        form.addRow("Description", self.description_edit)
-        form.addRow("Notes", self.notes_edit)
+        form.addRow(self.tr("Name"), self.name_edit)
+        form.addRow(self.tr("Author"), self.author_edit)
+        form.addRow(self.tr("Description"), self.description_edit)
+        form.addRow(self.tr("Notes"), self.notes_edit)
         root.addWidget(manifest_box)
 
         # ---- Fonts --------------------------------------------------------
-        font_box = QGroupBox("Fonts")
+        font_box = QGroupBox(self.tr("Fonts"))
         font_layout = QVBoxLayout(font_box)
         uncommon = project.collect_uncommon_font_families()
         all_families = project.collect_font_families()
         if uncommon:
             font_layout.addWidget(QLabel(
-                "This HUD uses custom font families that may be missing on "
-                "other machines:"
+                self.tr("This HUD uses custom font families that may be missing on "
+                "other machines:")
             ))
             fam_label = QLabel("• " + "\n• ".join(uncommon))
             fam_label.setWordWrap(True)
             font_layout.addWidget(fam_label)
         elif all_families:
             font_layout.addWidget(QLabel(
-                "Fonts used: " + ", ".join(all_families)
-                + " (common system families — no files required)."
+                self.tr("Fonts used: {0} (common system families — no files required).").format(", ".join(all_families))
             ))
         else:
-            font_layout.addWidget(QLabel("No font families set on nodes."))
+            font_layout.addWidget(QLabel(self.tr("No font families set on nodes.")))
 
         self.font_list = QListWidget()
         self.font_list.setMinimumHeight(60)
         font_layout.addWidget(self.font_list)
 
         font_btn_row = QHBoxLayout()
-        add_font_btn = QPushButton("Add font files…")
-        add_font_btn.setToolTip("Choose .ttf / .otf files to embed in the package")
+        add_font_btn = QPushButton(self.tr("Add font files…"))
+        add_font_btn.setToolTip(self.tr("Choose .ttf / .otf files to embed in the package"))
         add_font_btn.clicked.connect(self._add_fonts)
-        remove_font_btn = QPushButton("Remove selected")
+        remove_font_btn = QPushButton(self.tr("Remove selected"))
         remove_font_btn.clicked.connect(self._remove_selected_fonts)
         font_btn_row.addWidget(add_font_btn)
         font_btn_row.addWidget(remove_font_btn)
@@ -782,10 +781,10 @@ class SaveProjectDialog(QDialog):
         root.addWidget(font_box)
 
         # ---- Destination --------------------------------------------------
-        dest_box = QGroupBox("Save location")
+        dest_box = QGroupBox(self.tr("Save location"))
         dest_layout = QHBoxLayout(dest_box)
         self.path_edit = QLineEdit(self._suggested)
-        browse_btn = QPushButton("Browse…")
+        browse_btn = QPushButton(self.tr("Browse…"))
         browse_btn.clicked.connect(self._browse_dest)
         dest_layout.addWidget(self.path_edit, 1)
         dest_layout.addWidget(browse_btn)
@@ -793,11 +792,11 @@ class SaveProjectDialog(QDialog):
 
         # ---- Buttons: Save | Skip | Cancel --------------------------------
         buttons = QDialogButtonBox()
-        self.save_btn = buttons.addButton("Save package", QDialogButtonBox.ButtonRole.AcceptRole)
-        self.skip_btn = buttons.addButton("Skip", QDialogButtonBox.ButtonRole.ActionRole)
+        self.save_btn = buttons.addButton(self.tr("Save package"), QDialogButtonBox.ButtonRole.AcceptRole)
+        self.skip_btn = buttons.addButton(self.tr("Skip"), QDialogButtonBox.ButtonRole.ActionRole)
         self.cancel_btn = buttons.addButton(QDialogButtonBox.StandardButton.Cancel)
         self.skip_btn.setToolTip(
-            "Use a generic manifest.json; still saves project.json and imported images."
+            self.tr("Use a generic manifest.json; still saves project.json and imported images.")
         )
         self.save_btn.clicked.connect(self._on_save)
         self.skip_btn.clicked.connect(self._on_skip)
@@ -816,11 +815,11 @@ class SaveProjectDialog(QDialog):
                 start_dir = candidate
                 break
 
-        dialog = QFileDialog(self, "Choose font files to include in the package", start_dir)
+        dialog = QFileDialog(self, self.tr("Choose font files to include in the package"), start_dir)
         dialog.setFileMode(QFileDialog.FileMode.ExistingFiles)
         dialog.setNameFilters([
-            "Fonts (*.ttf *.otf *.ttc *.woff *.woff2)",
-            "All files (*)",
+            self.tr("Fonts (*.ttf *.otf *.ttc *.woff *.woff2)"),
+            self.tr("All files (*)"),
         ])
         # Native GTK/KDE dialogs often hide dotfolders; Qt dialog can show them.
         dialog.setOption(QFileDialog.Option.DontUseNativeDialog, True)
@@ -849,9 +848,9 @@ class SaveProjectDialog(QDialog):
     def _browse_dest(self):
         path, _ = QFileDialog.getSaveFileName(
             self,
-            "Save Conky Studio project",
+            self.tr("Save Conky Studio project"),
             self.path_edit.text() or self._suggested,
-            "Conky Studio project (*.cstudio);;Legacy project JSON (*.json)",
+            self.tr("Conky Studio project (*.cstudio);;Legacy project JSON (*.json)"),
         )
         if path:
             if not path.lower().endswith((".cstudio", ".json")):
@@ -876,7 +875,7 @@ class SaveProjectDialog(QDialog):
 
     def _on_save(self):
         if not self._resolved_path():
-            QMessageBox.warning(self, "Save Project", "Choose where to save the package.")
+            QMessageBox.warning(self, self.tr("Save Project"), self.tr("Choose where to save the package."))
             return
         self.result_mode = "save"
         self.accept()
@@ -884,7 +883,7 @@ class SaveProjectDialog(QDialog):
     def _on_skip(self):
         # Generic manifest; still need a destination.
         if not self._resolved_path():
-            QMessageBox.warning(self, "Save Project", "Choose where to save the package.")
+            QMessageBox.warning(self, self.tr("Save Project"), self.tr("Choose where to save the package."))
             return
         self.result_mode = "skip"
         self.accept()
@@ -896,7 +895,7 @@ class SaveProjectDialog(QDialog):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(f"Conky Studio v{update_checker.APP_VERSION}")
+        self.setWindowTitle(self.tr("Conky Studio v{0}").format(update_checker.APP_VERSION))
 
         # Low floor so vertical resize always works. Child docks used to
         # inflate minimumSizeHint so the resize cursor appeared but height
@@ -916,9 +915,9 @@ class MainWindow(QMainWindow):
         self.manager_tab = ManagerTab()
         self.studio_tab = StudioTab()
         self.store_tab = StoreTab()
-        self.tabs.addTab(self.manager_tab, "Manager")
-        self.tabs.addTab(self.studio_tab, "Studio")
-        self.tabs.addTab(self.store_tab, "Store")
+        self.tabs.addTab(self.manager_tab, self.tr("Manager"))
+        self.tabs.addTab(self.studio_tab, self.tr("Studio"))
+        self.tabs.addTab(self.store_tab, self.tr("Store"))
 
         self.studio_tab.project_changed.connect(self._on_project_edited)
 
@@ -936,7 +935,7 @@ class MainWindow(QMainWindow):
             self.studio_tab.palette._refresh()
         except Exception:
             pass
-        self.statusBar().showMessage("Ready")
+        self.statusBar().showMessage(self.tr("Ready"))
 
         # Silent -- only ever speaks up (via UpdateAvailableDialog) if a
         # newer release actually exists. Kept off the UI thread so a
@@ -967,7 +966,7 @@ class MainWindow(QMainWindow):
         dlg.exec()
         if dlg.dont_ask_again:
             app_settings.set_bool("deps/suppress_popup", True)
-            self.statusBar().showMessage("OK \u2014 you can always find the commands under Tools \u2192 Missing packages.", 8000)
+            self.statusBar().showMessage(self.tr("OK \u2014 you can always find the commands under Tools \u2192 Missing packages."), 8000)
 
     def _apply_initial_geometry(self) -> None:
         """Size and center the window inside the available desktop area.
@@ -1008,125 +1007,125 @@ class MainWindow(QMainWindow):
             self._apply_initial_geometry()
 
     def _build_toolbar(self):
-        toolbar = self.addToolBar("Main")
+        toolbar = self.addToolBar(self.tr("Main"))
         toolbar.setMovable(False)
         toolbar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextOnly)
 
-        import_btn = QPushButton("Import Custom Files")
+        import_btn = QPushButton(self.tr("Import Custom Files"))
         import_btn.setToolTip(
-            "Pick Lua / shell script / .conf / conkyrc files and import them as nodes."
+            self.tr("Pick Lua / shell script / .conf / conkyrc files and import them as nodes.")
         )
         import_btn.clicked.connect(self._import_custom_files)
         toolbar.addWidget(import_btn)
 
     def _build_menu(self):
-        file_menu = self.menuBar().addMenu("&Project")
+        file_menu = self.menuBar().addMenu(self.tr("&Project"))
 
-        new_action = QAction("New HUD\u2026", self)
+        new_action = QAction(self.tr("New HUD\u2026"), self)
         new_action.triggered.connect(self._new_project_wizard)
         file_menu.addAction(new_action)
 
-        blank_action = QAction("New Blank HUD", self)
+        blank_action = QAction(self.tr("New Blank HUD"), self)
         blank_action.triggered.connect(self._new_project)
         file_menu.addAction(blank_action)
 
-        open_action = QAction("Open Project\u2026", self)
+        open_action = QAction(self.tr("Open Project\u2026"), self)
         open_action.triggered.connect(self._open_project)
         file_menu.addAction(open_action)
 
-        import_cstudio_action = QAction("Import .cstudio Project\u2026", self)
+        import_cstudio_action = QAction(self.tr("Import .cstudio Project\u2026"), self)
         import_cstudio_action.setToolTip(
-            "Import a shared .cstudio (or .zip) package: unpack it, "
-            "save a local .cstudio copy, and open it in Studio."
+            self.tr("Import a shared .cstudio (or .zip) package: unpack it, "
+            "save a local .cstudio copy, and open it in Studio.")
         )
         import_cstudio_action.triggered.connect(self._import_cstudio_project)
         file_menu.addAction(import_cstudio_action)
 
-        save_action = QAction("Save Project\u2026", self)
+        save_action = QAction(self.tr("Save Project\u2026"), self)
         save_action.triggered.connect(self._save_project)
         file_menu.addAction(save_action)
 
         file_menu.addSeparator()
 
-        build_action = QAction("Build to Folder\u2026", self)
+        build_action = QAction(self.tr("Build to Folder\u2026"), self)
         build_action.triggered.connect(self._build_to_folder)
         file_menu.addAction(build_action)
 
-        install_action = QAction("Build && Install to Manager", self)
+        install_action = QAction(self.tr("Build && Install to Manager"), self)
         install_action.triggered.connect(self._build_and_install)
         file_menu.addAction(install_action)
 
         file_menu.addSeparator()
 
-        import_action = QAction("Import Custom Files\u2026", self)
+        import_action = QAction(self.tr("Import Custom Files\u2026"), self)
         import_action.triggered.connect(self._import_custom_files)
         file_menu.addAction(import_action)
         self._import_custom_files_action = import_action
 
-        tools_menu = self.menuBar().addMenu("&Tools")
-        hw_action = QAction("Hardware && Session\u2026", self)
+        tools_menu = self.menuBar().addMenu(self.tr("&Tools"))
+        hw_action = QAction(self.tr("Hardware && Session\u2026"), self)
         hw_action.triggered.connect(lambda: HardwareDialog(self).exec())
         tools_menu.addAction(hw_action)
 
-        deps_action = QAction("Missing packages\u2026", self)
-        deps_action.setToolTip("Check which packages Conky Studio needs on this distro and get the install commands.")
+        deps_action = QAction(self.tr("Missing packages\u2026"), self)
+        deps_action.setToolTip(self.tr("Check which packages Conky Studio needs on this distro and get the install commands."))
         deps_action.triggered.connect(lambda: DependenciesDialog(parent=self).exec())
         tools_menu.addAction(deps_action)
 
-        font_action = QAction("Install Font\u2026", self)
+        font_action = QAction(self.tr("Install Font\u2026"), self)
         font_action.triggered.connect(self._install_font)
         tools_menu.addAction(font_action)
 
-        plugins_action = QAction("Plugins\u2026", self)
+        plugins_action = QAction(self.tr("Plugins\u2026"), self)
         plugins_action.triggered.connect(self._open_plugins_dialog)
         tools_menu.addAction(plugins_action)
 
-        plugin_create_action = QAction("Plugin Creation\u2026", self)
+        plugin_create_action = QAction(self.tr("Plugin Creation\u2026"), self)
         plugin_create_action.setToolTip(
-            "Author a logic / visual / source / canvas_ext plugin from the "
-            "custom-node model: validate schema, export JSON, or install locally."
+            self.tr("Author a logic / visual / source / canvas_ext plugin from the "
+            "custom-node model: validate schema, export JSON, or install locally.")
         )
         plugin_create_action.triggered.connect(self._open_plugin_creator)
         tools_menu.addAction(plugin_create_action)
 
-        help_menu = self.menuBar().addMenu("&Help")
-        start_action = QAction("Getting Started…", self)
+        help_menu = self.menuBar().addMenu(self.tr("&Help"))
+        start_action = QAction(self.tr("Getting Started…"), self)
         start_action.triggered.connect(self._open_getting_started)
         help_menu.addAction(start_action)
 
-        full_tour_action = QAction("Take the Full Tour…", self)
+        full_tour_action = QAction(self.tr("Take the Full Tour…"), self)
         full_tour_action.setToolTip(
-            "Theme Wizard (Minimal + Showcase) → Studio (nodes, sensors, naming) → "
-            "Manager → Store. Recommended first run."
+            self.tr("Theme Wizard (Minimal + Showcase) → Studio (nodes, sensors, naming) → "
+            "Manager → Store. Recommended first run.")
         )
         full_tour_action.triggered.connect(self._open_full_tour)
         help_menu.addAction(full_tour_action)
 
-        tour_action = QAction("Learn Studio…", self)
-        tour_action.setToolTip("Interactive guided tour of the Studio tab only (can be run anytime)")
+        tour_action = QAction(self.tr("Learn Studio…"), self)
+        tour_action.setToolTip(self.tr("Interactive guided tour of the Studio tab only (can be run anytime)"))
         tour_action.triggered.connect(self._open_studio_tour)
         help_menu.addAction(tour_action)
 
-        wizard_tour_action = QAction("Learn Theme Wizard…", self)
+        wizard_tour_action = QAction(self.tr("Learn Theme Wizard…"), self)
         wizard_tour_action.setToolTip(
-            "Opens Theme Wizard already mid-tour, walking through category, resolution, "
-            "panels, extras, and complexity (can be run anytime)"
+            self.tr("Opens Theme Wizard already mid-tour, walking through category, resolution, "
+            "panels, extras, and complexity (can be run anytime)")
         )
         wizard_tour_action.triggered.connect(self._open_theme_wizard_tour)
         help_menu.addAction(wizard_tour_action)
 
-        support_action = QAction("Support…", self)
-        support_action.setToolTip("Discord and YouTube links — always available")
+        support_action = QAction(self.tr("Support…"), self)
+        support_action.setToolTip(self.tr("Discord and YouTube links — always available"))
         support_action.triggered.connect(self._open_support)
         help_menu.addAction(support_action)
 
-        wiki_action = QAction("Wiki…", self)
-        wiki_action.setToolTip("Open the Conky Studio GitHub wiki in your browser")
+        wiki_action = QAction(self.tr("Wiki…"), self)
+        wiki_action.setToolTip(self.tr("Open the Conky Studio GitHub wiki in your browser"))
         wiki_action.triggered.connect(self._open_wiki)
         help_menu.addAction(wiki_action)
 
         help_menu.addSeparator()
-        update_action = QAction("Check for Updates…", self)
+        update_action = QAction(self.tr("Check for Updates…"), self)
         update_action.triggered.connect(lambda: self._check_for_updates(manual=True))
         help_menu.addAction(update_action)
 
@@ -1136,7 +1135,7 @@ class MainWindow(QMainWindow):
             dialog.exec()
         except Exception as e:
             QMessageBox.warning(
-                self, "Plugins", "Could not open Plugins dialog: %s" % e
+                self, self.tr("Plugins"), self.tr("Could not open Plugins dialog: {0}").format(e)
             )
             return
         try:
@@ -1178,14 +1177,14 @@ class MainWindow(QMainWindow):
 
             dialog.exec()
             if getattr(dialog, "exported_path", None):
-                self.statusBar().showMessage(f"Plugin: {dialog.exported_path}")
+                self.statusBar().showMessage(self.tr("Plugin: {0}").format(dialog.exported_path))
             try:
                 self.studio_tab.palette._refresh()
             except Exception:
                 pass
         except Exception as e:
             QMessageBox.warning(
-                self, "Plugin Creation", "Could not open Plugin Creation: %s" % e
+                self, self.tr("Plugin Creation"), self.tr("Could not open Plugin Creation: {0}").format(e)
             )
 
     def _open_getting_started(self):
@@ -1199,14 +1198,14 @@ class MainWindow(QMainWindow):
             pass
         self._guided_tour.start()
         self.statusBar().showMessage(
-            "Full tour — Wizard → Studio → Manager → Store (Help → Take the Full Tour to run again)"
+            self.tr("Full tour — Wizard → Studio → Manager → Store (Help → Take the Full Tour to run again)")
         )
 
     def _open_studio_tour(self):
         """Always available — no one-shot flag; safe to run repeatedly."""
         self.tabs.setCurrentWidget(self.studio_tab)
         self._studio_tour.start()
-        self.statusBar().showMessage("Learn Studio tour — Help → Learn Studio to run again anytime")
+        self.statusBar().showMessage(self.tr("Learn Studio tour — Help → Learn Studio to run again anytime"))
 
     def _open_theme_wizard_tour(self):
         """Opens a fresh Theme Wizard dialog and starts its tour immediately,
@@ -1228,7 +1227,7 @@ class MainWindow(QMainWindow):
             self.current_project_path = None
             self._mark_project_clean()
             self.tabs.setCurrentWidget(self.studio_tab)
-            self.statusBar().showMessage(f"Created {dialog.result_project.name}")
+            self.statusBar().showMessage(self.tr("Created {0}").format(dialog.result_project.name))
 
     def _open_support(self):
         SupportDialog(self).exec()
@@ -1245,10 +1244,10 @@ class MainWindow(QMainWindow):
         is actually available."""
         if self._update_worker is not None and self._update_worker.isRunning():
             if manual:
-                self.statusBar().showMessage("Already checking for updates…")
+                self.statusBar().showMessage(self.tr("Already checking for updates…"))
             return
         if manual:
-            self.statusBar().showMessage("Checking for updates…")
+            self.statusBar().showMessage(self.tr("Checking for updates…"))
         worker = update_checker.UpdateCheckWorker(self)
         worker.finished_check.connect(lambda result: self._on_update_check_finished(result, manual))
         self._update_worker = worker
@@ -1256,24 +1255,24 @@ class MainWindow(QMainWindow):
 
     def _on_update_check_finished(self, result, manual: bool):
         if not result.checked_ok:
-            self.statusBar().showMessage("Ready")
+            self.statusBar().showMessage(self.tr("Ready"))
             if manual:
                 QMessageBox.warning(
-                    self, "Check for Updates",
-                    f"Couldn't check for updates: {result.error}",
+                    self, self.tr("Check for Updates"),
+                    self.tr("Couldn't check for updates: {0}").format(result.error),
                 )
             return
 
         if result.update_available:
-            self.statusBar().showMessage(f"Update available: v{result.latest_version}")
+            self.statusBar().showMessage(self.tr("Update available: v{0}").format(result.latest_version))
             UpdateAvailableDialog(result, self).exec()
             return
 
-        self.statusBar().showMessage("Ready")
+        self.statusBar().showMessage(self.tr("Ready"))
         if manual:
             QMessageBox.information(
-                self, "Check for Updates",
-                f"You're up to date (v{result.current_version}).",
+                self, self.tr("Check for Updates"),
+                self.tr("You're up to date (v{0}).").format(result.current_version),
             )
 
     # ------------------------------------------------------------------
@@ -1285,15 +1284,15 @@ class MainWindow(QMainWindow):
         if not self._project_dirty:
             return True
         box = QMessageBox(self)
-        box.setWindowTitle("Unsaved changes")
+        box.setWindowTitle(self.tr("Unsaved changes"))
         box.setIcon(QMessageBox.Icon.Warning)
         box.setText(
-            "You have changes that have not been saved yet.\n"
-            "Create new project?"
+            self.tr("You have changes that have not been saved yet.\n"
+            "Create new project?")
         )
-        save_btn = box.addButton("Save now", QMessageBox.ButtonRole.AcceptRole)
+        save_btn = box.addButton(self.tr("Save now"), QMessageBox.ButtonRole.AcceptRole)
         create_btn = box.addButton(
-            "Yes, create new project", QMessageBox.ButtonRole.DestructiveRole
+            self.tr("Yes, create new project"), QMessageBox.ButtonRole.DestructiveRole
         )
         cancel_btn = box.addButton(QMessageBox.StandardButton.Cancel)
         box.setDefaultButton(save_btn)
@@ -1313,7 +1312,7 @@ class MainWindow(QMainWindow):
         self.current_project_path = None
         self._mark_project_clean()
         self.tabs.setCurrentWidget(self.studio_tab)
-        self.statusBar().showMessage("New blank HUD created")
+        self.statusBar().showMessage(self.tr("New blank HUD created"))
 
     def _new_project_wizard(self):
         if not self._confirm_unsaved_before_new():
@@ -1324,22 +1323,22 @@ class MainWindow(QMainWindow):
             self.current_project_path = None
             self._mark_project_clean()
             self.tabs.setCurrentWidget(self.studio_tab)
-            self.statusBar().showMessage(f"Created {dialog.result_project.name}")
+            self.statusBar().showMessage(self.tr("Created {0}").format(dialog.result_project.name))
 
     def _open_project(self):
         # Prefer .cstudio packages; legacy Hud.json / .json still openable.
         path, _ = QFileDialog.getOpenFileName(
             self,
-            "Open Conky Studio project",
+            self.tr("Open Conky Studio project"),
             "",
-            "Conky Studio project (*.cstudio);;Legacy project JSON (*.json);;All files (*)",
+            self.tr("Conky Studio project (*.cstudio);;Legacy project JSON (*.json);;All files (*)"),
         )
         if not path:
             return
         try:
             project = Project.load(path)
         except (OSError, ValueError, KeyError, zipfile.BadZipFile) as e:
-            QMessageBox.warning(self, "Couldn't open project", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't open project"), str(e))
             return
         self.studio_tab.load_project(project)
         # Save on a legacy .json will re-prompt for .cstudio so projects
@@ -1347,8 +1346,8 @@ class MainWindow(QMainWindow):
         self.current_project_path = path
         self._mark_project_clean()
         self.tabs.setCurrentWidget(self.studio_tab)
-        kind = "package" if path.lower().endswith((".cstudio", ".zip")) else "legacy JSON"
-        self.statusBar().showMessage(f"Opened {os.path.basename(path)} ({kind})")
+        kind = self.tr("package") if path.lower().endswith((".cstudio", ".zip")) else self.tr("legacy JSON")
+        self.statusBar().showMessage(self.tr("Opened {0} ({1})").format(os.path.basename(path), kind))
 
     def _import_cstudio_project(self):
         """Import a shared .cstudio / .zip package: unpack, save a local
@@ -1356,9 +1355,9 @@ class MainWindow(QMainWindow):
         """
         src, _ = QFileDialog.getOpenFileName(
             self,
-            "Import .cstudio project",
+            self.tr("Import .cstudio project"),
             "",
-            "Conky Studio package (*.cstudio *.zip);;All files (*)",
+            self.tr("Conky Studio package (*.cstudio *.zip);;All files (*)"),
         )
         if not src:
             return
@@ -1371,20 +1370,20 @@ class MainWindow(QMainWindow):
             else:
                 QMessageBox.warning(
                     self,
-                    "Import failed",
-                    "That file is not a .cstudio package or a zip archive.",
+                    self.tr("Import failed"),
+                    self.tr("That file is not a .cstudio package or a zip archive."),
                 )
                 return
         except (OSError, ValueError, KeyError, zipfile.BadZipFile) as e:
-            QMessageBox.warning(self, "Couldn't import package", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't import package"), str(e))
             return
 
         default_name = _safe_filename(project.name or "Imported HUD") + ".cstudio"
         dest, _ = QFileDialog.getSaveFileName(
             self,
-            "Save imported project as",
+            self.tr("Save imported project as"),
             default_name,
-            "Conky Studio project (*.cstudio)",
+            self.tr("Conky Studio project (*.cstudio)"),
         )
         if not dest:
             return
@@ -1394,18 +1393,18 @@ class MainWindow(QMainWindow):
         try:
             warnings = project.save_package(dest)
         except (OSError, ValueError) as e:
-            QMessageBox.warning(self, "Couldn't save imported project", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't save imported project"), str(e))
             return
 
         self.studio_tab.load_project(project)
         self.current_project_path = dest
         self._mark_project_clean()
         self.tabs.setCurrentWidget(self.studio_tab)
-        msg = f"Imported {os.path.basename(src)} → {os.path.basename(dest)}"
+        msg = self.tr("Imported {0} → {1}").format(os.path.basename(src), os.path.basename(dest))
         if warnings:
             QMessageBox.warning(
                 self,
-                "Imported with warnings",
+                self.tr("Imported with warnings"),
                 msg + "\n\n" + "\n".join(f"• {w}" for w in warnings[:12]),
             )
         self.statusBar().showMessage(msg)
@@ -1441,11 +1440,11 @@ class MainWindow(QMainWindow):
             try:
                 project.save_legacy_json(path)
             except OSError as e:
-                QMessageBox.warning(self, "Couldn't save project", str(e))
+                QMessageBox.warning(self, self.tr("Couldn't save project"), str(e))
                 return False
             self.current_project_path = path
             self._mark_project_clean()
-            self.statusBar().showMessage(f"Saved {os.path.basename(path)} (legacy JSON)")
+            self.statusBar().showMessage(self.tr("Saved {0} (legacy JSON)").format(os.path.basename(path)))
             return True
 
         if not path.lower().endswith(".cstudio"):
@@ -1469,25 +1468,25 @@ class MainWindow(QMainWindow):
                 generic_manifest=generic,
             )
         except (OSError, ValueError) as e:
-            QMessageBox.warning(self, "Couldn't save project", str(e))
+            QMessageBox.warning(self, self.tr("Couldn't save project"), str(e))
             return False
 
         self.current_project_path = path
         self._mark_project_clean()
-        kind = "generic manifest" if generic else "package"
-        msg = f"Saved {os.path.basename(path)} ({kind})"
+        kind = self.tr("generic manifest") if generic else self.tr("package")
+        msg = self.tr("Saved {0} ({1})").format(os.path.basename(path), kind)
         if warnings:
-            msg += f" — {len(warnings)} warning(s)"
+            msg += self.tr(" — %n warning(s)", "", len(warnings))
             QMessageBox.warning(
                 self,
-                "Saved with warnings",
+                self.tr("Saved with warnings"),
                 msg + "\n\n" + "\n".join(f"• {w}" for w in warnings[:12]),
             )
         self.statusBar().showMessage(msg)
         return True
 
     def _build_to_folder(self):
-        out_dir = QFileDialog.getExistingDirectory(self, "Build into folder")
+        out_dir = QFileDialog.getExistingDirectory(self, self.tr("Build into folder"))
         if not out_dir:
             return
         project = self.studio_tab.project
@@ -1495,10 +1494,10 @@ class MainWindow(QMainWindow):
         result = builder.build_project(
             project, target, source_search_dirs=project.search_dirs() or None,
         )
-        msg = f"Built to {result.output_dir}"
+        msg = self.tr("Built to {0}").format(result.output_dir)
         if result.warnings:
-            msg += f"\n\n{len(result.warnings)} warning(s):\n" + "\n".join(f"\u2022 {w}" for w in result.warnings)
-        QMessageBox.information(self, "Build complete", msg)
+            msg += self.tr("\n\n%n warning(s):\n", "", len(result.warnings)) + "\n".join(f"\u2022 {w}" for w in result.warnings)
+        QMessageBox.information(self, self.tr("Build complete"), msg)
 
     def _build_and_install(self):
         project = self.studio_tab.project
@@ -1506,10 +1505,10 @@ class MainWindow(QMainWindow):
         result = builder.build_project(
             project, target, source_search_dirs=project.search_dirs() or None,
         )
-        msg = f"Installed to {result.output_dir}\n\nSwitch to the Manager tab to launch it."
+        msg = self.tr("Installed to {0}\n\nSwitch to the Manager tab to launch it.").format(result.output_dir)
         if result.warnings:
-            msg += f"\n\n{len(result.warnings)} warning(s):\n" + "\n".join(f"\u2022 {w}" for w in result.warnings)
-        QMessageBox.information(self, "Build complete", msg)
+            msg += self.tr("\n\n%n warning(s):\n", "", len(result.warnings)) + "\n".join(f"\u2022 {w}" for w in result.warnings)
+        QMessageBox.information(self, self.tr("Build complete"), msg)
         self.manager_tab.refresh()
 
     def _import_custom_files(self):
@@ -1527,9 +1526,9 @@ class MainWindow(QMainWindow):
         from conkystudio.importer.legacy_parser import import_custom_files
 
         paths, _ = QFileDialog.getOpenFileNames(
-            self, "Choose Lua / shell script / conf / conkyrc files to import",
+            self, self.tr("Choose Lua / shell script / conf / conkyrc files to import"),
             "",
-            "Conky Studio importable (*.lua *.sh *.bash *.conf conkyrc *);;All files (*)",
+            self.tr("Conky Studio importable (*.lua *.sh *.bash *.conf conkyrc *);;All files (*)"),
         )
         if not paths:
             return
@@ -1541,11 +1540,11 @@ class MainWindow(QMainWindow):
         try:
             result = import_custom_files(paths)
         except FileNotFoundError as e:
-            QMessageBox.warning(self, "Import failed", str(e))
+            QMessageBox.warning(self, self.tr("Import failed"), str(e))
             return
         except Exception as e:
             QMessageBox.critical(
-                self, "Import crashed",
+                self, self.tr("Import crashed"),
                 f"{type(e).__name__}: {e}\n\n{traceback.format_exc()}",
             )
             return
@@ -1557,9 +1556,9 @@ class MainWindow(QMainWindow):
             self.tabs.setCurrentWidget(self.studio_tab)
         except Exception as e:
             QMessageBox.critical(
-                self, "Import loaded but canvas failed",
-                f"The project was parsed ({len(result.project.nodes)} nodes) but Studio "
-                f"could not display it:\n\n{type(e).__name__}: {e}\n\n{traceback.format_exc()}",
+                self, self.tr("Import loaded but canvas failed"),
+                self.tr("The project was parsed ({0} nodes) but Studio "
+                "could not display it:\n\n{1}: {2}\n\n{3}").format(len(result.project.nodes), type(e).__name__, e, traceback.format_exc()),
             )
             return
 
@@ -1580,28 +1579,28 @@ class MainWindow(QMainWindow):
                 pass
 
             msg = (
-                f"Imported {len(result.project.nodes)} node(s) from {len(paths)} file(s).\n\n"
-                f"This is semantic extraction, not a pixel-perfect recreation — expect to "
-                f"reposition things. Unrecognised bits became Custom Script or Custom Lua nodes.\n\n"
-                f"Installed to {build.output_dir}\n"
-                f"Switch to the Manager tab and hit Start to launch it."
+                self.tr("Imported {0} node(s) from {1} file(s).\n\n"
+                "This is semantic extraction, not a pixel-perfect recreation — expect to "
+                "reposition things. Unrecognised bits became Custom Script or Custom Lua nodes.\n\n"
+                "Installed to {2}\n"
+                "Switch to the Manager tab and hit Start to launch it.").format(len(result.project.nodes), len(paths), build.output_dir)
             )
             if result.warnings:
-                msg += f"\n\n{len(result.warnings)} import note(s):\n" + "\n".join(
+                msg += self.tr("\n\n%n import note(s):\n", "", len(result.warnings)) + "\n".join(
                     f"• {w}" for w in result.warnings[:15]
                 )
                 if len(result.warnings) > 15:
-                    msg += f"\n…and {len(result.warnings) - 15} more."
+                    msg += self.tr("\n…and %n more.", "", len(result.warnings) - 15)
             if getattr(build, "warnings", None):
-                msg += f"\n\n{len(build.warnings)} build warning(s):\n" + "\n".join(
+                msg += self.tr("\n\n%n build warning(s):\n", "", len(build.warnings)) + "\n".join(
                     f"• {w}" for w in build.warnings[:10]
                 )
-            QMessageBox.information(self, "Import complete", msg)
+            QMessageBox.information(self, self.tr("Import complete"), msg)
         except Exception as e:
             QMessageBox.critical(
-                self, "Import partially succeeded",
-                f"The theme is open in Studio, but Build/Install failed:\n\n"
-                f"{type(e).__name__}: {e}\n\n{traceback.format_exc()}",
+                self, self.tr("Import partially succeeded"),
+                self.tr("The theme is open in Studio, but Build/Install failed:\n\n"
+                "{0}: {1}\n\n{2}").format(type(e).__name__, e, traceback.format_exc()),
             )
 
     def _install_font(self):
@@ -1614,9 +1613,9 @@ class MainWindow(QMainWindow):
             if os.path.isdir(candidate):
                 start_dir = candidate
                 break
-        dialog = QFileDialog(self, "Choose a font file", start_dir)
+        dialog = QFileDialog(self, self.tr("Choose a font file"), start_dir)
         dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
-        dialog.setNameFilters(["Fonts (*.ttf *.otf *.ttc)", "All files (*)"])
+        dialog.setNameFilters([self.tr("Fonts (*.ttf *.otf *.ttc)"), self.tr("All files (*)")])
         dialog.setOption(QFileDialog.Option.DontUseNativeDialog, True)
         dialog.setFilter(
             QDir.Filter.AllEntries
@@ -1634,29 +1633,29 @@ class MainWindow(QMainWindow):
         result = font_manager.install_font(path)
         if result.success:
             self.studio_tab.property_panel.invalidate_font_cache()
-            QMessageBox.information(self, "Font installed", result.message)
+            QMessageBox.information(self, self.tr("Font installed"), result.message)
         else:
-            QMessageBox.warning(self, "Font install failed", result.message)
+            QMessageBox.warning(self, self.tr("Font install failed"), result.message)
 
     def closeEvent(self, event):
         if self._project_dirty:
             if self.current_project_path:
-                text = (
+                text = self.tr(
                     "You have made changes since your last save.\n"
                     "Do you want to save now?"
                 )
             else:
-                text = (
+                text = self.tr(
                     "You have not saved your project.\n"
                     "All progress will be lost if you exit.\n\n"
                     "Save now?"
                 )
             box = QMessageBox(self)
-            box.setWindowTitle("Unsaved changes")
+            box.setWindowTitle(self.tr("Unsaved changes"))
             box.setIcon(QMessageBox.Icon.Warning)
             box.setText(text)
-            save_btn = box.addButton("Save now", QMessageBox.ButtonRole.AcceptRole)
-            exit_btn = box.addButton("Continue to exit", QMessageBox.ButtonRole.DestructiveRole)
+            save_btn = box.addButton(self.tr("Save now"), QMessageBox.ButtonRole.AcceptRole)
+            exit_btn = box.addButton(self.tr("Continue to exit"), QMessageBox.ButtonRole.DestructiveRole)
             cancel_btn = box.addButton(QMessageBox.StandardButton.Cancel)
             box.setDefaultButton(save_btn)
             box.exec()

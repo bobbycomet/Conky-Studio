@@ -14,15 +14,16 @@ from PyQt6.QtWidgets import (
     QFrame,
 )
 from PyQt6.QtGui import QColor, QIcon, QPixmap, QPainter, QDrag
-from PyQt6.QtCore import Qt, QMimeData, QByteArray, pyqtSignal
+from PyQt6.QtCore import Qt, QMimeData, QByteArray, pyqtSignal, QT_TRANSLATE_NOOP
 
 from conkystudio.theme import PALETTE
+from conkystudio.i18n import node_text
 from conkystudio.nodes import registry
 from conkystudio.ui.studio.node_canvas import NODE_MIME_TYPE
 
 _CATEGORY_LABELS = [
-    ("source", "Data Sources"), ("logic", "Logic"), ("visual", "Visuals"),
-    ("canvas_ext", "Canvas Extensions"),
+    ("source", QT_TRANSLATE_NOOP("PalettePanel", "Data Sources")), ("logic", QT_TRANSLATE_NOOP("PalettePanel", "Logic")),
+    ("visual", QT_TRANSLATE_NOOP("PalettePanel", "Visuals")), ("canvas_ext", QT_TRANSLATE_NOOP("PalettePanel", "Canvas Extensions")),
 ]
 _NODE_TYPE_ROLE = Qt.ItemDataRole.UserRole
 
@@ -134,13 +135,13 @@ class PalettePanel(QWidget):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(8)
 
-        heading = QLabel("Nodes")
+        heading = QLabel(self.tr("Nodes"))
         heading.setProperty("role", "heading")
         layout.addWidget(heading)
 
         mode_row = QHBoxLayout()
-        self.simple_radio = QRadioButton("Simple")
-        self.complex_radio = QRadioButton("Complex")
+        self.simple_radio = QRadioButton(self.tr("Simple"))
+        self.complex_radio = QRadioButton(self.tr("Complex"))
         self.simple_radio.setChecked(True)
         group = QButtonGroup(self)
         group.addButton(self.simple_radio)
@@ -152,7 +153,7 @@ class PalettePanel(QWidget):
         layout.addLayout(mode_row)
 
         self.search = QLineEdit()
-        self.search.setPlaceholderText("Search nodes\u2026")
+        self.search.setPlaceholderText(self.tr("Search nodes\u2026"))
         self.search.textChanged.connect(self._refresh)
         layout.addWidget(self.search)
 
@@ -168,7 +169,7 @@ class PalettePanel(QWidget):
         layout.addWidget(self.scroll, 1)
 
         for category, cat_label in _CATEGORY_LABELS:
-            section = _CollapsibleSection(cat_label)
+            section = _CollapsibleSection(self.tr(cat_label))
             tree = _DraggableTree()
             tree.setHeaderHidden(True)
             tree.setDragEnabled(True)
@@ -182,9 +183,9 @@ class PalettePanel(QWidget):
             self._sections[category] = section
             self._trees[category] = tree
 
-        hint = QLabel("Drag a node onto the canvas, or double-click to drop it in the middle. "
+        hint = QLabel(self.tr("Drag a node onto the canvas, or double-click to drop it in the middle. "
                        "Click a category header to expand or collapse it. Shift+click-drag on "
-                       "empty canvas to box-select; plain drag pans.")
+                       "empty canvas to box-select; plain drag pans."))
         hint.setProperty("role", "caption")
         hint.setWordWrap(True)
         layout.addWidget(hint)
@@ -205,7 +206,8 @@ class PalettePanel(QWidget):
                 specs = [s for s in specs if s.simple_mode]
             if query:
                 specs = [s for s in specs if query in s.label.lower() or query in s.type.lower()
-                          or query in s.subcategory.lower()]
+                          or query in s.subcategory.lower()
+                          or query in node_text(s.label).lower() or query in node_text(s.subcategory).lower()]
 
             section.setVisible(bool(specs))
             if not specs:
@@ -231,15 +233,15 @@ class PalettePanel(QWidget):
             for subcat in ordered_subcats:
                 if subcat not in by_sub:
                     continue
-                sub_item = QTreeWidgetItem([subcat])
+                sub_item = QTreeWidgetItem([node_text(subcat)])
                 sub_item.setFlags(Qt.ItemFlag.ItemIsEnabled)
                 sub_item.setForeground(0, QColor("#9aa2ad"))
                 tree.addTopLevelItem(sub_item)
                 for spec in by_sub[subcat]:
-                    leaf = QTreeWidgetItem([spec.label])
+                    leaf = QTreeWidgetItem([node_text(spec.label)])
                     leaf.setIcon(0, _swatch_icon(spec.color))
                     leaf.setData(0, _NODE_TYPE_ROLE, spec.type)
-                    leaf.setToolTip(0, spec.description)
+                    leaf.setToolTip(0, node_text(spec.description))
                     leaf.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled)
                     sub_item.addChild(leaf)
                 sub_item.setExpanded(bool(query))  # collapsed by default; search expands matches
