@@ -22,7 +22,7 @@ RT="$(command -v docker || command -v podman)" || { echo "need docker or podman"
     libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb-xfixes0 libxcb-sync1 libxcb-shm0 libxcb-render0 \
     libx11-xcb1 libxrender1 libsm6 libice6 libwayland-client0 libwayland-cursor0 libwayland-egl1
   rc=0
-  ./build_appimage.sh || rc=$?
+  bash ./build_appimage.sh || rc=$?
   # The container runs as root; hand build outputs back to the invoking user
   # (with rootless podman this is a harmless no-op).
   chown -R "$HOST_UID:$HOST_GID" /src/build /src/dist /src/conkystudio/i18n 2>/dev/null || true
