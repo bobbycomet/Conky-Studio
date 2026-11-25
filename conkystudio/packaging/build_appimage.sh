@@ -14,25 +14,40 @@
 #   anything newer unless ALLOW_NEWER_GLIBC=1 (use build_in_ubuntu2204.sh to
 #   build in a 22.04 container from any host).
 #
+# TRANSLATIONS
+#   conkystudio/i18n/conkystudio_<lang>.ts are compiled to .qm with lrelease
+#   (Ubuntu: qt6-l10n-tools) and copied into the bundle. .qm files are not
+#   committed. If .ts files exist but lrelease is missing the build FAILS, so
+#   you never ship an English-only release by accident. Override with
+#   SKIP_TRANSLATIONS=1.
+#
 # Build-machine requirements (the machine RUNNING the AppImage needs only FUSE
 # -- or none, see README note -- same as any AppImage):
 #   - Ubuntu 22.04: python3 python3-venv python3-pip binutils curl file
-#                   libxcb-cursor0 libxkbcommon-x11-0 libxcb-xinerama0 + the
-#                   usual xcb libs (see build_in_ubuntu2204.sh for the full list)
+#                   qt6-l10n-tools libxcb-cursor0 libxkbcommon-x11-0
+#                   libxcb-xinerama0 + the usual xcb libs (see
+#                   build_in_ubuntu2204.sh for the full list)
 #
-# Usage:
-#   cd packaging && ./build_appimage.sh
+# Usage (from the repo root or from here):
+#   cd conkystudio/packaging && ./build_appimage.sh
 #
 set -euo pipefail
 
 MAX_GLIBC="2.35"    # Ubuntu 22.04 LTS
 
+# This script lives in <repo>/conkystudio/packaging, so the repo root is TWO levels up.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 BUILD_DIR="$REPO_ROOT/build"
 DIST_DIR="$REPO_ROOT/dist"
 APPDIR="$BUILD_DIR/AppDir"
 OUT_NAME="Conky-Studio-x86_64.AppImage"
+I18N_DIR="$REPO_ROOT/conkystudio/i18n"
+
+if [[ ! -f "$REPO_ROOT/conkystudio/__main__.py" ]]; then
+    echo "ERROR: $REPO_ROOT/conkystudio/__main__.py not found -- REPO_ROOT is wrong ($REPO_ROOT)."
+    exit 1
+fi
 
 ver_gt() { [[ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n1)" == "$1" && "$1" != "$2" ]]; }
 
@@ -49,6 +64,37 @@ fi
 echo "==> Cleaning previous build artifacts"
 rm -rf "$BUILD_DIR" "$DIST_DIR"
 mkdir -p "$BUILD_DIR" "$DIST_DIR"
+
+# ---------------------------------------------------------------------------
+# Translations: .ts -> .qm (before freezing, so a failure is cheap)
+# ---------------------------------------------------------------------------
+echo "==> Compiling translations (.ts -> .qm)"
+shopt -s nullglob
+TS_FILES=("$I18N_DIR"/conkystudio_*.ts)
+shopt -u nullglob
+if [[ ${#TS_FILES[@]} -eq 0 ]]; then
+    echo "   no conkystudio_*.ts catalogs in conkystudio/i18n -- nothing to compile"
+elif [[ "${SKIP_TRANSLATIONS:-0}" == "1" ]]; then
+    echo "   SKIP_TRANSLATIONS=1 -- building WITHOUT translations"
+else
+    LRELEASE=""
+    # Prefer explicit Qt6 names; a bare `lrelease` may be Qt5's, so check its version.
+    for cand in lrelease-qt6 /usr/lib/qt6/bin/lrelease lrelease; do
+        p="$(command -v "$cand" 2>/dev/null || true)"
+        [[ -n "$p" ]] || continue
+        if [[ "$("$p" -version 2>&1 || true)" == *" 6."* ]]; then LRELEASE="$p"; break; fi
+    done
+    if [[ -z "$LRELEASE" ]]; then
+        echo "ERROR: Qt6 lrelease not found (Ubuntu: apt install qt6-l10n-tools; it lives in /usr/lib/qt6/bin)."
+        echo "       Set SKIP_TRANSLATIONS=1 to build an English-only AppImage on purpose."
+        exit 1
+    fi
+    echo "   using $LRELEASE"
+    for ts in "${TS_FILES[@]}"; do
+        "$LRELEASE" -silent "$ts" -qm "${ts%.ts}.qm"
+        echo "   $(basename "$ts") -> $(basename "${ts%.ts}.qm")"
+    done
+fi
 
 echo "==> Creating build venv + installing PyQt6 / PyInstaller"
 python3 -m venv "$BUILD_DIR/venv"
@@ -95,6 +141,20 @@ pyinstaller --name conky-studio --windowed --noconfirm \
     "$REPO_ROOT/conkystudio/__main__.py"
 
 BUNDLE="$DIST_DIR/conky-studio"
+
+# --- Translations: put the compiled .qm next to the package inside the bundle
+# (PyInstaller only collects Python modules for --collect-submodules, not data).
+shopt -s nullglob
+QM_FILES=("$I18N_DIR"/conkystudio_*.qm)
+shopt -u nullglob
+if [[ ${#QM_FILES[@]} -gt 0 ]]; then
+    mkdir -p "$BUNDLE/conkystudio/i18n"
+    cp "${QM_FILES[@]}" "$BUNDLE/conkystudio/i18n/"
+    echo "==> Bundled ${#QM_FILES[@]} Conky Studio catalog(s) into conkystudio/i18n"
+    if [[ -z "$(find "$BUNDLE" -name 'qtbase_*.qm' -print -quit)" ]]; then
+        echo "==> WARNING: no qtbase_*.qm in the bundle -- Qt's own dialogs (file chooser, buttons) stay English."
+    fi
+fi
 
 PLATFORM_PLUGIN_DIR="$BUNDLE/PyQt6/Qt6/plugins/platforms"
 if [[ -f "$PLATFORM_PLUGIN_DIR/libqwayland-generic.so" || -f "$PLATFORM_PLUGIN_DIR/libqwayland.so" ]]; then
