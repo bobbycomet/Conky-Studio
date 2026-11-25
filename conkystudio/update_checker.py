@@ -30,7 +30,7 @@ from PyQt6.QtCore import QThread, pyqtSignal
 
 # Bump this on every release -- it's the only thing that needs updating
 # in this file when Conky Studio itself ships a new version.
-APP_VERSION = "1.1.1.2"
+APP_VERSION = "1.1.2"
 
 GITHUB_REPO = "bobbycomet/Conky-Studio"
 RELEASES_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
