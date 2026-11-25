@@ -1,0 +1,82 @@
+name: Build AppImage
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+  pull_request:
+    paths:
+      - "conkystudio/**"
+      - ".github/workflows/build-appimage.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appimage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # The runner image is only the host. The real build happens inside an
+    # ubuntu:22.04 container (glibc 2.35) via build_in_ubuntu2204.sh, so the
+    # AppImage keeps its Ubuntu 22.04 floor no matter what ubuntu-latest becomes.
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write   # needed to attach the AppImage to a release on tag pushes
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches APP_VERSION
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          app="$(grep -oP 'APP_VERSION\s*=\s*["'\'']\K[^"'\'']+' conkystudio/update_checker.py | head -n1 || true)"
+          echo "tag=$tag  APP_VERSION=$app"
+          if [[ -n "$app" && "$app" != "$tag" ]]; then
+            echo "::error::Tag v$tag does not match APP_VERSION $app in conkystudio/update_checker.py"
+            exit 1
+          fi
+
+      - name: Build AppImage (Ubuntu 22.04 container)
+        run: bash conkystudio/packaging/build_in_ubuntu2204.sh
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          f=dist/Conky-Studio-x86_64.AppImage
+          test -x "$f" || chmod +x "$f"
+          # extract-and-run: no FUSE needed on the runner
+          "$f" --appimage-extract-and-run --version
+
+      - name: Verify translations are inside the bundle
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          "$GITHUB_WORKSPACE/dist/Conky-Studio-x86_64.AppImage" --appimage-extract >/dev/null
+          echo "Conky Studio catalogs:"
+          find squashfs-root -path '*conkystudio/i18n/*.qm' | tee /tmp/cs_qm.txt
+          echo "Qt base catalogs (count):"
+          find squashfs-root -name 'qtbase_*.qm' | wc -l
+          # Fail if .ts catalogs exist in the repo but no .qm made it into the bundle.
+          if compgen -G "$GITHUB_WORKSPACE/conkystudio/i18n/conkystudio_*.ts" >/dev/null \
+             && [[ ! -s /tmp/cs_qm.txt ]]; then
+            echo "::error::.ts catalogs exist but no conkystudio_*.qm is inside the AppImage"
+            exit 1
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Conky-Studio-x86_64.AppImage
+          path: dist/Conky-Studio-x86_64.AppImage
+          if-no-files-found: error
+
+      - name: Attach to GitHub release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/Conky-Studio-x86_64.AppImage
+          # Keep the asset name exactly Conky-Studio-x86_64.AppImage:
+          # update_checker.py matches on it.
