@@ -39,6 +39,21 @@ jobs:
             exit 1
           fi
 
+      - name: Sanity-check packaging scripts
+        run: |
+          set -euo pipefail
+          cd conkystudio/packaging
+          bash -n build_appimage.sh
+          bash -n build_in_ubuntu2204.sh
+          if grep -nE '^(<<<<<<<|=======|>>>>>>>)' build_appimage.sh build_in_ubuntu2204.sh; then
+            echo "::error::merge-conflict markers in packaging scripts"; exit 1
+          fi
+          n="$(grep -c 'Compiling translations' build_appimage.sh)"
+          if [[ "$n" != "1" ]]; then
+            echo "::error::build_appimage.sh has $n 'Compiling translations' blocks (expected 1) - remove the duplicate that calls bare lrelease"
+            exit 1
+          fi
+
       - name: Build AppImage (Ubuntu 22.04 container)
         run: bash conkystudio/packaging/build_in_ubuntu2204.sh
 
