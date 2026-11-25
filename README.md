@@ -266,6 +266,8 @@ Conky Studio is an authoring tool. The node graph is converted into ordinary Con
 
 The interface follows the system language (`LANG`); `CONKY_STUDIO_LANG=ru` forces one, `CONKY_STUDIO_LANG=en` turns translation off. English is the fallback.
 
+Available languages: English, Russian (`ru`).
+
 Catalogs are `conkystudio/i18n/conkystudio_<lang>.ts`. To add or refresh one, run `conkystudio/tools/update_translations.sh <lang>`, translate it with Qt Linguist, and commit the `.ts` file only; the AppImage build compiles it to `.qm`. Code conventions are at the top of `conkystudio/i18n/__init__.py`.
 
 ---
