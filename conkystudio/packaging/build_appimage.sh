@@ -103,33 +103,6 @@ source "$BUILD_DIR/venv/bin/activate"
 pip install -q --upgrade pip
 pip install -q PyQt6 pyinstaller
 
-# Translations: conkystudio/i18n/*.ts are the source of truth; compile them to
-# .qm here (never committed). lrelease is not in the PyQt6 wheel -- on Ubuntu it
-# comes from qt6-l10n-tools. Without it the build goes on, English only.
-echo "==> Compiling translations"
-I18N_SRC="$REPO_ROOT/conkystudio/i18n"
-I18N_OUT="$BUILD_DIR/i18n"
-I18N_ARGS=()
-shopt -s nullglob
-TS_FILES=("$I18N_SRC"/conkystudio_*.ts)
-shopt -u nullglob
-if [[ ${#TS_FILES[@]} -eq 0 ]]; then
-    echo "   no catalogs yet (English only)"
-else
-    LRELEASE="$(command -v lrelease || command -v lrelease6 || command -v lrelease-qt6 || true)"
-    [[ -z "$LRELEASE" && -x /usr/lib/qt6/bin/lrelease ]] && LRELEASE=/usr/lib/qt6/bin/lrelease
-    if [[ -z "$LRELEASE" ]]; then
-        echo "==> WARNING: lrelease not found (apt install qt6-l10n-tools); building without translations"
-    else
-        mkdir -p "$I18N_OUT"
-        for ts in "${TS_FILES[@]}"; do
-            "$LRELEASE" -silent "$ts" -qm "$I18N_OUT/$(basename "${ts%.ts}").qm"
-        done
-        echo "   $(ls "$I18N_OUT" | tr '\n' ' ')"
-        I18N_ARGS=(--add-data "$I18N_OUT/*.qm:conkystudio/i18n")
-    fi
-fi
-
 echo "==> Freezing Conky Studio with PyInstaller"
 cd "$REPO_ROOT"
 pyinstaller --name conky-studio --windowed --noconfirm \
@@ -137,7 +110,6 @@ pyinstaller --name conky-studio --windowed --noconfirm \
     --contents-directory . \
     --paths "$REPO_ROOT" \
     --collect-submodules conkystudio \
-    ${I18N_ARGS[@]+"${I18N_ARGS[@]}"} \
     "$REPO_ROOT/conkystudio/__main__.py"
 
 BUNDLE="$DIST_DIR/conky-studio"
@@ -174,12 +146,6 @@ if [[ -z "$(find "$BUNDLE" -name 'libxcb-cursor.so*' -print -quit)" ]]; then
     else
         echo "ERROR: libxcb-cursor0 is not installed on the build machine (apt install libxcb-cursor0)"; exit 1
     fi
-fi
-
-# Qt's own catalogs (qtbase_*.qm: standard dialog buttons) come with the PyQt6
-# wheel; make sure PyInstaller carried them over.
-if [[ ${#I18N_ARGS[@]} -gt 0 && -z "$(find "$BUNDLE" -name 'qtbase_*.qm' -print -quit)" ]]; then
-    echo "==> WARNING: no qtbase_*.qm in the bundle; standard Qt buttons will stay English"
 fi
 
 echo "==> Checking bundled binaries against glibc $MAX_GLIBC"
