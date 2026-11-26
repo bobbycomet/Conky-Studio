@@ -21,6 +21,9 @@ import shutil
 import subprocess
 from dataclasses import dataclass, field
 from typing import Optional
+
+from PyQt6.QtCore import QCoreApplication
+
 from conkystudio.sysenv import system_env
 
 # Desktop tokens that usually mean layer-shell is available (substring match
@@ -728,8 +731,8 @@ def monitor_choices_for_ui(monitors: list | None = None) -> list[tuple[str, str]
     """[(value, label), ...] for combo boxes. Always starts with auto/primary."""
     mons = monitors if monitors is not None else detect_monitors()
     choices = [
-        ("auto", "Auto (primary / first)"),
-        ("primary", "Primary monitor"),
+        ("auto", QCoreApplication.translate("Monitors", "Auto (primary / first)")),
+        ("primary", QCoreApplication.translate("Monitors", "Primary monitor")),
     ]
     seen = {"auto", "primary"}
     for m in mons:

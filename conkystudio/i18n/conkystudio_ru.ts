@@ -927,6 +927,13 @@ Save often while learning. Build when you want Manager to Start the HUD. Re-buil
         <translation>Отсутствует: {0}</translation>
     </message>
 </context><context>
+    <name>LivePreviewController</name>
+    <message>
+        <location filename="../preview/live_preview.py" line="250" />
+        <source>{0} (primary)</source>
+        <translation>{0} (главное)</translation>
+    </message>
+</context><context>
     <name>MainWindow</name>
     <message>
         <location filename="../ui/main_window.py" line="898" />
@@ -1018,7 +1025,7 @@ Save often while learning. Build when you want Manager to Start the HUD. Re-buil
     <message>
         <location filename="../ui/main_window.py" line="1054" />
         <source>Build &amp;&amp; Install to Manager</source>
-        <translation>Собрать &amp;&amp; установить в Менеджер</translation>
+        <translation>Собрать и установить в Менеджер</translation>
     </message>
     <message>
         <location filename="../ui/main_window.py" line="1060" />
@@ -1033,7 +1040,7 @@ Save often while learning. Build when you want Manager to Start the HUD. Re-buil
     <message>
         <location filename="../ui/main_window.py" line="1066" />
         <source>Hardware &amp;&amp; Session…</source>
-        <translation>Оборудование &amp;&amp; сеанс…</translation>
+        <translation>Оборудование и сеанс…</translation>
     </message>
     <message>
         <location filename="../ui/main_window.py" line="1070" />
@@ -1623,6 +1630,11 @@ Save now?</source>
         <translation>Добавляет стандартную запись автозапуска для этой темы (~/.config/autostart). Снимите флажок, чтобы убрать её; сама тема не меняется.</translation>
     </message>
     <message>
+        <location filename="../ui/manager_tab.py" line="148" />
+        <source> s</source>
+        <translation> с</translation>
+    </message>
+    <message>
         <location filename="../ui/manager_tab.py" line="149" />
         <source>Wait this long after login so the desktop is ready before the theme starts.</source>
         <translation>Подождать столько после входа, чтобы рабочий стол успел загрузиться до запуска темы.</translation>
@@ -1822,6 +1834,18 @@ Save now?</source>
         <location filename="../ui/manager_tab.py" line="644" />
         <source>Delete '{0}' permanently? This can't be undone.</source>
         <translation>Удалить «{0}» навсегда? Это нельзя отменить.</translation>
+    </message>
+</context><context>
+    <name>Monitors</name>
+    <message>
+        <location filename="../hardware/discovery.py" line="734" />
+        <source>Auto (primary / first)</source>
+        <translation>Авто (основной / первый)</translation>
+    </message>
+    <message>
+        <location filename="../hardware/discovery.py" line="735" />
+        <source>Primary monitor</source>
+        <translation>Основной монитор</translation>
     </message>
 </context><context>
     <name>NodeCanvasScene</name>
@@ -7237,12 +7261,12 @@ It appears in the Nodes palette after refresh.</source>
         <location filename="../ui/studio/position_stage.py" line="811" />
         <location filename="../ui/studio/position_stage.py" line="792" />
         <source>Main (primary)</source>
-        <translation>Основное (главный)</translation>
+        <translation>Основное (главное)</translation>
     </message>
     <message>
         <location filename="../ui/studio/position_stage.py" line="825" />
         <source>{0} (primary)</source>
-        <translation>{0} (главный)</translation>
+        <translation>{0} (главное)</translation>
     </message>
 </context><context>
     <name>PreviewPanel</name>
@@ -7286,7 +7310,7 @@ It appears in the Nodes palette after refresh.</source>
         <location filename="../ui/studio/preview_panel.py" line="119" />
         <location filename="../ui/studio/preview_panel.py" line="87" />
         <source>Main (primary)</source>
-        <translation>Основное (главный)</translation>
+        <translation>Основное (главное)</translation>
     </message>
     <message>
         <location filename="../ui/studio/preview_panel.py" line="165" />

@@ -247,7 +247,7 @@ class LivePreviewController(QObject):
             if mon not in ("auto", "primary"):
                 label = f"{label} @ {mon}"
             if w.id == primary.id:
-                label = f"{label} (primary)"
+                label = self.tr("{0} (primary)").format(label)
             out.append((w.id, label))
         return out
 
