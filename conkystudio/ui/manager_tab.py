@@ -145,7 +145,7 @@ class ManagerTab(QWidget):
         self.autostart_delay = QSpinBox()
         self.autostart_delay.setRange(0, autostart.MAX_DELAY)
         self.autostart_delay.setValue(autostart.DEFAULT_DELAY)
-        self.autostart_delay.setSuffix(" s")
+        self.autostart_delay.setSuffix(self.tr(" s"))
         self.autostart_delay.setToolTip(self.tr("Wait this long after login so the desktop is ready before the theme starts."))
         self.autostart_delay.valueChanged.connect(self._on_autostart_delay_changed)
         as_row.addWidget(self.autostart_chk)
